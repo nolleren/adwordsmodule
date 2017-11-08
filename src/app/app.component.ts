@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  updateTitle(event){
+    console.log(event);
+  }
 }

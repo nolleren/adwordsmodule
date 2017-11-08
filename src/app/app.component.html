@@ -3,4 +3,8 @@
   <a routerLink="/blue" routerLinkActive="active">Blue</a>
   <a routerLink="/red" routerLinkActive="active">Red</a>
 </nav>
+{{ title }}
 <router-outlet></router-outlet>
+<app-test [(title)]="title" (titleChange)="updateTitle($event)"></app-test>
+
+<app-campaign></app-campaign>

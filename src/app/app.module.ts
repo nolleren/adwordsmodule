@@ -1,3 +1,4 @@
+import { CreateCampaignService } from './campaign/create-campaign/create-campaign.service';
 import { BlueComponent } from './blue/blue.component';
 import { RedComponent } from './red/red.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +9,7 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CreateCampaignComponent } from './campaign/create-campaign/create-campaign.component';
+import { HttpModule } from '@angular/http';
 
 const appRoutes: Routes = [
   { path: 'blue', component: BlueComponent },
@@ -25,9 +27,10 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpModule
   ],
-  providers: [],
+  providers: [ CreateCampaignService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

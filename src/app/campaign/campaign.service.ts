@@ -1,22 +1,14 @@
-import { Campaign } from '../../../models/campaign';
+import { CampaignList } from './../../models/campaign';
+import { Campaign } from '../../models/campaign';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Injectable()
-export class CreateCampaignService {
-  campaign: Campaign = new Campaign();
- 
-  signupForm: FormGroup;
-  
+export class CampaignService {
+
   constructor(private http: Http) {
-    this.signupForm = new FormGroup({
-      'userData': new FormGroup({
-        'username': new FormControl(null, Validators.required),
-        'email': new FormControl(null, Validators.required)
-      })
-    });
   }
   
   ngOnInit(){}
@@ -26,5 +18,9 @@ export class CreateCampaignService {
     campaign.budgetDto.name = new Date().toString();
     return this.http.post("http://localhost:52185/api/campaign", campaign).map(res => res.json()); 
     //return this.http.post("http://adwordsmoduleapi.azurewebsites.net/api/campaign", campaign).map(res => res.json()); 
+  }
+
+  getCampaigns(){
+    return this.http.get("http://adwordsmoduleapi.azurewebsites.net/api/campaign").map(res => res.json());                                                           
   }
 }

@@ -1,5 +1,5 @@
 import { Campaign } from './../../../models/campaign';
-import { CreateCampaignService } from './create-campaign.service';
+import { CampaignService } from '../campaign.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,7 @@ export class CreateCampaignComponent implements OnInit {
   campaign: Campaign = new Campaign();
   signupForm: FormGroup;
 
-  constructor(private campaignService: CreateCampaignService){}
+  constructor(private campaignService: CampaignService){}
   
   ngOnInit(){
     this.signupForm = new FormGroup({
@@ -31,13 +31,11 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   formIsValid(){
-    if(this.campaign.startDate === undefined || this.campaign.endDate === undefined ||
-      (this.campaign.startDate > this.campaign.endDate) || 
-       this.campaign.name === undefined || this.campaign.name.length < 1 ||
-      (this.campaign.budgetDto.microAmount < 1 || this.campaign.budgetDto.microAmount === undefined)) {
-      return false
-    }
-     return true
+    if(this.campaign.startDate === undefined || this.campaign.endDate === undefined) return false;
+    if(this.campaign.startDate > this.campaign.endDate) return false;
+    if(this.campaign.name === undefined || this.campaign.name.length < 1) return false;
+    if(this.campaign.budgetDto.microAmount === undefined || this.campaign.budgetDto.microAmount < 1) return false;
+      return true
   }
 
   submitCampaign(){

@@ -1,4 +1,4 @@
-import { CreateCampaignService } from './campaign/create-campaign/create-campaign.service';
+import { CampaignService } from './campaign/campaign.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -40,9 +41,10 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
-  providers: [ CreateCampaignService ],
+  providers: [ CampaignService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

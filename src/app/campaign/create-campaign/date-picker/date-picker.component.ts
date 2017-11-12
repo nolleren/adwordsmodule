@@ -13,8 +13,7 @@ export class DatepickerComponent {
   @Output() dateChanged = new EventEmitter<Date>();
   date: Date;
   dates: Dates;
-  //selectedDate: Date;
-  
+
   constructor(private adapter: DateAdapter<any>){
     this.adapter.setLocale("da");
   }

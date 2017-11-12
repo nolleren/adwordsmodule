@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  collapseOne: boolean = false;
 
   updateTitle(event){
     console.log(event);
+  }
+
+  collapse(value: boolean){
+    if(value === this.collapseOne) return (this.collapseOne === false) ? this.collapseOne = true : this.collapseOne = false;
   }
 }

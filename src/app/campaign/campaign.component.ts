@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./campaign.component.css']
 })
 export class CampaignComponent implements OnInit {
-
+  test = "hej med dig";
   constructor() { }
 
   ngOnInit() {

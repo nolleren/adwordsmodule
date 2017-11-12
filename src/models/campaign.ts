@@ -1,13 +1,13 @@
 import { Budget } from "./budget";
 
 export class Campaign {
-    budget: Budget;
+    budgetDto: Budget;
     id?: number;
     name: string;
     startDate: Date;
-    endDate: number;
+    endDate: Date;
 
     constructor(){
-        this.budget = new Budget();
+        this.budgetDto = new Budget();
     }
 }

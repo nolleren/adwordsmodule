@@ -1,10 +1,15 @@
-<h1>Angular Router</h1>
-<nav>
-  <a routerLink="/blue" routerLinkActive="active">Blue</a>
-  <a routerLink="/red" routerLinkActive="active">Red</a>
-</nav>
-{{ title }}
-<router-outlet></router-outlet>
-<app-test [(title)]="title" (titleChange)="updateTitle($event)"></app-test>
+<div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+          <div class="card-header" role="tab" id="headingOne" (click)="collapse(collapseOne)">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
+                Vælg kampagne
+              </a>
+            </h5>
+          </div>    
+          <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" *ngIf="collapseOne">
+                <app-campaign></app-campaign>        
+          </div>
+        </div>
 
-<app-campaign></app-campaign>
+

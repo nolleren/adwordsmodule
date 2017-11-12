@@ -1,34 +1,46 @@
 import { CreateCampaignService } from './campaign/create-campaign/create-campaign.service';
-import { BlueComponent } from './blue/blue.component';
-import { RedComponent } from './red/red.component';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { TestComponent } from './test/test.component';
-import { CampaignComponent } from './campaign/campaign.component';
-import { CreateCampaignComponent } from './campaign/create-campaign/create-campaign.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 
+import { AppComponent } from './app.component';
+import { CampaignComponent } from './campaign/campaign.component';
+import { CreateCampaignComponent } from './campaign/create-campaign/create-campaign.component';
+import { ChooseCampaignComponent } from './campaign/choose-campaign/choose-campaign.component';
+import { DatepickerComponent } from './campaign/create-campaign/date-picker/date-picker.component';
+
+
 const appRoutes: Routes = [
-  { path: 'blue', component: BlueComponent },
-  { path: 'red', component: RedComponent }
+ 
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    BlueComponent,
-    RedComponent,
-    TestComponent,
     CampaignComponent,
-    CreateCampaignComponent
+    CreateCampaignComponent,
+    ChooseCampaignComponent,
+    DatepickerComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    HttpModule
+    HttpModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [ CreateCampaignService ],
   bootstrap: [AppComponent]

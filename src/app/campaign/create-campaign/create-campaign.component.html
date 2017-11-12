@@ -1,3 +1,57 @@
-<p>
-  create-campaign works!
-</p>
+<div class="jumbotron">
+<div class="form-group row">
+    <label for="name" class="col-2 col-form-label"><b>Opret kampagne:</b></label>
+</div>
+<form [formGroup]="signupForm" (ngSubmit)="submitCampaign()">
+  <div class="form-group row">
+      <label for="name" class="col-2 col-form-label">kampagnenavn</label>
+      <div class="col-6">
+        <input class="form-control" 
+               type="text" 
+               id="name"
+               formControlName="name"
+               [(ngModel)]="campaign.name">
+        <span 
+          *ngIf="!signupForm.get('name').valid && signupForm.get('name').touched"
+          class="help-block">Venligst udfyld et kampagnenavn
+      </span>     
+      </div>
+    </div>
+    <div class="form-group row">
+        <label for="startDate" class="col-2 col-form-label">Startdato for kampagnen:</label>
+        <div class="col-6">
+          <app-date-picker
+              [selectedDate]="campaign.startDate"
+              (dateChanged)="updateStartDate($event)">
+            </app-date-picker>
+         </div>
+      </div>
+      <div class="form-group row">
+      <label for="startDate" class="col-2 col-form-label">Startdato for kampagnen:</label>
+      <div class="col-6">
+        <app-date-picker
+            [selectedDate]="campaign.endDate"
+            (dateChanged)="updateEndDate($event)">
+          </app-date-picker>
+       </div>
+    </div>
+    <div class="form-group row">
+        <label for="microAmount" class="col-2 col-form-label">Budget for kampagne</label>
+        <div class="col-6">
+          <input class="form-control" 
+                 type="number" 
+                 id="microAmount"
+                 formControlName="microAmount"
+                 [(ngModel)]="campaign.budgetDto.microAmount">
+        <span 
+            *ngIf="!signupForm.get('microAmount').valid && signupForm.get('microAmount').touched && !campaign.budgetDto.microAmount > 0"
+            class="help-block">Angiv venligst et beløb for kampagnen
+        </span>   
+        </div>
+      </div>
+      <div class="col-8">
+          <button class="btn btn-primary float-right" type="submit" [disabled]="!formIsValid()">Opret kampagne</button>
+      </div>
+</form>
+</div>
+

@@ -1,4 +1,11 @@
 <div class="jumbotron">
-     <app-choose-campaign></app-choose-campaign>
-     <app-create-campaign></app-create-campaign>
+     <app-choose-campaign 
+        [campaignList]="campaignList"
+        (showCreateCampaign)="updateCreateCampaign($event)">
+    </app-choose-campaign>
+     <app-create-campaign 
+        [campaignList]="campaignList"
+        (showCreateCampaign)="updateCreateCampaign($event)" 
+        (addCreatedCampaign)="addCreatedCampaign()"
+        *ngIf="showCampaign"></app-create-campaign>
 </div>

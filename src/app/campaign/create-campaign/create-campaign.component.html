@@ -1,9 +1,9 @@
 <div class="form-group row">
-    <label for="name" class="col-2 col-form-label"><b>Opret kampagne:</b></label>
+    <label for="name" class="col-3 col-form-label"><b>Opret kampagne:</b></label>
 </div>
-<form [formGroup]="signupForm" (ngSubmit)="submitCampaign()">
+<form [formGroup]="campaignForm" (ngSubmit)="submitCampaign()">
   <div class="form-group row">
-      <label for="name" class="col-2 col-form-label">kampagnenavn</label>
+      <label for="name" class="col-3 col-form-label">kampagnenavn</label>
       <div class="col-6">
         <input class="form-control" 
                type="text" 
@@ -11,13 +11,17 @@
                formControlName="name"
                [(ngModel)]="campaign.name">
         <span 
-          *ngIf="!signupForm.get('name').valid && signupForm.get('name').touched"
+          *ngIf="!campaignForm.get('name').valid && campaignForm.get('name').touched"
           class="help-block">Venligst udfyld et kampagnenavn
-      </span>     
+      </span>
+      <span 
+      *ngIf="!campaignNameExist()"
+      class="help-block">Kampagnenavn eksisterer allerede
+     </span>       
       </div>
     </div>
     <div class="form-group row">
-        <label for="startDate" class="col-2 col-form-label">Startdato for kampagnen:</label>
+        <label for="startDate" class="col-3 col-form-label">Startdato for kampagnen:</label>
         <div class="col-6">
           <app-date-picker
               [selectedDate]="campaign.startDate"
@@ -26,7 +30,7 @@
          </div>
       </div>
       <div class="form-group row">
-      <label for="startDate" class="col-2 col-form-label">Startdato for kampagnen:</label>
+      <label for="startDate" class="col-3 col-form-label">Slutdato for kampagnen:</label>
       <div class="col-6">
         <app-date-picker
             [selectedDate]="campaign.endDate"
@@ -35,21 +39,22 @@
        </div>
     </div>
     <div class="form-group row">
-        <label for="microAmount" class="col-2 col-form-label">Budget for kampagne</label>
+        <label for="microAmount" class="col-3 col-form-label">Budget for kampagne</label>
         <div class="col-6">
           <input class="form-control" 
-                 type="number" 
+                 type="number"
                  id="microAmount"
                  formControlName="microAmount"
                  [(ngModel)]="campaign.budgetDto.microAmount">
         <span 
-            *ngIf="!signupForm.get('microAmount').valid && signupForm.get('microAmount').touched && !campaign.budgetDto.microAmount > 0"
-            class="help-block">Angiv venligst et beløb for kampagnen
-        </span>   
+            *ngIf="!campaignForm.get('microAmount').valid && campaignForm.get('microAmount').touched"
+            class="help-block">Angiv venligst et beløb for kampagnen, og beløb skal være minimum 1 krone
+        </span>  
         </div>
       </div>
-      <div class="col-8">
+      <div class="col-9">
           <button class="btn btn-primary float-right" type="submit" [disabled]="!formIsValid()">Opret kampagne</button>
+          <button class="btn btn-danger float-right" (click)="closeForm()">Annuller</button>
       </div>
 </form>
 

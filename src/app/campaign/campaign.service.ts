@@ -16,8 +16,8 @@ export class CampaignService {
   createCampaign(campaign: Campaign){
     campaign.budgetDto.microAmount *= 1000000;
     campaign.budgetDto.name = new Date().toString();
-    return this.http.post("http://localhost:52185/api/campaign", campaign).map(res => res.json()); 
-    //return this.http.post("http://adwordsmoduleapi.azurewebsites.net/api/campaign", campaign).map(res => res.json()); 
+    //return this.http.post("http://localhost:52185/api/campaign", campaign).map(res => res.json()); 
+    return this.http.post("http://adwordsmoduleapi.azurewebsites.net/api/campaign", campaign).map(res => res.json()); 
   }
 
   getCampaigns(){

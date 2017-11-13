@@ -1,7 +1,7 @@
 import { element } from 'protractor';
 import { CampaignService } from './../campaign.service';
 import { Campaign, CampaignList } from './../../../models/campaign';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-choose-campaign',
@@ -9,13 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./choose-campaign.component.css']
 })
 export class ChooseCampaignComponent implements OnInit {
-  campaignList: CampaignList[] = [];
+  @Input() campaignList: CampaignList[];
   campaign: Campaign = new Campaign();
+  @Output() showCreateCampaign: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() createdCampaign: Campaign;
 
   constructor(private campaignService: CampaignService) { }
 
   ngOnInit() {
-    this.campaignService.getCampaigns().subscribe((result) => {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+  }
+
+  getCampaigns(){
+      this.campaignService.getCampaigns().subscribe((result) => {
         result.forEach(element => {
           let campaign: CampaignList = {
             id: element.idField,
@@ -24,7 +32,10 @@ export class ChooseCampaignComponent implements OnInit {
         this.campaignList.push(campaign);
       });
     });
-    console.log(this.campaignList);
+  }
+
+  CreateCampaign(){
+    this.showCreateCampaign.emit(true);
   }
 
 }

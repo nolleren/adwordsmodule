@@ -1,7 +1,9 @@
-import { element } from 'protractor';
+import { MatDialog } from '@angular/material';
+import { CampaignSelectedDialogComponent } from './../../dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
+import { Toggle } from './../../../models/toggle';
 import { CampaignService } from './../campaign.service';
-import { Campaign, CampaignList } from './../../../models/campaign';
-import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
+import { CampaignDto, CampaignListItem } from './../../../models/campaign';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-choose-campaign',
@@ -9,33 +11,32 @@ import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@
   styleUrls: ['./choose-campaign.component.css']
 })
 export class ChooseCampaignComponent implements OnInit {
-  @Input() campaignList: CampaignList[];
-  campaign: Campaign = new Campaign();
-  @Output() showCreateCampaign: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() createdCampaign: Campaign;
+  campaign: CampaignDto = new CampaignDto();
+  campaignList: CampaignListItem[] = [];
+  toggle: Toggle = new Toggle();
 
-  constructor(private campaignService: CampaignService) { }
+  constructor(private campaignService: CampaignService, private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.campaignList = this.campaignService.getCampaigns();
+    this.addCampaignToList();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-  }
-
-  getCampaigns(){
-      this.campaignService.getCampaigns().subscribe((result) => {
-        result.forEach(element => {
-          let campaign: CampaignList = {
-            id: element.idField,
-            name: element.nameField
-          };
-        this.campaignList.push(campaign);
+  addCampaignToList(){
+    this.campaignService.dataCreatedCampaign$.subscribe(
+      data => {
+        this.campaignList.push(data); 
       });
-    });
+  }
+  
+  toggleCreateCampaign(){
+    this.toggle.value = true;
+    this.campaignService.toggle(this.toggle);
   }
 
-  CreateCampaign(){
-    this.showCreateCampaign.emit(true);
+  setChosenCampaign(){   
+    this.campaignService.setChosenCampaign(this.campaign);
+    this.dialog.open(CampaignSelectedDialogComponent);
   }
+} 
 
-}

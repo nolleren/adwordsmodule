@@ -17,10 +17,10 @@ import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CreateCampaignComponent } from './campaign/create-campaign/create-campaign.component';
 import { ChooseCampaignComponent } from './campaign/choose-campaign/choose-campaign.component';
+import { CampaignNotCreatedDialogComponent } from './dialogs/campaign-not-created-dialog/campaign-not-created-dialog.component';
+import { CampaignCreatedDialogComponent } from './dialogs/campaign-created-dialog/campaign-created-dialog.component';
 import { DatepickerComponent } from './campaign/create-campaign/date-picker/date-picker.component';
-import { CampaignNotCreatedDialogComponent } from './messages/campaign-not-created-dialog/campaign-not-created-dialog.component';
-import { CampaignCreatedDialogComponent } from './messages/campaign-created-dialog/campaign-created-dialog.component';
-
+import { CampaignSelectedDialogComponent } from './dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
 
 const appRoutes: Routes = [
  
@@ -34,7 +34,9 @@ const appRoutes: Routes = [
     ChooseCampaignComponent,
     DatepickerComponent,
     CampaignNotCreatedDialogComponent,
-    CampaignCreatedDialogComponent
+    CampaignCreatedDialogComponent,
+    CampaignSelectedDialogComponent,
+    CampaignSelectedDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ const appRoutes: Routes = [
   ],
   entryComponents: [
     CampaignNotCreatedDialogComponent,
-    CampaignCreatedDialogComponent
+    CampaignCreatedDialogComponent,
+    CampaignSelectedDialogComponent
   ],
   providers: [ CampaignService ],
   bootstrap: [AppComponent]

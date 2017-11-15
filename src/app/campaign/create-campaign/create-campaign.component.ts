@@ -1,10 +1,10 @@
-import { CampaignNotCreatedDialogComponent } from './../../messages/campaign-not-created-dialog/campaign-not-created-dialog.component';
-import { CampaignCreatedDialogComponent } from './../../messages/campaign-created-dialog/campaign-created-dialog.component';
-import { Campaign, CampaignList } from './../../../models/campaign';
+import { Toggle } from './../../../models/toggle';
+import { CampaignNotCreatedDialogComponent } from './../../dialogs/campaign-not-created-dialog/campaign-not-created-dialog.component';
+import { CampaignCreatedDialogComponent } from './../../dialogs/campaign-created-dialog/campaign-created-dialog.component';
+import { CampaignDto, CampaignListItem } from './../../../models/campaign';
 import { CampaignService } from '../campaign.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -13,61 +13,75 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./create-campaign.component.css'],
 })
 export class CreateCampaignComponent implements OnInit {
-  campaign: Campaign = new Campaign();
+  campaign: CampaignDto = new CampaignDto();
   campaignForm: FormGroup;
-  @Input() campaignList: CampaignList[];
-  @Output() showCreateCampaign: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() addCreatedCampaign: EventEmitter<boolean> = new EventEmitter<boolean>();
+  campaignList: CampaignListItem[];
+  microAmount?: number;
+  toggle: Toggle = new Toggle();
 
-  constructor(private campaignService: CampaignService, private dialog: MatDialog){}
+  constructor(private campaignService: CampaignService, 
+              private dialog: MatDialog,){}
   
   ngOnInit(){
+    this.campaignList = this.campaignService.getCampaigns();
+    this.createFormGroup();   
+    this.setDate();
+    this.addCampaignToList();
+  }
+
+  createFormGroup(){
     this.campaignForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
+      'name': new FormControl(null, [Validators.required, Validators.minLength(1)]),
       'microAmount': new FormControl(null, [ Validators.required, Validators.min(1) ])
     });
   }
 
-  updateStartDate(event) {
-    this.campaign.startDate = event;
+  addCampaignToList(){
+    this.campaignService.dataCreatedCampaign$.subscribe(
+      data => {
+        this.campaignList.push(data); 
+      });
   }
 
-  updateEndDate(event) {
-    this.campaign.endDate = event;
+  toggleCreateCampaign(){
+    this.toggle.value = false;
+    this.campaignService.toggle(this.toggle)
   }
 
-  formIsValid(){
-    if(this.campaign.startDate === undefined || this.campaign.endDate === undefined) return false
-    if(this.campaign.startDate > this.campaign.endDate) return false
-    if(this.campaign.name === undefined || this.campaign.name.length < 1) return false
-    if(this.campaign.budgetDto.microAmount === undefined || this.campaign.budgetDto.microAmount < 1) return false
-     return true
+  setDate(){
+    this.campaignService.dataDateOne$.subscribe(data => { this.campaign.startDate = data });
+    this.campaignService.dataDateTwo$.subscribe(data => { this.campaign.endDate = data });
+  }
+  
+  campaignNameExist(){
+    if(this.campaignList.find(x => x.name === this.campaign.name)) return false;
+      return true;
   }
 
   submitCampaign(){
     this.createCampagin(this.campaign);   
   }
 
-  campaignNameExist(){
-    if(this.campaignList.find(x => x.name === this.campaign.name)) return false;
-      return true;
-  }
-
-  closeForm(){
-    this.showCreateCampaign.emit(false);
-  }
-
-  createCampagin(campaign: Campaign){
+  createCampagin(campaign: CampaignDto){
+    this.campaign.budget.microAmount = this.microAmount;
     this.campaignService.createCampaign(campaign).subscribe(
       data => {
-        this.addCreatedCampaign.emit();
-        this.showCreateCampaign.emit(false);
-        this.campaign = new Campaign();
+        let campaign: CampaignListItem = {
+          id: data.id,
+          name: data.name
+        };
+        this.addCreatedCampaignToList(campaign);
+        this.toggleCreateCampaign();
+        this.campaign = new CampaignDto();
         this.dialog.open(CampaignCreatedDialogComponent)
     },
       err => {
-        this.campaign.budgetDto.microAmount /= 1000000;
+        this.campaign.budget.microAmount /= 1000000;
         this.dialog.open(CampaignNotCreatedDialogComponent);       
     });
+  }
+
+  addCreatedCampaignToList(campaign: CampaignListItem){   
+    this.campaignService.addCreatedCampaignToList(this.campaign);
   }
 }

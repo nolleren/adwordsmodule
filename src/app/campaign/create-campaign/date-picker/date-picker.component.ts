@@ -1,32 +1,53 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { CampaignService } from './../../campaign.service';
+import { Component } from '@angular/core';
 import { Dates } from '../../../../models/Dates';
 import { DateAdapter } from '@angular/material';
-import * as moment from 'moment';
-import 'moment-timezone';
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: 'date-picker.component.html'
 })
 export class DatepickerComponent {
-  @Input() selectedDate: Date;
-  @Output() dateChanged = new EventEmitter<Date>();
-  date: Date;
-  dates: Dates;
+  selectedStartDate: Date;
+  selectedEndDate: Date;
+  startDate: Date = new Date();
+  endDate: Date = new Date();
+  datesStart: Dates = new Dates();
+  datesEnd: Dates = new Dates();
 
-  constructor(private adapter: DateAdapter<any>){
+  constructor(private adapter: DateAdapter<any>, private campaignService: CampaignService){
     this.adapter.setLocale("da");
   }
 
   ngOnInit() {
-      this.date = new Date();
-      this.dates = {
-        startDate: this.date,
-        endDate: new Date(this.date.getFullYear() + 5, 0, 1)
-      };
-    }
+    this.setPickRangeOnDatesStart();
+    this.setPickRangeOnDatesEnd();
+
+    this.updateStartDateForEndDate();
+  }
+
+  updateStartDateForEndDate(){
+    this.campaignService.dataDateOne$.subscribe(data => {
+      this.datesEnd.startDate = data;
+    });
+  }
+
+  setPickRangeOnDatesStart(){
+    this.datesStart = {
+      startDate: this.startDate,
+      endDate: new Date(this.startDate.getFullYear() + 5, 0, 1)
+    };
+  }
+
+  setPickRangeOnDatesEnd(){
+    this.datesEnd = {
+      startDate: this.endDate,
+      endDate: new Date(this.endDate.getFullYear() + 5, 0, 1)
+    };
+  }
 
   updatePickedDate(){
-    this.dateChanged.emit(this.selectedDate);
+    this.campaignService.setDateOne(this.selectedStartDate);
+    this.campaignService.setDateTwo(this.selectedEndDate);
   }
 }

@@ -1,17 +1,18 @@
-import { Budget } from "./budget";
+import { BudgetDto } from "./budget";
 
-export class Campaign {
-    budgetDto: Budget;
+export class CampaignDto {
+    id: number;
+    budget: BudgetDto;
     name: string;
     startDate: Date;
     endDate: Date;
 
     constructor(){
-        this.budgetDto = new Budget();
+        this.budget = new BudgetDto();
     }
 }
 
-export class CampaignList {
+export class CampaignListItem {
     id: number;
     name: string;
 }

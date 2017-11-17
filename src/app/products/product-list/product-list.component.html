@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-header" (click)="show()">
+    <h5 class="mb-0">
+      <a href="#" >
+        Vælg produkter
+      </a>
+    </h5>
+  </div>    
+  <div [hidden]="!visible">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-8">
+              <mat-card>
+                  <mat-card-content>
+                      <section *ngFor="let product of products">
+                          <mat-checkbox [checked]="selected" (change)="updateSelectedProducts(product, $event)">{{ product.productName }}</mat-checkbox>
+                        </section>
+                </mat-card-content>
+              </mat-card>
+              <button class="btn btn-primary float-right" (click)="setChosenProducts()">Vælg produkter</button>
+              </div>
+          </div>
+        </div>       
+  </div>
+</div>

@@ -20,12 +20,6 @@ export class ChooseCampaignComponent implements OnInit {
   ngOnInit() {
     this.campaignList = this.campaignService.getCampaigns();
     this.addCampaignToList();
-
-    let campaignTest: CampaignListItem = {
-      id: 12,
-      name: "test"
-    }
-    this.campaignService.addCreatedCampaignToList(campaignTest);
   }
 
   addCampaignToList(){

@@ -39,7 +39,6 @@ export class CreateCampaignComponent implements OnInit {
   addCampaignToList(){
     this.campaignService.dataCreatedCampaign$.subscribe(
       data => {
-        console.log(data);
         this.campaignList.push(data); 
       });
   }

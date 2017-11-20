@@ -1,3 +1,4 @@
+import { ProductService } from './products/product.service';
 import { CampaignService } from './campaign/campaign.service';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,10 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatCardModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpModule } from '@angular/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
@@ -21,6 +23,8 @@ import { CampaignNotCreatedDialogComponent } from './dialogs/campaign-not-create
 import { CampaignCreatedDialogComponent } from './dialogs/campaign-created-dialog/campaign-created-dialog.component';
 import { DatepickerComponent } from './campaign/create-campaign/date-picker/date-picker.component';
 import { CampaignSelectedDialogComponent } from './dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
+import { ProductListComponent } from './products/product-list/product-list.component';
+import { ProductsSelectedDialogComponent } from './dialogs/products-selected-dialog/products-selected-dialog.component';
 
 const appRoutes: Routes = [
  
@@ -36,7 +40,10 @@ const appRoutes: Routes = [
     CampaignNotCreatedDialogComponent,
     CampaignCreatedDialogComponent,
     CampaignSelectedDialogComponent,
-    CampaignSelectedDialogComponent
+    CampaignSelectedDialogComponent,
+    ProductListComponent,
+    ProductsSelectedDialogComponent,
+    ProductsSelectedDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,14 +57,17 @@ const appRoutes: Routes = [
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule,
+    MatCardModule
   ],
   entryComponents: [
     CampaignNotCreatedDialogComponent,
     CampaignCreatedDialogComponent,
-    CampaignSelectedDialogComponent
+    CampaignSelectedDialogComponent,
+    ProductsSelectedDialogComponent
   ],
-  providers: [ CampaignService ],
+  providers: [ CampaignService, ProductService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

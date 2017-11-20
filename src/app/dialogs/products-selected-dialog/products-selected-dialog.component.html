@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>Produkter valgt</h2>
+<mat-dialog-content>
+  <h5>Følgende produkter blev valgt:</h5>
+  <ul>
+    <li *ngFor="let product of data.products">{{ product.productName }}</li>
+  </ul>
+</mat-dialog-content>

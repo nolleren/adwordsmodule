@@ -9,16 +9,28 @@ import { CampaignService } from './campaign.service';
 })
 export class CampaignComponent implements OnInit {
   showCampaign: boolean = false;
+  visible: boolean = false;
 
   constructor(private campaignService: CampaignService) { }
 
   ngOnInit() {
     this.setShowCampaign();
+    this.setVisibleCampaign();
   }
 
   setShowCampaign(){
     this.campaignService.dataToggle$.subscribe(data => {
       this.showCampaign = data.value;
     });
+  }
+
+  setVisibleCampaign(){
+    this.campaignService.dataVisibleCampaign$.subscribe(data => {
+      this.visible = false;
+    })
+  }
+
+  show(){
+    this.visible = !this.visible;
   }
 }

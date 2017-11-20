@@ -39,6 +39,7 @@ export class CreateCampaignComponent implements OnInit {
   addCampaignToList(){
     this.campaignService.dataCreatedCampaign$.subscribe(
       data => {
+        console.log(data);
         this.campaignList.push(data); 
       });
   }
@@ -66,11 +67,11 @@ export class CreateCampaignComponent implements OnInit {
     this.campaign.budget.microAmount = this.microAmount;
     this.campaignService.createCampaign(campaign).subscribe(
       data => {
-        let campaign: CampaignListItem = {
-          id: data.id,
-          name: data.name
+        let newCampaignListItem: CampaignListItem = {
+          id: data.value[0].id,
+          name: data.value[0].name
         };
-        this.addCreatedCampaignToList(campaign);
+        this.addCreatedCampaignToList(newCampaignListItem);       
         this.toggleCreateCampaign();
         this.campaign = new CampaignDto();
         this.dialog.open(CampaignCreatedDialogComponent)
@@ -81,7 +82,7 @@ export class CreateCampaignComponent implements OnInit {
     });
   }
 
-  addCreatedCampaignToList(campaign: CampaignListItem){   
-    this.campaignService.addCreatedCampaignToList(this.campaign);
+  addCreatedCampaignToList(campaign: CampaignListItem){  
+    this.campaignService.addCreatedCampaignToList(campaign);
   }
 }

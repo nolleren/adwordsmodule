@@ -1,3 +1,5 @@
+import { ProductService } from './products/product.service';
+import { Product } from './../models/product';
 import { CampaignService } from './campaign/campaign.service';
 import { CampaignListItem } from './../models/campaign';
 import { Component, OnInit } from '@angular/core';
@@ -9,16 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'My Google Adwords App';
-  show: boolean = false;
-  collapseOne: boolean = false;
   campaign: CampaignListItem = new CampaignListItem();
+  products: Product[] = [];
  
-  constructor(private campaignService: CampaignService){}
+  constructor(private campaignService: CampaignService, private productService: ProductService){}
 
   ngOnInit(){
     this.setChosenCampaign();
+    this.setChosenProducts();
   }
-
+  
   setChosenCampaign(){
     this.campaignService.dataCampaign$.subscribe(
       data => {
@@ -26,12 +28,10 @@ export class AppComponent implements OnInit {
       });
   }
 
-  collapse(value: boolean){
-    if(value === this.collapseOne) return this.collapseOne = !this.collapseOne;
+  setChosenProducts(){
+    this.productService.DataProductList$.subscribe(data => {
+      this.products = data;
+    });
   }
-
-  showMe(){
-    this.show = !this.show;
-  }  
 
 }

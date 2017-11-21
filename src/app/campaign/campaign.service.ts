@@ -39,7 +39,6 @@ export class CampaignService {
    }
 
   addCreatedCampaignToList(campaigntest: CampaignListItem){
-    console.log(campaigntest);
      this.dataCreatedCampaignSource.next(campaigntest);
    }
 

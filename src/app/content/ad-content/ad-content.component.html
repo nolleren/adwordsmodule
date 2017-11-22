@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-header" (click)="show()">
+    <h5 class="mb-0">
+      <a href="#" >
+        Udfyld annonceindhold
+      </a>
+    </h5>
+  </div>    
+  <div [hidden]="!visible">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-8">
+          <div class="form-group row">
+            <label for="name" class="col-2 col-form-label">Overskrift 1</label>
+              <div class="col-10">
+                <input class="form-control dropdiv" 
+                      type="text"
+                      id="headlinePart1">
+              </div>
+          </div>
+          <div class="form-group row">
+            <label for="name" class="col-2 col-form-label">Overskrift 2</label>
+              <div class="col-10">
+                <input class="form-control dropdiv" 
+                      type="text"
+                      id="headlinePart2">
+              </div>
+          </div>
+          <div class="form-group row">
+            <label for="name" class="col-2 col-form-label">Sti</label>
+            <label for="" class="col-4">www.nolleren.org /</label>
+              <div class="col-6">
+                <input class="form-control dropdiv" 
+                      type="text"
+                      id="path">
+              </div>
+          </div>
+          <div class="form-group row">
+            <label for="name" class="col-2 col-form-label">Beskrivelse</label>
+              <div class="col-10">
+                <textarea 
+                  class="form-control dropdiv" 
+                  rows="3"
+                  id="description">
+                </textarea>
+              </div>
+        </div>  
+        <div class="col-12">
+            <button class="btn btn-primary float-right" (click)="check()">Gem</button>
+          </div>
+        </div> 
+        <div class="col-4" id="maindiv">
+                <div id="dragdiv">
+                    <h3>
+                        <span>Drag contact from the list</span></h3>
+                    <ul id="allItems" runat="server">
+                        <li id="node1">a1@test.com</li>
+                        <li id="node2">b2@test.com</li>
+                        <li id="node3">c3@test.com</li>
+                        <li id="node4">d4@test.com</li>
+                        <li id="node5">e5@test.com</li>
+                        <li id="node6">f6@test.com</li>
+                        <li id="node7">g7@test.com</li>
+                        <li id="node8">h8@test.com</li>
+                        <li id="node9">i9@test.com</li>
+                    </ul>
+                </div>
+        </div>  
+      </div>
+    </div>          
+  </div>
+</div>  

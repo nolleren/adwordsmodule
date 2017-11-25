@@ -22,14 +22,13 @@ export class AppComponent implements OnInit {
   }
   
   setChosenCampaign(){
-    this.campaignService.dataCampaign$.subscribe(
-      data => {
-        this.campaign = data; 
-      });
+    this.campaignService.setChosenCampaign.subscribe((data: CampaignListItem) => {
+      this.campaign = data;
+    })
   }
 
   setChosenProducts(){
-    this.productService.DataProductList$.subscribe(data => {
+    this.productService.setChosenproduct.subscribe((data: Product[]) => {
       this.products = data;
     });
   }

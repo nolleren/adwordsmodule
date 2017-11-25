@@ -44,7 +44,7 @@ export class ProductListComponent implements OnInit {
   }
 
   setChosenProducts(){
-    this.productService.setChosenProducts(this.selectedProducts);
+    this.productService.setChosenproduct.next(this.selectedProducts);
     this.show();
     this.dialog.open(ProductsSelectedDialogComponent, { data: { products: this.selectedProducts }} )
   }

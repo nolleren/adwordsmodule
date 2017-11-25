@@ -1,6 +1,5 @@
 import { MatDialog } from '@angular/material';
 import { CampaignSelectedDialogComponent } from './../../dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
-import { Toggle } from './../../../models/toggle';
 import { CampaignService } from './../campaign.service';
 import { CampaignDto, CampaignListItem } from './../../../models/campaign';
 import { Component, OnInit, EventEmitter } from '@angular/core';
@@ -13,7 +12,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 export class ChooseCampaignComponent implements OnInit {
   campaign: CampaignListItem = new CampaignListItem();
   campaignList: CampaignListItem[] = [];
-  toggle: Toggle = new Toggle();
+  visible: boolean = false;
 
   constructor(private campaignService: CampaignService, private dialog: MatDialog) { }
 
@@ -23,20 +22,18 @@ export class ChooseCampaignComponent implements OnInit {
   }
 
   addCampaignToList(){
-    this.campaignService.dataCreatedCampaign$.subscribe(
-      data => {
-        this.campaignList.push(data); 
-      });
+    this.campaignService.addCreatedCampaignToList.subscribe((data: CampaignListItem) => {
+      this.campaignList.push(data);
+    });
   }
   
   toggleCreateCampaign(){
-    this.toggle.value = true;
-    this.campaignService.toggle(this.toggle);
+    this.campaignService.showCreateCampaignComponent.next(true);
   }
 
   setChosenCampaign(){   
-    this.campaignService.setChosenCampaign(this.campaign);
-    this.campaignService.setVisibleCampaign(false);
+    this.campaignService.setChosenCampaign.next(this.campaign);
+    this.campaignService.toggleVisibility.next(false);
     this.dialog.open(CampaignSelectedDialogComponent);
   }
 } 

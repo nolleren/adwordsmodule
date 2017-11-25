@@ -1,4 +1,3 @@
-import { Toggle } from './../../../models/toggle';
 import { CampaignNotCreatedDialogComponent } from './../../dialogs/campaign-not-created-dialog/campaign-not-created-dialog.component';
 import { CampaignCreatedDialogComponent } from './../../dialogs/campaign-created-dialog/campaign-created-dialog.component';
 import { CampaignDto, CampaignListItem } from './../../../models/campaign';
@@ -17,7 +16,7 @@ export class CreateCampaignComponent implements OnInit {
   campaignForm: FormGroup;
   campaignList: CampaignListItem[];
   microAmount?: number;
-  toggle: Toggle = new Toggle();
+  visible: boolean = false;
 
   constructor(private campaignService: CampaignService, 
               private dialog: MatDialog,){}
@@ -25,7 +24,7 @@ export class CreateCampaignComponent implements OnInit {
   ngOnInit(){
     this.campaignList = this.campaignService.getCampaigns();
     this.createFormGroup();   
-    this.setDate();
+    this.setDates();
     this.addCampaignToList();
   }
 
@@ -37,20 +36,18 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   addCampaignToList(){
-    this.campaignService.dataCreatedCampaign$.subscribe(
-      data => {
-        this.campaignList.push(data); 
-      });
+    this.campaignService.addCreatedCampaignToList.subscribe((data: CampaignListItem) => {
+      this.campaignList.push(data);
+    });
   }
 
   toggleCreateCampaign(){
-    this.toggle.value = false;
-    this.campaignService.toggle(this.toggle)
+    this.campaignService.showCreateCampaignComponent.next(false);
   }
 
-  setDate(){
-    this.campaignService.dataDateOne$.subscribe(data => { this.campaign.startDate = data });
-    this.campaignService.dataDateTwo$.subscribe(data => { this.campaign.endDate = data });
+  setDates(){
+    this.campaignService.startDate.subscribe((data: Date) => { this.campaign.startDate = data });
+    this.campaignService.endDate.subscribe((data: Date) => { this.campaign.endDate = data });
   }
   
   campaignNameExist(){
@@ -70,7 +67,7 @@ export class CreateCampaignComponent implements OnInit {
           id: data.value[0].id,
           name: data.value[0].name
         };
-        this.addCreatedCampaignToList(newCampaignListItem);       
+        this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       
         this.toggleCreateCampaign();
         this.campaign = new CampaignDto();
         this.dialog.open(CampaignCreatedDialogComponent)
@@ -82,6 +79,6 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   addCreatedCampaignToList(campaign: CampaignListItem){  
-    this.campaignService.addCreatedCampaignToList(campaign);
+    this.campaignService.addCreatedCampaignToList.next(campaign);
   }
 }

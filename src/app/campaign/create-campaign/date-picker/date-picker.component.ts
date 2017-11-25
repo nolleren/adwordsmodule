@@ -10,10 +10,9 @@ import { DateAdapter } from '@angular/material';
 export class DatepickerComponent {
   selectedStartDate: Date;
   selectedEndDate: Date;
-  startDate: Date = new Date();
-  endDate: Date = new Date();
-  datesStart: Dates = new Dates();
-  datesEnd: Dates = new Dates();
+  date: Date = new Date();
+  startDate: Dates = new Dates();
+  endDate: Dates = new Dates();
 
   constructor(private adapter: DateAdapter<any>, private campaignService: CampaignService){
     this.adapter.setLocale("da");
@@ -27,27 +26,27 @@ export class DatepickerComponent {
   }
 
   updateStartDateForEndDate(){
-    this.campaignService.dataDateOne$.subscribe(data => {
-      this.datesEnd.startDate = data;
-    });
+    this.campaignService.startDate.subscribe((data: Date) => {
+      this.endDate.startDate = data;
+    })
   }
 
   setPickRangeOnDatesStart(){
-    this.datesStart = {
-      startDate: this.startDate,
-      endDate: new Date(this.startDate.getFullYear() + 5, 0, 1)
+    this.startDate = {
+      startDate: this.date,
+      endDate: new Date(this.date.getFullYear() + 5, 0, 1)
     };
   }
 
   setPickRangeOnDatesEnd(){
-    this.datesEnd = {
-      startDate: this.endDate,
-      endDate: new Date(this.endDate.getFullYear() + 5, 0, 1)
+    this.endDate = {
+      startDate: this.date,
+      endDate: new Date(this.date.getFullYear() + 5, 0, 1)
     };
   }
 
   updatePickedDate(){
-    this.campaignService.setDateOne(this.selectedStartDate);
-    this.campaignService.setDateTwo(this.selectedEndDate);
+    this.campaignService.startDate.next(this.selectedStartDate);
+    this.campaignService.endDate.next(this.selectedEndDate);
   }
 }

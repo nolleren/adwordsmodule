@@ -10,15 +10,7 @@ export class ProductService {
   constructor(private http: Http) {}
 
   // Observable string source
-  DataProductListSource = new Subject<Product[]>();
-
-  // Observable string stream
-  DataProductList$ = this.DataProductListSource.asObservable();
-
-  // Service message commands
-  setChosenProducts(products: Product[]){
-    this.DataProductListSource.next(products);
-  }
+  setChosenproduct = new Subject<Product[]>();
   
   getProducts(){
     return this.http.get("http://adwordsmoduleapi.azurewebsites.net/api/products").map(res => res.json());

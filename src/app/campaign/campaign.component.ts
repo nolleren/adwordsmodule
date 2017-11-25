@@ -8,25 +8,25 @@ import { CampaignService } from './campaign.service';
   styleUrls: ['./campaign.component.css']
 })
 export class CampaignComponent implements OnInit {
-  showCampaign: boolean = false;
+  showCreateCampaign: boolean = false;
   visible: boolean = false;
 
   constructor(private campaignService: CampaignService) { }
 
   ngOnInit() {
     this.setShowCampaign();
-    this.setVisibleCampaign();
+    this.setShowCreateCampaign();
   }
 
   setShowCampaign(){
-    this.campaignService.dataToggle$.subscribe(data => {
-      this.showCampaign = data.value;
-    });
+    this.campaignService.toggleVisibility.subscribe((data: boolean) => {
+      this.visible = data;
+    })
   }
 
-  setVisibleCampaign(){
-    this.campaignService.dataVisibleCampaign$.subscribe(data => {
-      this.visible = false;
+  setShowCreateCampaign(){
+    this.campaignService.showCreateCampaignComponent.subscribe((data: boolean) => {
+      this.showCreateCampaign = data;
     })
   }
 

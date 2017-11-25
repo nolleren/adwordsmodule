@@ -25,6 +25,7 @@ import { DatepickerComponent } from './campaign/create-campaign/date-picker/date
 import { CampaignSelectedDialogComponent } from './dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductsSelectedDialogComponent } from './dialogs/products-selected-dialog/products-selected-dialog.component';
+import { AdContentComponent } from './content/ad-content/ad-content.component';
 
 const appRoutes: Routes = [
  
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
     CampaignSelectedDialogComponent,
     ProductListComponent,
     ProductsSelectedDialogComponent,
-    ProductsSelectedDialogComponent
+    ProductsSelectedDialogComponent,
+    AdContentComponent
   ],
   imports: [
     BrowserModule,

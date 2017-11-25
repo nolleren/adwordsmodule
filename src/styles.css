@@ -2,6 +2,21 @@ input.ng-invalid.ng-touched {
     border: 1px solid red;
   }
 
-  .help-block {
-    color: red;
-  }
+.help-block {
+  color: red;
+}
+
+.ui-drop-hover
+{
+    border: 2px solid #bbb;
+}
+#dragdiv
+{
+    width: 180px;
+    height: 400px;
+    float: left;
+}
+#dropdiv li
+{
+    padding-left: 10px;
+}

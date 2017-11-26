@@ -17,6 +17,12 @@ export class AdContentComponent implements OnInit {
 
   ngOnInit() {
     this.draggable.draggable();
+
+    $("#description").on("drop keyup change", () => {
+      var $this = $("#description")
+      var $test = $this[0];
+      console.log($test.value);
+    });
   }
 
   check(){

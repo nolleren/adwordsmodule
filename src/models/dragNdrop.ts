@@ -24,6 +24,7 @@ export class dragNdrop {
                         var $this = $(this);
                         if ($this.val() == '') {
                             $this.val(ui.draggable.text());
+                           // console.log($this.value);
                         } else {
                             $this.val($this.val() + " " + ui.draggable.text());
                         }

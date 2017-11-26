@@ -1,3 +1,4 @@
+import { ListItemComponent } from './list/ad-list/list-item/list-item.component';
 import { ProductService } from './products/product.service';
 import { CampaignService } from './campaign/campaign.service';
 
@@ -26,6 +27,8 @@ import { CampaignSelectedDialogComponent } from './dialogs/campaign-selected-dia
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductsSelectedDialogComponent } from './dialogs/products-selected-dialog/products-selected-dialog.component';
 import { AdContentComponent } from './content/ad-content/ad-content.component';
+import { ListService } from './list/list.service';
+import { AdListComponent } from './list/ad-list/ad-list.component';
 
 const appRoutes: Routes = [
  
@@ -45,7 +48,9 @@ const appRoutes: Routes = [
     ProductListComponent,
     ProductsSelectedDialogComponent,
     ProductsSelectedDialogComponent,
-    AdContentComponent
+    AdContentComponent,
+    AdListComponent,
+    ListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +74,11 @@ const appRoutes: Routes = [
     CampaignSelectedDialogComponent,
     ProductsSelectedDialogComponent
   ],
-  providers: [ CampaignService, ProductService ],
+  providers: [ 
+    CampaignService, 
+    ProductService,
+    ListService
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

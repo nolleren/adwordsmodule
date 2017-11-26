@@ -1,0 +1,14 @@
+<form [formGroup]="listItemForm" (ngSubmit)="submitCampaign()">
+    <div class="form-group row" *ngFor="let item of test">
+        <label for="name" class="col-3 col-form-label">kampagnenavn</label>
+        <div class="col-6">
+          <input class="form-control" 
+                 type="text" 
+                 id="item.name"
+                 formControlName="name"
+                 [(ngModel)]="test.item.name">
+                 {{item.name}}
+          <span (click)="changeName(item)">Skift navn</span>     
+        </div>
+      </div>
+  </form>

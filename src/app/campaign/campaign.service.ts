@@ -12,8 +12,8 @@ export class CampaignService {
     httpString: string;
 
     constructor(private http: Http) {
-      //this.httpString = "http://localhost:52185/api/campaign";
-      this.httpString = "http://adwordsmoduleapi.azurewebsites.net/api/campaign"; 
+      if(isDevMode()) this.httpString = "http://localhost:52185/api/campaign";
+      else this.httpString = "http://adwordsmoduleapi.azurewebsites.net/api/campaign"; 
     }
 
    // Observable string source

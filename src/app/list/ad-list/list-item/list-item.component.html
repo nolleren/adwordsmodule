@@ -1,0 +1,12 @@
+<form [formGroup]="listItemForm" (ngSubmit)="submitCampaign()">
+  <div class="form-group row">
+      <label for="name" class="col-3 col-form-label">kampagnenavn</label>
+      <div class="col-6">
+        <input class="form-control" 
+               type="text" 
+               id="test.name"
+               formControlName="name"
+               >     
+      </div>
+    </div>
+</form>

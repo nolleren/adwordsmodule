@@ -28,4 +28,6 @@ export class ListItemComponent implements OnInit {
     });
   }
 
+  submitCampaign(){}
+
 }

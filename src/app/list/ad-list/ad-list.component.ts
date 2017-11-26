@@ -36,6 +36,8 @@ export class AdListComponent implements OnInit {
     this.test.splice(this.test.indexOf(test), 1, testObjekt);
   }
 
+  submitCampaign(){}
+
   createFormGroup(){
     this.listItemForm = new FormGroup({
       'name': new FormControl(null, [Validators.required, Validators.minLength(1)])

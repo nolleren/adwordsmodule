@@ -36,7 +36,8 @@ export class CampaignService {
             result.forEach(element => {
               let campaign: CampaignListItem = {
                 id: element.id,
-                name: element.name
+                name: element.name,
+                microAmount: element.budget.amount.microAmount
               };
               this.campaignList.push(campaign);
             });

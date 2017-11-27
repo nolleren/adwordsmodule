@@ -65,7 +65,8 @@ export class CreateCampaignComponent implements OnInit {
       data => {
         let newCampaignListItem: CampaignListItem = {
           id: data.value[0].id,
-          name: data.value[0].name
+          name: data.value[0].name,
+          microAmount: data.value[0].budget.amount.microAmount
         };
         this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       
         this.toggleCreateCampaign();

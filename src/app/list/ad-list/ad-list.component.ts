@@ -1,3 +1,5 @@
+import { CampaignService } from './../../campaign/campaign.service';
+import { CampaignListItem } from './../../../models/campaign';
 import { ListService } from './../list.service';
 import { element } from 'protractor';
 import { AdContentService } from './../../content/ad-content.service';
@@ -16,19 +18,29 @@ export class AdListComponent implements OnInit {
   adwordsAds: ContentProduct[] = [];
   visible: boolean = false;
   enable: boolean = false;
+  campaign: CampaignListItem = new CampaignListItem();
 
-  constructor(private adContentService: AdContentService, private listService: ListService) { }
+  constructor(private adContentService: AdContentService, 
+              private listService: ListService, 
+              private campaignService: CampaignService) { }
 
   ngOnInit() {
     this.getadwordsAds();
     this.getUpdatedAd();
+    this.setChosenCampaign();
+  }
+
+  setChosenCampaign(){
+    this.campaignService.setChosenCampaign.subscribe((data: CampaignListItem) => {
+      this.campaign = data;
+    });
   }
 
   getUpdatedAd(){
+    
     this.listService.updateAd.subscribe((data: ContentProduct) => {
       this.adwordsAds.splice(this.adwordsAds.indexOf(data), 1, data);
     });
-    console.log(this.adwordsAds);
   }
 
   getadwordsAds(){
@@ -59,8 +71,20 @@ export class AdListComponent implements OnInit {
   show(){
     this.visible = !this.visible;
   }
-
-  submitCampaign(){}
-
   
-}
+  validateAds(){
+    let result = this.adwordsAds;
+    for(let element of this.adwordsAds){
+      if(element.adContent.description.length > 80) return false;
+      if(element.adContent.path.length > 15) return false;
+      if(element.adContent.headLinePart1.length > 30) return false;
+      if(element.adContent.headLinePart2.length > 30) return false;
+        return true;
+    }
+  }
+
+  check(){
+    console.log(this.adwordsAds);
+  }
+    
+} 

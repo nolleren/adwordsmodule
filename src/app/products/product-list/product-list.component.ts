@@ -46,11 +46,16 @@ export class ProductListComponent implements OnInit {
   setChosenProducts(){
     this.productService.setChosenproduct.next(this.selectedProducts);
     this.show();
-    this.dialog.open(ProductsSelectedDialogComponent, { data: { products: this.selectedProducts }} )
+    this.dialog.open(ProductsSelectedDialogComponent, { data: { products: this.selectedProducts }} );
   }
 
   show(){
     this.visible = !this.visible;
+  }
+
+  noProductChosen(){
+    if(this.selectedProducts.length <= 0) return false;
+      return true;
   }
 
 }

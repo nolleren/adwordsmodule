@@ -1,12 +1,67 @@
-<form [formGroup]="listItemForm" (ngSubmit)="submitCampaign()">
-  <div class="form-group row">
-      <label for="name" class="col-3 col-form-label">kampagnenavn</label>
-      <div class="col-6">
-        <input class="form-control" 
-               type="text" 
-               id="test.name"
-               formControlName="name"
-               >     
-      </div>
-    </div>
+<div class="card-block cardAd">
+<form [formGroup]="listItemForm">
+    <div class="form-group row">
+        <label for="name" class="col-3 col-form-label">kampagnenavn</label>
+        <div class="col-6">
+            <input class="form-control" 
+                    type="text" 
+                    id="adwordAd.adContent.headLinePart1"
+                    formControlName="headlinePart1"
+                    [(ngModel)]="adwordAd.adContent.headLinePart1"> 
+                <span 
+                    *ngIf="!listItemForm.get('headlinePart1').valid"
+                    class="help-block">Overskrift 1 er for lang, den er {{ adwordAd.adContent.headLinePart1.length }}, og må kun være 30 tegn.
+                </span> 
+        </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-3 col-form-label">kampagnenavn</label>
+            <div class="col-6">
+                <input class="form-control" 
+                        type="text" 
+                        id="adwordAd.adContent.headLinePart2"
+                        formControlName="headlinePart2"
+                        [(ngModel)]="adwordAd.adContent.headLinePart2">
+                    <span 
+                        *ngIf="!listItemForm.get('headlinePart2').valid"
+                        class="help-block">Overskrift 2 er for lang, den er {{ adwordAd.adContent.headLinePart2.length }}, og må kun være 30 tegn.
+                    </span>   
+        </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-3 col-form-label">kampagnenavn</label>
+            <div class="col-6">
+                <input class="form-control" 
+                        type="text" 
+                        id="adwordAd.adContent.path"
+                        formControlName="path"
+                        [(ngModel)]="adwordAd.adContent.path">
+                    <span 
+                        *ngIf="!listItemForm.get('path').valid"
+                        class="help-block">Stien er for lang, den er {{ adwordAd.adContent.path.length }}, og må kun være 15 tegn.
+                    </span> 
+            </div>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-3 col-form-label">kampagnenavn</label>
+                <div class="col-6">
+                    <textarea class="form-control"
+                            rows="3" 
+                            type="text" 
+                            id="adwordAd.adContent.description"
+                            formControlName="description"
+                            [(ngModel)]="adwordAd.adContent.description"></textarea>
+                        <span 
+                            *ngIf="!listItemForm.get('description').valid"
+                            class="help-block">Overskrift 1 er for lang, den er {{ adwordAd.adContent.description.length }}, og må kun være 80 tegn.
+                        </span>   
+        </div>
+        </div>
+        <div class="form-group row">
+                <div class="col-12">
+                        <button class="btn btn-primary float-right" [disabled]="!listItemForm.valid" (click)="saveChanges()">Gem ændringer</button>
+                    </div>
+        </div>
+        
 </form>
+</div>

@@ -21,7 +21,7 @@
           </div>
           <div class="row">
             <div class="col-8">
-              <button class="btn btn-primary float-right" (click)="setChosenProducts()">Vælg produkter</button>
+              <button class="btn btn-primary float-right" [disabled]="!noProductChosen()" (click)="setChosenProducts()">Vælg produkter</button>
             </div>
           </div>
         </div>       

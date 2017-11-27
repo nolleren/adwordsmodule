@@ -1,9 +1,9 @@
-textarea {
-    resize: none;
-}
 button {
     margin-top: 5px;
 }
 ul {
     list-style-type: none;
+}
+textarea {
+    resize: none;
 }

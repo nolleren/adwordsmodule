@@ -7,12 +7,15 @@ import { Product } from '../../models/product';
 export class ProductService {
   httpString: string;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+    if(isDevMode()) this.httpString = "http://localhost:52185/api/products";
+    else this.httpString = "http://adwordsmoduleapi.azurewebsites.net/api/products"; 
+  }
 
-  // Observable string source
   setChosenproduct = new Subject<Product[]>();
+
   
   getProducts(){
-    return this.http.get("http://adwordsmoduleapi.azurewebsites.net/api/products").map(res => res.json());
+    return this.http.get(this.httpString).map(res => res.json());
   }
 }

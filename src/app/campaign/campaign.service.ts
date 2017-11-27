@@ -16,7 +16,6 @@ export class CampaignService {
       else this.httpString = "http://adwordsmoduleapi.azurewebsites.net/api/campaign"; 
     }
 
-   // Observable string source
    addCreatedCampaignToList = new Subject<CampaignListItem>();
    toggleVisibility = new Subject<boolean>();
    showCreateCampaignComponent = new Subject<boolean>();

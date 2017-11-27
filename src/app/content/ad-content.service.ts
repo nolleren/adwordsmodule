@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { ContentProduct } from '../../models/contentProduct';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class ListService {
-  updateAd = new Subject<ContentProduct>();
+export class AdContentService {
+  adwordAds = new Subject<ContentProduct[]>();
 
   constructor() { }
 

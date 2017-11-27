@@ -29,6 +29,8 @@ import { ProductsSelectedDialogComponent } from './dialogs/products-selected-dia
 import { AdContentComponent } from './content/ad-content/ad-content.component';
 import { ListService } from './list/list.service';
 import { AdListComponent } from './list/ad-list/ad-list.component';
+import { AdContentService } from './content/ad-content.service';
+import { AdwordsAdsCreatedDialogComponent } from './dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 
 const appRoutes: Routes = [
  
@@ -50,7 +52,8 @@ const appRoutes: Routes = [
     ProductsSelectedDialogComponent,
     AdContentComponent,
     AdListComponent,
-    ListItemComponent
+    ListItemComponent,
+    AdwordsAdsCreatedDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -72,12 +75,14 @@ const appRoutes: Routes = [
     CampaignNotCreatedDialogComponent,
     CampaignCreatedDialogComponent,
     CampaignSelectedDialogComponent,
-    ProductsSelectedDialogComponent
+    ProductsSelectedDialogComponent,
+    AdwordsAdsCreatedDialogComponent
   ],
   providers: [ 
     CampaignService, 
     ProductService,
-    ListService
+    ListService,
+    AdContentService
    ],
   bootstrap: [AppComponent]
 })

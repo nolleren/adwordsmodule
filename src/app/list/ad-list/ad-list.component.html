@@ -1,13 +1,33 @@
-<form [formGroup]="listItemForm" (ngSubmit)="submitCampaign()">
-    <div class="form-group row" *ngFor="let item of test">
-        <label for="name" class="col-3 col-form-label">kampagnenavn</label>
-        <div class="col-6">
-          <input class="form-control" 
-                 type="text" 
-                 id="item.name"
-                 formControlName="name">
-                 {{item.name}}
-          <span (click)="changeName(item)">Skift navn</span>     
+<div class="card">
+    <div class="card-header" (click)="show()">
+      <h5 class="mb-0">
+        <a href="#" >
+          Tilpas annoncer
+        </a>
+      </h5>
+    </div>    
+    <div [hidden]="!visible">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-12">
+              <div *ngIf="!enable">
+                  <h5>Ingen annoncer oprettet</h5>
+                  <p>Vælg produkter og udfyld annonceindhold for at kunne tilpasse annoncer</p>
+                  </div>         
+                </div>
         </div>
+                <div class="row">
+                  <div class="col-12">
+                      <div class="row" *ngFor="let item of adwordsAds">
+                        <div class="col-12">
+                              <app-list-item [adwordAd]="item"></app-list-item>                     
+                        </div>     
+                      </div>
+                  </div>
+                </div>             
       </div>
-  </form>
+    </div>
+  </div>
+
+
+

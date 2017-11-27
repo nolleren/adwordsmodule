@@ -1,0 +1,8 @@
+textarea {
+    resize: none;
+}
+.cardAd {
+    border-style: groove;
+    border-radius: 8px;
+    margin: 5px;
+}

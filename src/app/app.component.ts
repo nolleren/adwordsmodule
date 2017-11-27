@@ -1,3 +1,4 @@
+import { AdContentService } from './content/ad-content.service';
 import { ProductService } from './products/product.service';
 import { Product } from './../models/product';
 import { CampaignService } from './campaign/campaign.service';
@@ -12,13 +13,11 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'My Google Adwords App';
   campaign: CampaignListItem = new CampaignListItem();
-  products: Product[] = [];
  
-  constructor(private campaignService: CampaignService, private productService: ProductService){}
+  constructor(private campaignService: CampaignService){}
 
   ngOnInit(){
     this.setChosenCampaign();
-    this.setChosenProducts();
   }
   
   setChosenCampaign(){
@@ -26,11 +25,4 @@ export class AppComponent implements OnInit {
       this.campaign = data;
     })
   }
-
-  setChosenProducts(){
-    this.productService.setChosenproduct.subscribe((data: Product[]) => {
-      this.products = data;
-    });
-  }
-
 }

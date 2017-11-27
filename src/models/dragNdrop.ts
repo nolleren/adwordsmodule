@@ -1,6 +1,6 @@
 declare var $ :any;
 
-export class dragNdrop {
+export class DragNdrop {
     draggable(){
         $(function() {
             $("#dragdiv li").draggable({

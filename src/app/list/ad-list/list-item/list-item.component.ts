@@ -1,7 +1,8 @@
-import { Test } from './../../../../models/test';
+import { ContentProduct } from './../../../../models/contentProduct';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, Input, ViewChild } from '@angular/core';
 import { TagContentType } from '@angular/compiler';
+import { ListService } from '../../list.service';
 
 @Component({
   selector: 'app-list-item',
@@ -11,23 +12,25 @@ import { TagContentType } from '@angular/compiler';
 })
 export class ListItemComponent implements OnInit {
   listItemForm: FormGroup;
-  
-  @Input() test: Test;
+  @Input() adwordAd: ContentProduct;
 
-  constructor() { }
+  constructor(private listService: ListService) { }
 
   ngOnInit() {
     this.createFormGroup();
-    
-    console.log(this.test);
   }
 
   createFormGroup(){
     this.listItemForm = new FormGroup({
-      'name': new FormControl(null, [Validators.required, Validators.minLength(1)])
+      'headlinePart1': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
+      'headlinePart2': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
+      'path': new FormControl(null, [Validators.required, Validators.maxLength(15)]),
+      'description': new FormControl(null, [Validators.required, Validators.maxLength(80)])
     });
   }
 
-  submitCampaign(){}
+  saveChanges(){
+    this.listService.updateAd.next(this.adwordAd);
+  }
 
 }

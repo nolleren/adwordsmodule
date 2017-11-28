@@ -16,8 +16,8 @@
                   </div>         
                 </div>
         </div>
-                <div class="row">
-                  <div class="col-12">
+                <div class="row search-results" >
+                  <div class="col-12">                      
                       <div class="row" *ngFor="let item of adwordsAds">
                         <div class="col-12">
                               <app-list-item [adwordAd]="item"></app-list-item>                     
@@ -27,7 +27,7 @@
                 </div>
                 <div class="row" *ngIf="enable">
                     <div class="col-12">
-                        <button class="btn btn-primary float-right" [disabled]="!validateAds()" (click)="check()">Opret annoncer</button>  
+                        <button class="btn btn-primary float-right" [disabled]="!validateAds()" (click)="createAds()">Opret annoncer</button>  
                     </div> 
                 </div>             
       </div>

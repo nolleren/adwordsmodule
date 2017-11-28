@@ -1,3 +1,4 @@
+import { ListService } from './../../list/list.service';
 import { MatDialog } from '@angular/material';
 import { CampaignSelectedDialogComponent } from './../../dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
 import { CampaignService } from './../campaign.service';
@@ -24,6 +25,12 @@ export class ChooseCampaignComponent implements OnInit {
   addCampaignToList(){
     this.campaignService.addCreatedCampaignToList.subscribe((data: CampaignListItem) => {
       this.campaignList.push(data);
+    });
+  }
+
+  removeCampaignFromList(){
+    this.campaignService.removeCampaign.subscribe((data: CampaignListItem) => {
+      this.campaignList.splice(this.campaignList.indexOf(data, 1));
     });
   }
   

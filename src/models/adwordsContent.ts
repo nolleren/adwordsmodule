@@ -1,6 +1,7 @@
 import { ContentProduct } from './contentProduct';
 import { CampaignListItem } from './campaign';
 
-export class AdwordsContent extends ContentProduct {
-    campaign: CampaignListItem;
+export class AdwordsContent {
+    contentCampaign: CampaignListItem;
+    contentProducts: ContentProduct[];
 }

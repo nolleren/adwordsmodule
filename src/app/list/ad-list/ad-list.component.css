@@ -1,0 +1,12 @@
+.search-results {
+    height: 100%;
+    overflow: auto;
+}
+
+.jumbotron {
+    height: 750px;
+}
+.btn {
+    margin-top: 5px;
+}
+

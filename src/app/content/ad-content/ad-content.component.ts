@@ -24,6 +24,7 @@ export class AdContentComponent implements OnInit {
   replacers: string[] = [ "Produktnummer", "Produktnavn", "Logisknavn", "Beskrivelse" ];
   contentProducts: ContentProduct[] = [];
   adContentForm: FormGroup;
+  url: string = "http://www.nolleren.org/";
 
   constructor(private productService: ProductService, private adContentService: AdContentService, private dialog: MatDialog) { }
 
@@ -50,7 +51,11 @@ export class AdContentComponent implements OnInit {
 
   setChosenProducts(){
     this.productService.setChosenproduct.subscribe((data: Product[]) => {
-      this.products = data;
+      if(this.contentProducts.length !== 0) {
+        this.products = data;
+        this.createContentProduct(false);
+      }
+        this.products = data;
     });
   }
 
@@ -62,22 +67,22 @@ export class AdContentComponent implements OnInit {
         description: $("#description").val()
       };
 
-      this.createContentProduct();
+      this.createContentProduct(true);
   }
 
   submitAdContent(){
     this.setAdwordsAds();
   }
 
-  createContentProduct(){
+  createContentProduct(showDialog: boolean){
     this.contentProducts = [];
     this.products.forEach(element => {
       let contentProduct: ContentProduct = {
         adContent: {
-          headLinePart1: this.replacer(this.adContent.headLinePart1, element),
-          headLinePart2: this.replacer(this.adContent.headLinePart2, element),
-          path: this.replacer(this.adContent.path, element),
-          description: this.replacer(this.adContent.description, element),
+          headLinePart1: this.adContent.headLinePart1,
+          headLinePart2: this.adContent.headLinePart2,
+          path: this.adContent.path,
+          description: this.adContent.description,
         },
         product: {
           id: element.id,
@@ -86,24 +91,24 @@ export class AdContentComponent implements OnInit {
           logicName: element.logicName,
           description: element.description,
           extraDescription: element.extraDescription
-        }
+        },
+        finalUrl: [ this.url + element.logicName ]
       };
+      this.replacer(contentProduct);
       this.contentProducts.push(contentProduct);
     });
     this.adContentService.adwordAds.next(this.contentProducts);
-    this.dialog.open(AdwordsAdsCreatedDialogComponent, { data: this.contentProducts.length } )
+    if(showDialog) this.dialog.open(AdwordsAdsCreatedDialogComponent, { data: this.contentProducts.length } )
     this.visible = false;
   }
 
-  replacer(text: string, element: Product) : string{
-    for(let i = 0; i < this.replacers.length; i++){
-        let count = 0;
-        text = text.replace(this.replacers[count++], element.productNumber);
-        text = text.replace(this.replacers[count++], element.productName);
-        text = text.replace(this.replacers[count++], element.logicName);
-        text = text.replace(this.replacers[count], element.description);
+  replacer(contentProduct: ContentProduct){
+    for(let item of this.replacers){
+      contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(item, contentProduct.product.productName);
+      contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(item, contentProduct.product.productNumber);
+      contentProduct.adContent.path = contentProduct.adContent.path.replace(item, contentProduct.product.logicName);
+      contentProduct.adContent.description = contentProduct.adContent.description.replace(item, contentProduct.product.description);
     }
-    return text;
   }
 
   show(){

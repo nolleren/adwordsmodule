@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpModule } from '@angular/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
@@ -33,7 +34,7 @@ import { AdContentService } from './content/ad-content.service';
 import { AdwordsAdsCreatedDialogComponent } from './dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 
 const appRoutes: Routes = [
- 
+  { path: 'home', component: AppComponent }
 ];
 
 @NgModule({
@@ -69,7 +70,8 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    InfiniteScrollModule
   ],
   entryComponents: [
     CampaignNotCreatedDialogComponent,

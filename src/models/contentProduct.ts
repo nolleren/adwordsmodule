@@ -5,4 +5,5 @@ import { CampaignListItem } from './campaign';
 export class ContentProduct {
     adContent: AdContent;
     product: Product;
+    finalUrl: string[];
 }

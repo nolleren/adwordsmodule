@@ -2,6 +2,7 @@ import { Subject } from 'rxjs/Subject';
 import { Http } from '@angular/http';
 import { Injectable, isDevMode } from '@angular/core';
 import { Product } from '../../models/product';
+import { ContentProduct } from '../../models/contentProduct';
 
 @Injectable()
 export class ProductService {
@@ -13,7 +14,7 @@ export class ProductService {
   }
 
   setChosenproduct = new Subject<Product[]>();
-
+  changeInProductList = new Subject
   
   getProducts(){
     return this.http.get(this.httpString).map(res => res.json());

@@ -1,3 +1,4 @@
+import { AdwordsContent } from './../../../models/adwordsContent';
 import { CampaignService } from './../../campaign/campaign.service';
 import { CampaignListItem } from './../../../models/campaign';
 import { ListService } from './../list.service';
@@ -7,6 +8,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ListItemComponent } from './list-item/list-item.component';
 import { Component, OnInit } from '@angular/core';
 import { ContentProduct } from '../../../models/contentProduct';
+import { Testability } from '@angular/core/src/testability/testability';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ad-list',
@@ -19,10 +22,12 @@ export class AdListComponent implements OnInit {
   visible: boolean = false;
   enable: boolean = false;
   campaign: CampaignListItem = new CampaignListItem();
+  adwordsContent: AdwordsContent;
 
   constructor(private adContentService: AdContentService, 
               private listService: ListService, 
-              private campaignService: CampaignService) { }
+              private campaignService: CampaignService,
+              private router: Router) { }
 
   ngOnInit() {
     this.getadwordsAds();
@@ -43,29 +48,54 @@ export class AdListComponent implements OnInit {
     });
   }
 
+  addContentProduct
+
   getadwordsAds(){
+    let tempArray: ContentProduct[] = [];
     this.adContentService.adwordAds.subscribe((data: ContentProduct[]) => {
       this.enable = true;
-      data.forEach(element => {
+      for(let i = 0; i < data.length; i++){
         let contentProduct: ContentProduct = {
           adContent: {
-            headLinePart1: element.adContent.headLinePart1,
-            headLinePart2: element.adContent.headLinePart2,
-            path: element.adContent.path,
-            description: element.adContent.description  ,
+            headLinePart1: data[i].adContent.headLinePart1,
+            headLinePart2: data[i].adContent.headLinePart2,
+            path: data[i].adContent.path,
+            description: data[i].adContent.description  ,
           },
           product: {
-            id: element.product.id,
-            productNumber: element.product.productNumber,
-            productName: element.product.productName,
-            logicName: element.product.logicName,
-            description: element.product.description,
-            extraDescription: element.product.extraDescription
-          }
+            id: data[i].product.id,
+            productNumber: data[i].product.productNumber,
+            productName: data[i].product.productName,
+            logicName: data[i].product.logicName,
+            description: data[i].product.description,
+            extraDescription: data[i].product.extraDescription
+          },
+          finalUrl: data[i].finalUrl
         };
-        this.adwordsAds.push(contentProduct);
-      });
+          if(this.addNewProducts(contentProduct)) tempArray.push(contentProduct);
+      }
+      if(this.adwordsAds.length > data.length) this.adwordsAds = tempArray = this.viTester(data); 
+        else this.adwordsAds = tempArray;
+      //this.validateAds();
     });
+  }
+
+  viTester(testArray: ContentProduct[]){
+    let resultArray: ContentProduct[] = [];
+    for(let i = 0; i < this.adwordsAds.length; i++){
+      for(let j = 0; j < testArray.length; j++){
+        if(this.adwordsAds[i].product.id === testArray[j].product.id ){
+          resultArray.push(this.adwordsAds[i]);
+        }
+      }
+    }
+    return resultArray;
+  }
+
+  addNewProducts(contentProduct: ContentProduct){
+    for(let i = 0; i < this.adwordsAds.length; i++)
+      if(this.adwordsAds[i].product.id === contentProduct.product.id) return false
+        return true; 
   }
 
   show(){
@@ -73,18 +103,30 @@ export class AdListComponent implements OnInit {
   }
   
   validateAds(){
-    let result = this.adwordsAds;
+    let valid: boolean = false;
     for(let element of this.adwordsAds){
       if(element.adContent.description.length > 80) return false;
       if(element.adContent.path.length > 15) return false;
       if(element.adContent.headLinePart1.length > 30) return false;
       if(element.adContent.headLinePart2.length > 30) return false;
-        return true;
+        valid = true;
     }
+    return valid;
   }
 
-  check(){
-    console.log(this.adwordsAds);
+  createAds(){
+    this.adwordsContent = {
+      contentCampaign: this.campaign,
+      contentProducts: this.adwordsAds
+    };
+    this.listService.createAds(this.adwordsContent).subscribe((data) => {
+      console.log(data);
+      this.router.navigate["/home"];
+    },
+      err => {
+
+      });
+    this.campaignService.removeCampaign.next(this.campaign);
   }
     
 } 

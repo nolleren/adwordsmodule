@@ -39,7 +39,7 @@ export class ProductListComponent implements OnInit {
   }
 
   updateSelectedProducts(product: Product, event){
-    if(event.checked === true) this.selectedProducts.push(product)
+    if(event.checked === true) for(let i = 0; i < 10; i++) this.selectedProducts.push(product)
       else this.selectedProducts.splice(this.selectedProducts.indexOf(product), 1);
   }
 

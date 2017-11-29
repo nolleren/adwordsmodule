@@ -13,7 +13,10 @@
               <div *ngIf="!enable">
                   <h5>Ingen annoncer oprettet</h5>
                   <p>Vælg produkter og udfyld annonceindhold for at kunne tilpasse annoncer</p>
-                  </div>         
+                  </div>  
+              <div *ngIf="this.campaign.id === undefined && enable">
+                <p class="alert">Du har ikke valgt en kampagne.</p>  
+              </div>       
                 </div>
         </div>
                 <div class="row search-results" >
@@ -33,6 +36,7 @@
       </div>
     </div>
   </div>
+
 
 
 

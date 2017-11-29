@@ -33,7 +33,8 @@ import { AdContentService } from './content/ad-content.service';
 import { AdwordsAdsCreatedDialogComponent } from './dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 
 const appRoutes: Routes = [
-  { path: 'home', component: AppComponent }
+  { path: '', component: AppComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

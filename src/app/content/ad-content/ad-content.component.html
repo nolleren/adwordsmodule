@@ -73,14 +73,9 @@
         </div> 
         <div class="col-4" id="maindiv">
                 <div id="dragdiv">
-                    <h3>
-                        <span>Annoncevariabler</span>
-                      </h3>
+                    <h5>Annoncevariabler</h5>
                     <ul id="allItems" runat="server">
-                        <li>Produktnummer</li>
-                        <li>Produktnavn</li>
-                        <li>Logisknavn</li>
-                        <li>Beskrivelse</li>
+                        <li *ngFor="let item of replacers">{{ item }}</li>
                     </ul>
                 </div>
         </div>  

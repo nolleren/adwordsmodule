@@ -28,6 +28,8 @@ export class DatepickerComponent {
   updateStartDateForEndDate(){
     this.campaignService.startDate.subscribe((data: Date) => {
       this.endDate.startDate = data;
+      if(this.selectedEndDate < data)
+        this.selectedEndDate = data;
     })
   }
 

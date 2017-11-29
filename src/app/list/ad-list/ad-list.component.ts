@@ -111,6 +111,7 @@ export class AdListComponent implements OnInit {
       if(element.adContent.headLinePart2.length > 30) return false;
         valid = true;
     }
+    if(this.campaign.id === undefined) return false;
     return valid;
   }
 
@@ -121,12 +122,12 @@ export class AdListComponent implements OnInit {
     };
     this.listService.createAds(this.adwordsContent).subscribe((data) => {
       console.log(data);
-      this.router.navigate["/home"];
     },
       err => {
 
       });
     this.campaignService.removeCampaign.next(this.campaign);
+    this.router.navigate["/home"];
   }
     
 } 

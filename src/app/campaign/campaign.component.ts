@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CampaignDto, CampaignListItem } from './../../models/campaign';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CampaignService } from './campaign.service';
@@ -11,7 +12,7 @@ export class CampaignComponent implements OnInit {
   showCreateCampaign: boolean = false;
   visible: boolean = false;
 
-  constructor(private campaignService: CampaignService) { }
+  constructor(private campaignService: CampaignService, private router: Router) { }
 
   ngOnInit() {
     this.setShowCampaign();

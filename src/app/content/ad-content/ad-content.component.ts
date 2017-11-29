@@ -1,3 +1,4 @@
+import { AppPage } from './../../../../e2e/app.po';
 import { MatDialog } from '@angular/material';
 import { AdwordsAdsCreatedDialogComponent } from './../../dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 import { AdContentService } from './../ad-content.service';
@@ -9,6 +10,7 @@ import { AdContent } from '../../../models/adContent';
 import { DragNdrop } from '../../../models/dragNdrop';
 import { ProductService } from '../../products/product.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { KeyValuePair } from '../../../models/keyValuePair';
 declare var $ :any;
 
 @Component({
@@ -25,6 +27,7 @@ export class AdContentComponent implements OnInit {
   contentProducts: ContentProduct[] = [];
   adContentForm: FormGroup;
   url: string = "http://www.nolleren.org/";
+  keyValuePair: KeyValuePair[] = [];
 
   constructor(private productService: ProductService, private adContentService: AdContentService, private dialog: MatDialog) { }
 
@@ -94,6 +97,7 @@ export class AdContentComponent implements OnInit {
         },
         finalUrl: [ this.url + element.logicName ]
       };
+      this.setKeyValuePairs(contentProduct);
       this.replacer(contentProduct);
       this.contentProducts.push(contentProduct);
     });
@@ -102,12 +106,45 @@ export class AdContentComponent implements OnInit {
     this.visible = false;
   }
 
+  setKeyValuePairs(contentProduct: ContentProduct){
+    this.keyValuePair = [];
+    let keyValue1: KeyValuePair = {
+      key: this.replacers[0],
+      value: contentProduct.product.productNumber
+    };
+    this.keyValuePair.push(keyValue1);
+
+    let keyValue2: KeyValuePair = {
+      key: this.replacers[1],
+      value: contentProduct.product.productName
+    };
+    this.keyValuePair.push(keyValue2);
+
+    let keyValue3: KeyValuePair = {
+      key: this.replacers[2],
+      value: contentProduct.product.logicName
+    };
+    this.keyValuePair.push(keyValue3);
+
+    let keyValue4: KeyValuePair = {
+      key: this.replacers[3],
+      value: contentProduct.product.description
+    };
+    this.keyValuePair.push(keyValue4);
+  }
+
   replacer(contentProduct: ContentProduct){
-    for(let item of this.replacers){
-      contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(item, contentProduct.product.productName);
-      contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(item, contentProduct.product.productNumber);
-      contentProduct.adContent.path = contentProduct.adContent.path.replace(item, contentProduct.product.logicName);
-      contentProduct.adContent.description = contentProduct.adContent.description.replace(item, contentProduct.product.description);
+    for(let i = 0; i < this.keyValuePair.length; i++){
+      contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+    }
+    for(let i = 0; i < this.keyValuePair.length; i++){
+      contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+    }
+    for(let i = 0; i < this.keyValuePair.length; i++){
+      contentProduct.adContent.path = contentProduct.adContent.path.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+    }
+    for(let i = 0; i < this.keyValuePair.length; i++){
+      contentProduct.adContent.description = contentProduct.adContent.description.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
     }
   }
 

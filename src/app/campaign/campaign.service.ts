@@ -13,7 +13,7 @@ export class CampaignService {
 
     constructor(private http: Http) {
       if(isDevMode()) this.httpString = "http://localhost:52185/api/campaign";
-      else this.httpString = "http://adwordsmoduleapi.azurewebsites.net/api/campaign"; 
+      else this.httpString = "https://adwordsmoduleapi.azurewebsites.net/api/campaign"; 
     }
 
    addCreatedCampaignToList = new Subject<CampaignListItem>();

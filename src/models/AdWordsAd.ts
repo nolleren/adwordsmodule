@@ -2,8 +2,8 @@ import { Product } from './product';
 import { AdContent } from './adContent';
 import { CampaignListItem } from './campaign';
 
-export class ContentProduct {
+export class AdWordsAd {
     adContent: AdContent;
-    product: Product;
+    id: number;
     finalUrl: string[];
 }

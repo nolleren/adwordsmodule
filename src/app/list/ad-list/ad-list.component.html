@@ -10,11 +10,11 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-12">
-              <div *ngIf="!enable">
+              <div *ngIf="!enableAdList">
                   <h5>Ingen annoncer oprettet</h5>
                   <p>Vælg produkter og udfyld annonceindhold for at kunne tilpasse annoncer</p>
                   </div>  
-              <div *ngIf="this.campaign.id === undefined && enable">
+              <div *ngIf="this.campaign.id === undefined && enableAdList">
                 <p class="alert">Du har ikke valgt en kampagne.</p>  
               </div>       
                 </div>
@@ -28,9 +28,10 @@
                       </div>
                   </div>
                 </div>
-                <div class="row" *ngIf="enable">
+                <div class="row" *ngIf="enableAdList">
                     <div class="col-12">
-                        <button class="btn btn-primary float-right" [disabled]="!validateAds()" (click)="createAds()">Opret annoncer</button>  
+                        <button class="btn btn-primary float-right" [hidden]="toggleCreateAdsButton" [disabled]="!validateAds()" (click)="createAds()">Opret annoncer</button> 
+                        <button class="btn btn-danger float-right" [hidden]="!toggleCreateAdsButton" [disabled]="true">Opretter annoncer, vent venligst</button> 
                     </div> 
                 </div>             
       </div>

@@ -1,4 +1,4 @@
-import { ContentProduct } from './../../../../models/contentProduct';
+import { AdWordsAd } from './../../../../models/AdWordsAd';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, Input, ViewChild } from '@angular/core';
 import { TagContentType } from '@angular/compiler';
@@ -12,7 +12,7 @@ import { ListService } from '../../list.service';
 })
 export class ListItemComponent implements OnInit {
   listItemForm: FormGroup;
-  @Input() adwordAd: ContentProduct;
+  @Input() adwordAd: AdWordsAd;
 
   constructor(private listService: ListService) { }
 

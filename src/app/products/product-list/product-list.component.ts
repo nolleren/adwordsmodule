@@ -15,10 +15,12 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   selectedProducts: Product[] = [];
   visible: boolean = false;
+  counter: number;
 
   constructor(private productService: ProductService, private dialog: MatDialog) {}
 
   ngOnInit() {
+    this.counter = 0;
     this.setProductList();
   }
 
@@ -39,12 +41,17 @@ export class ProductListComponent implements OnInit {
   }
 
   updateSelectedProducts(product: Product, event){
-    if(event.checked === true) for(let i = 0; i < 10; i++) this.selectedProducts.push(product)
-      else this.selectedProducts.splice(this.selectedProducts.indexOf(product), 1);
+    if(event.checked === true) {
+      this.counter++;
+      this.productService.addProductToList.next(product);
+    }
+    else {
+      this.counter--;
+      this.productService.removeProductFromList.next(product);
+    }
   }
 
   setChosenProducts(){
-    this.productService.setChosenproduct.next(this.selectedProducts);
     this.show();
     this.dialog.open(ProductsSelectedDialogComponent, { data: { products: this.selectedProducts }} );
   }
@@ -54,7 +61,7 @@ export class ProductListComponent implements OnInit {
   }
 
   noProductChosen(){
-    if(this.selectedProducts.length <= 0) return false;
+    if(this.counter <= 0) return false;
       return true;
   }
 

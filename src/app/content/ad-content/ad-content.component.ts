@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { AdwordsAdsCreatedDialogComponent } from './../../dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 import { AdContentService } from './../ad-content.service';
 import { element } from 'protractor';
-import { ContentProduct } from './../../../models/contentProduct';
+import { AdWordsAd } from './../../../models/AdWordsAd';
 import { Product } from './../../../models/product';
 import { Component, OnInit } from '@angular/core';
 import { AdContent } from '../../../models/adContent';
@@ -19,28 +19,50 @@ declare var $ :any;
   styleUrls: ['./ad-content.component.css']
 })
 export class AdContentComponent implements OnInit {
-  visible: boolean = false;
-  products: Product[] = [];
+  visible: boolean;
   adContent: AdContent;
-  draggable: DragNdrop = new DragNdrop();
-  replacers: string[] = [ "Produktnummer", "Produktnavn", "Logisknavn", "Beskrivelse" ];
-  contentProducts: ContentProduct[] = [];
+  draggable: DragNdrop;
   adContentForm: FormGroup;
-  url: string = "http://www.nolleren.org/";
-  keyValuePair: KeyValuePair[] = [];
+  url: string = "http://www.nolleren.org/";  
+  replacers: string[] = [ "Produktnummer", "Produktnavn", "Logisknavn", "Beskrivelse" ];
 
-  constructor(private productService: ProductService, private adContentService: AdContentService, private dialog: MatDialog) { }
+  constructor(private adContentService: AdContentService, private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.draggable.draggable();
-    this.setChosenProducts();
-    this.createFormGroup();
+    this.visible = false;
+    this.adContent = new AdContent();
+    this.draggable = new DragNdrop();
 
-    /*$("#description").on("drop keyup change", () => {
-      var $this = $("#description")
-      var $test = $this[0];
-      console.log($test.value);
-    });*/
+    this.draggable.draggable();
+    this.createFormGroup();
+    this.setDataBinding();
+  }
+
+  setDataBinding(){
+    $("#headlinePart1").on("keyup dropped", () => {
+      let value = $("#headlinePart1").val();
+      this.adContent.headLinePart1 = value;    
+      this.adContentForm.patchValue({headlinePart1: value});
+      $("#headlinePart1").focus();    
+    });
+    $("#headlinePart2").on("keyup dropped", () => {
+      let value = $("#headlinePart2").val();
+      this.adContent.headLinePart2 = value; 
+      this.adContentForm.patchValue({headlinePart2: value});
+      $("#headlinePart2").focus(); 
+    });
+    $("#path").on("keyup dropped", () => {
+      let value = $("#path").val();
+      this.adContent.path = value;
+      this.adContentForm.patchValue({path: value});
+      $("#path").focus();
+    });
+    $("#description").on("keyup dropped", () => {
+      let value = $("#description").val();
+      this.adContent.description = value;   
+      this.adContentForm.patchValue({description: value});
+      $("#description").focus();
+    });
   }
 
   createFormGroup(){
@@ -52,25 +74,8 @@ export class AdContentComponent implements OnInit {
     });
   }
 
-  setChosenProducts(){
-    this.productService.setChosenproduct.subscribe((data: Product[]) => {
-      if(this.contentProducts.length !== 0) {
-        this.products = data;
-        this.createContentProduct(false);
-      }
-        this.products = data;
-    });
-  }
-
   setAdwordsAds(){
-      this.adContent = {
-        headLinePart1: $("#headlinePart1").val(),
-        headLinePart2: $("#headlinePart2").val(),
-        path: $("#path").val(),
-        description: $("#description").val()
-      };
-
-      this.createContentProduct(true);
+    this.createContentProduct(true);
   }
 
   submitAdContent(){
@@ -78,75 +83,12 @@ export class AdContentComponent implements OnInit {
   }
 
   createContentProduct(showDialog: boolean){
-    this.contentProducts = [];
-    this.products.forEach(element => {
-      let contentProduct: ContentProduct = {
-        adContent: {
-          headLinePart1: this.adContent.headLinePart1,
-          headLinePart2: this.adContent.headLinePart2,
-          path: this.adContent.path,
-          description: this.adContent.description,
-        },
-        product: {
-          id: element.id,
-          productNumber: element.productNumber,
-          productName: element.productName,
-          logicName: element.logicName,
-          description: element.description,
-          extraDescription: element.extraDescription
-        },
-        finalUrl: [ this.url + element.logicName ]
-      };
-      this.setKeyValuePairs(contentProduct);
-      this.replacer(contentProduct);
-      this.contentProducts.push(contentProduct);
-    });
-    this.adContentService.adwordAds.next(this.contentProducts);
-    if(showDialog) this.dialog.open(AdwordsAdsCreatedDialogComponent, { data: this.contentProducts.length } )
+    this.adContentService.adContent.next(this.adContent);
+    if(showDialog) this.dialog.open(AdwordsAdsCreatedDialogComponent);
     this.visible = false;
   }
 
-  setKeyValuePairs(contentProduct: ContentProduct){
-    this.keyValuePair = [];
-    let keyValue1: KeyValuePair = {
-      key: this.replacers[0],
-      value: contentProduct.product.productNumber
-    };
-    this.keyValuePair.push(keyValue1);
-
-    let keyValue2: KeyValuePair = {
-      key: this.replacers[1],
-      value: contentProduct.product.productName
-    };
-    this.keyValuePair.push(keyValue2);
-
-    let keyValue3: KeyValuePair = {
-      key: this.replacers[2],
-      value: contentProduct.product.logicName
-    };
-    this.keyValuePair.push(keyValue3);
-
-    let keyValue4: KeyValuePair = {
-      key: this.replacers[3],
-      value: contentProduct.product.description
-    };
-    this.keyValuePair.push(keyValue4);
-  }
-
-  replacer(contentProduct: ContentProduct){
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.path = contentProduct.adContent.path.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.description = contentProduct.adContent.description.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-  }
+  
 
   show(){
     this.visible = !this.visible;

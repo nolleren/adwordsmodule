@@ -22,6 +22,7 @@ export class CampaignComponent implements OnInit {
   setShowCampaign(){
     this.campaignService.toggleVisibility.subscribe((data: boolean) => {
       this.visible = data;
+      this.router.navigate([""]);
     })
   }
 

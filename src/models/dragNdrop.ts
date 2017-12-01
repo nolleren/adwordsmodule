@@ -24,9 +24,10 @@ export class DragNdrop {
                         var $this = $(this);
                         if ($this.val() == '') {
                             $this.val(ui.draggable.text());
-                           // console.log($this.value);
+                            $this.trigger("dropped");
                         } else {
                             $this.val($this.val() + " " + ui.draggable.text());
+                            $this.trigger("dropped");
                         }
                     }
                 });

@@ -8,7 +8,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 })
 export class AdwordsAdsCreatedDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor() { }
 
   ngOnInit() {
   }

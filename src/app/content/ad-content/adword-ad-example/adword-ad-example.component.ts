@@ -20,7 +20,7 @@ export class AdwordAdExampleComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.adExample = new AdWordsAd();
     this.product = new Product();
-    this.setProductList();
+    this.getProduct();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -28,9 +28,8 @@ export class AdwordAdExampleComponent implements OnInit, OnChanges {
      //console.log(this.adContent);
   }
 
-  setProductList(){
+  getProduct(){
     this.productService.getProducts().subscribe((data) => {
-      //console.log(data[0].productLos[0].id);
           this.product = {
             id: data[0].productLos[0].id,
             productNumber: data[0].productLos[0].productNumber,
@@ -38,7 +37,9 @@ export class AdwordAdExampleComponent implements OnInit, OnChanges {
             logicName: data[0].productLos[0].logicName,
             description: data[0].productLos[0].description,
             descriptionShort: data[0].productLos[0].descriptionShort,
-            adGroupId: data[0].productLos[0].adGroupLoId
+            adGroupId: data[0].productLos[0].adGroupLoId,
+            isChecked: false,
+            keyValuePairs: []
         };
       });
       

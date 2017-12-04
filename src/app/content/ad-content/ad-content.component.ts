@@ -24,9 +24,11 @@ export class AdContentComponent implements OnInit {
   draggable: DragNdrop;
   adContentForm: FormGroup;
   url: string = "www.nolleren.org/";  
-  replacers: string[] = [ "Produktnummer", "Produktnavn", "Logisknavn", "Beskrivelse" ];
+  product: Product = new Product();
 
-  constructor(private adContentService: AdContentService, private dialog: MatDialog) { }
+  constructor(private adContentService: AdContentService, 
+              private dialog: MatDialog,
+              private productService: ProductService) { }
 
   ngOnInit() {
     this.visible = false;
@@ -36,7 +38,31 @@ export class AdContentComponent implements OnInit {
     this.draggable.draggable();
     this.createFormGroup();
     this.setDataBinding();
+    this.getProduct();
   }
+
+  getProduct(){
+    this.productService.getProducts().subscribe((data) => {
+          this.product = {
+            id: data[0].productLos[0].id,
+            productNumber: data[0].productLos[0].productNumber,
+            productName: data[0].productLos[0].productName,
+            logicName: data[0].productLos[0].logicName,
+            description: data[0].productLos[0].description,
+            descriptionShort: data[0].productLos[0].descriptionShort,
+            adGroupId: data[0].productLos[0].adGroupLoId,
+            isChecked: false,
+            keyValuePairs: []
+        };
+        for(let i = 0; i < data[0].productLos[0].keyValuePairs.length; i++){
+          this.product.keyValuePairs.push({
+            key: data[0].productLos[0].keyValuePairs[i].key,
+            value: data[0].productLos[0].keyValuePairs[i].value
+          });
+        }
+      });
+      
+    }
 
   alertChildComponentOnChanges(){
     this.adContent = {

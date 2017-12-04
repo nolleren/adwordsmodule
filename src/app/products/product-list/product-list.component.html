@@ -16,7 +16,7 @@
                     </div>
                   <div [hidden]="!showProducts[i]" class="product" >
                       <div *ngFor="let product of productGroup.products">
-                          <label>{{ product.productName }}</label> <input class="float-right" type="checkbox" (change)="addProduct(product, $event)">
+                          <label>{{ product.productName }}</label> <input class="float-right" type="checkbox" [checked]="product.isChecked" (change)="addProduct(product, $event)">
                       </div>
                   </div>  
                 </div>

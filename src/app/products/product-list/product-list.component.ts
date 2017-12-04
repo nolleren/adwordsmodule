@@ -1,3 +1,4 @@
+import { KeyValuePair } from './../../../models/keyValuePair';
 import { CampaignService } from './../../campaign/campaign.service';
 import { ProductService } from './../product.service';
 import { Product } from './../../../models/product';
@@ -14,6 +15,7 @@ import { ProductGroup } from '../../../models/productGroup';
 })
 export class ProductListComponent implements OnInit {
   products: Product[];
+  product: Product;
   visible: boolean;
   showProducts: boolean[];
   counter: number;
@@ -28,18 +30,21 @@ export class ProductListComponent implements OnInit {
     this.productGroups = [];
     this.counter = 0;
     this.setProductList();
-  }
+ }
 
   addProductGroup(productGroup: ProductGroup, event){
+    console.log(event);
     if(event.target.checked === true) {
       for(let i = 0; i < productGroup.products.length; i++){
         this.counter++;
+        productGroup.products[i].isChecked = true;
         this.productService.addProductToList.next(productGroup.products[i]);
       }
     }
     else {
       for(let i = 0; i < productGroup.products.length; i++){
         this.counter--;
+        productGroup.products[i].isChecked = false;
         this.productService.removeProductFromList.next(productGroup.products[i]);
       }
     }
@@ -63,8 +68,9 @@ export class ProductListComponent implements OnInit {
         let productGroup: ProductGroup = {
           id: data[i].id,
           name: data[i].groupName,
-          products: []
+          products: [],
         };
+
         for(let j = 0; j < data[i].productLos.length; j++){
           productGroup.products.push({
             id: data[i].productLos[j].id,
@@ -74,11 +80,20 @@ export class ProductListComponent implements OnInit {
             description: data[i].productLos[j].description,
             descriptionShort: data[i].productLos[j].descriptionShort,
             adGroupId: data[i].productLos[j].adGroupLoId,
+            isChecked: false,
+            keyValuePairs: []
           });
-        }
-        this.productGroups.push(productGroup);
-        this.showProducts.push(false);
+
+          for(let h = 0; h < data[i].productLos[j].keyValuePairs.length; h++){
+            productGroup.products[j].keyValuePairs.push({
+              key: data[i].productLos[j].keyValuePairs[h].key,
+              value: data[i].productLos[j].keyValuePairs[h].value
+            });
+          }  
+        }  
+          this.productGroups.push(productGroup);
       }
+          this.showProducts.push(false);
     });
   }
 

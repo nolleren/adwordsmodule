@@ -1,3 +1,5 @@
+import { KeyValuePair } from "./keyValuePair";
+
 export class Product {
     id: number;
     productNumber: string;
@@ -6,4 +8,6 @@ export class Product {
     description: string;
     descriptionShort: string;
     adGroupId: number;
+    isChecked: boolean;
+    keyValuePairs: KeyValuePair[];
 }

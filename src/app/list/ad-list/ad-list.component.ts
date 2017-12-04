@@ -90,6 +90,8 @@ export class AdListComponent implements OnInit {
       for(let i = 0; i < this.adwordsAds.length; i++){
         if(this.adwordsAds[i].id === data.id) this.adwordsAds.splice(i, 1);
       }
+
+      if(this.adwordsAds.length <= 0) this.enableAdList = false;
     });
   }
 
@@ -105,8 +107,7 @@ export class AdListComponent implements OnInit {
       id: product.id,
       finalUrl: [this.url + "/" + product.logicName]
     };
-    //this.setKeyValuePairs(product);
-    //this.replacer(adwordAd);
+    this.replacer(adwordAd, product);
     return adwordAd;
   }
 
@@ -147,48 +148,25 @@ export class AdListComponent implements OnInit {
     this.toggleCreateAdsButton = !this.toggleCreateAdsButton
   }
 
-  setKeyValuePairs(contentProduct: Product){
-    this.keyValuePair = [];
-    let keyValue1: KeyValuePair = {
-      key: this.replacers[0],
-      value: contentProduct.productNumber
-    };
-    this.keyValuePair.push(keyValue1);
-
-    let keyValue2: KeyValuePair = {
-      key: this.replacers[1],
-      value: contentProduct.productName
-    };
-    this.keyValuePair.push(keyValue2);
-
-    let keyValue3: KeyValuePair = {
-      key: this.replacers[2],
-      value: contentProduct.logicName
-    };
-    this.keyValuePair.push(keyValue3);
-
-    let keyValue4: KeyValuePair = {
-      key: this.replacers[3],
-      value: contentProduct.description
-    };
-    this.keyValuePair.push(keyValue4);
-  }
-
-  replacer(contentProduct: AdWordsAd){
-      for(let i = 0; i < this.keyValuePair.length; i++){
-        contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+  replacer(contentProduct: AdWordsAd, product: Product){
+      for(let i = 0; i < product.keyValuePairs.length; i++){
+        contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
       }
-      for(let i = 0; i < this.keyValuePair.length; i++){
-        contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      for(let i = 0; i < product.keyValuePairs.length; i++){
+        contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
       }
-      for(let i = 0; i < this.keyValuePair.length; i++){
-        contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      if(!contentProduct.adContent.path1 === undefined){
+        for(let i = 0; i < product.keyValuePairs.length; i++){
+          contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
+        }
       }
-      for(let i = 0; i < this.keyValuePair.length; i++){
-        contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-      }
-      for(let i = 0; i < this.keyValuePair.length; i++){
-        contentProduct.adContent.description = contentProduct.adContent.description.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      if(!contentProduct.adContent.path2 === undefined){
+        for(let i = 0; i < product.keyValuePairs.length; i++){
+          contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
+        }
+      } 
+      for(let i = 0; i < product.keyValuePairs.length; i++){
+        contentProduct.adContent.description = contentProduct.adContent.description.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
       }
   }
     

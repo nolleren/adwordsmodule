@@ -4,5 +4,6 @@ export class Product {
     productName: string;
     logicName: string;
     description: string;
-    extraDescription: string;
+    descriptionShort: string;
+    adGroupId: number;
 }

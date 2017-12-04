@@ -51,11 +51,15 @@ export class AdContentComponent implements OnInit {
       this.adContentForm.patchValue({headlinePart2: value});
       $("#headlinePart2").focus(); 
     });
-    $("#path").on("keyup dropped", () => {
-      let value = $("#path").val();
-      this.adContent.path = value;
-      this.adContentForm.patchValue({path: value});
-      $("#path").focus();
+    $("#path1").on("keyup dropped", () => {
+      let value = $("#path1").val();
+      this.adContent.path1 = value;
+      this.adContentForm.patchValue({path1: value});
+      $("#path1").focus();
+    });
+    $("#path2").on("keyup dropped", () => {
+      let value = $("#path2").val();
+      this.adContent.path1 = value;
     });
     $("#description").on("keyup dropped", () => {
       let value = $("#description").val();
@@ -69,7 +73,7 @@ export class AdContentComponent implements OnInit {
     this.adContentForm = new FormGroup({
       'headlinePart1': new FormControl(null, Validators.required),
       'headlinePart2': new FormControl(null, Validators.required),
-      'path': new FormControl(null, Validators.required),
+      'path1': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required)
     });
   }
@@ -87,8 +91,6 @@ export class AdContentComponent implements OnInit {
     if(showDialog) this.dialog.open(AdwordsAdsCreatedDialogComponent);
     this.visible = false;
   }
-
-  
 
   show(){
     this.visible = !this.visible;

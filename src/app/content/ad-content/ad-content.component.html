@@ -40,17 +40,25 @@
           <div class="form-group row">
             <label for="name" class="col-2 col-form-label">Sti</label>
             <label for="" class="col-4">{{ url }}</label>
-              <div class="col-6">
-                <input class="form-control dropdiv" 
+              <div class="col-2">
+                  <span class="input-inline">
+                      <input class="form-control dropdiv input-inline" 
                       type="text"
-                      id="path"
-                      formControlName="path">
-                  <span 
-                      *ngIf="!adContentForm.get('path').valid && adContentForm.get('path').touched"
-                      class="help-block">Venligst udfyld en Sti
-                  </span>
-              </div>
+                      id="path1"
+                      formControlName="path1">
+                  <input class="form-control dropdiv input-inline float-right"  
+                        type="text"
+                        id="path2">
+                  </span>    
+                </div>
           </div>
+          <span class="input-inline">
+              
+               <input class="inputbold" type="text" name="" placeholder="boldinput"  /> 
+                  <input class="inputbold" type="text"  name="" placeholder="blah"/>
+               
+              
+          </span>
           <div class="form-group row">
             <label for="name" class="col-2 col-form-label">Beskrivelse</label>
               <div class="col-10">
@@ -80,6 +88,13 @@
                 </div>
         </div>  
       </div>
+      <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8">
+              <app-adword-ad-example [adContent]="adContent"></app-adword-ad-example>              
+          </div>
+          <div class="col-2"></div>
+      </div>      
     </div>          
   </div>
 </div>  

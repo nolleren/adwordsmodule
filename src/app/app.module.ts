@@ -1,3 +1,4 @@
+import { AdwordAdExampleComponent } from './content/ad-content/adword-ad-example/adword-ad-example.component';
 import { ListItemComponent } from './list/ad-list/list-item/list-item.component';
 import { ProductService } from './products/product.service';
 import { CampaignService } from './campaign/campaign.service';
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
     AdContentComponent,
     AdListComponent,
     ListItemComponent,
-    AdwordsAdsCreatedDialogComponent
+    AdwordsAdsCreatedDialogComponent,
+    AdwordAdExampleComponent
   ],
   imports: [
     BrowserModule,

@@ -24,7 +24,7 @@ export class ListItemComponent implements OnInit {
     this.listItemForm = new FormGroup({
       'headlinePart1': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
       'headlinePart2': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
-      'path': new FormControl(null, [Validators.required, Validators.maxLength(15)]),
+      'path1': new FormControl(null, [Validators.required, Validators.maxLength(15)]),
       'description': new FormControl(null, [Validators.required, Validators.maxLength(80)])
     });
   }

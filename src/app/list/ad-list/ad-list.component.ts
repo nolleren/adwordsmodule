@@ -60,7 +60,7 @@ export class AdListComponent implements OnInit {
   }
 
   getAdContent(){
-    this.adContentService.adContent.subscribe((data) => {
+    this.adContentService.adContent.subscribe((data: AdContent) => {
       this.adContent = data;
       if(this.adwordsAds.length === 0){
         for(let i = 0; i < this.productList.length; i++) {
@@ -68,16 +68,17 @@ export class AdListComponent implements OnInit {
           this.adwordsAds.push(adWordsAd);
         };
       }
-      this.enableAdList = true;
+      if(this.adwordsAds.length !== 0) this.enableAdList = true;
     });
   }
 
   addProductToList(){
-    this.productService.addProductToList.subscribe((data) => {
+    this.productService.addProductToList.subscribe((data: Product) => {
       this.productList.push(data);
-      if(this.adwordsAds.length > 0) {
+      if(this.adwordsAds.length > 0 || this.adContent !== {}) {
         let adWordAd: AdWordsAd = this.createAdWordContent(data);
         this.adwordsAds.push(adWordAd);
+        this.enableAdList = true;
       }
     });
   }
@@ -97,7 +98,8 @@ export class AdListComponent implements OnInit {
       adContent: {
         headLinePart1: this.adContent.headLinePart1,
         headLinePart2: this.adContent.headLinePart2,
-        path: this.adContent.path,
+        path1: this.adContent.path1,
+        path2: this.adContent.path2,
         description: this.adContent.description
       },
       id: product.id,
@@ -116,7 +118,8 @@ export class AdListComponent implements OnInit {
     let valid: boolean = false;
     for(let element of this.adwordsAds){
       if(element.adContent.description.length > 80) return false;
-      if(element.adContent.path.length > 15) return false;
+      if(element.adContent.path1.length > 15) return false;
+      if(element.adContent.path2.length > 15) return false;
       if(element.adContent.headLinePart1.length > 30) return false;
       if(element.adContent.headLinePart2.length > 30) return false;
         valid = true;
@@ -179,7 +182,10 @@ export class AdListComponent implements OnInit {
       contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
     }
     for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.path = contentProduct.adContent.path.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+    }
+    for(let i = 0; i < this.keyValuePair.length; i++){
+      contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
     }
     for(let i = 0; i < this.keyValuePair.length; i++){
       contentProduct.adContent.description = contentProduct.adContent.description.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);

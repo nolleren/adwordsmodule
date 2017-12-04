@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material';
 import { ProductsSelectedDialogComponent } from '../../dialogs/products-selected-dialog/products-selected-dialog.component';
+import { ProductGroup } from '../../../models/productGroup';
 
 @Component({
   selector: 'app-product-list',
@@ -16,27 +17,42 @@ export class ProductListComponent implements OnInit {
   selectedProducts: Product[] = [];
   visible: boolean = false;
   counter: number;
+  productGroups: ProductGroup[];
 
   constructor(private productService: ProductService, private dialog: MatDialog) {}
 
   ngOnInit() {
+
+
+    this.productGroups = [];
     this.counter = 0;
     this.setProductList();
   }
 
   setProductList(){
-    this.productService.getProducts().subscribe(data => {
-      data.forEach(element => {
-        let product: Product = {
-          id: element.id,
-          productNumber: element.productNumber,
-          productName: element.productName,
-          logicName: element.logicName,
-          description: element.description,
-          extraDescription: element.extraDescription
+    this.productService.getProducts().subscribe((data) => {
+      console.log(data);
+      for(let i = 0; i < data.length; i++)
+      {
+        let productGroup: ProductGroup = {
+          id: data[i].id,
+          name: data[i].groupName,
+          products: []
         };
-        this.products.push(product);
-      });      
+        for(let j = 0; j < data[i].productLos.length; j++){
+          productGroup.products.push({
+            id: data[i].productLos[j].id,
+            productNumber: data[i].productLos[j].productNumber,
+            productName: data[i].productLos[j].productName,
+            logicName: data[i].productLos[j].logicName,
+            description: data[i].productLos[j].description,
+            descriptionShort: data[i].productLos[j].descriptionShort,
+            adGroupId: data[i].productLos[j].adGroupLoId,
+          });
+        }
+        this.productGroups.push(productGroup);
+      }
+     console.log(this.productGroups);
     });
   }
 

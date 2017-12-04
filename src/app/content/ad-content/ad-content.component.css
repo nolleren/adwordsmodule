@@ -7,6 +7,6 @@ ul {
 textarea {
     resize: none;
 }
-.input-inline {
-    display: inline;
+#dragdiv {
+    height: 280px;
 }

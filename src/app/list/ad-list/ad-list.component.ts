@@ -10,7 +10,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ListItemComponent } from './list-item/list-item.component';
 import { Component, OnInit } from '@angular/core';
 import { AdWordsAd } from '../../../models/AdWordsAd';
-import { Router } from '@angular/router';
 import { ProductService } from '../../products/product.service';
 
 @Component({
@@ -75,7 +74,8 @@ export class AdListComponent implements OnInit {
   addProductToList(){
     this.productService.addProductToList.subscribe((data: Product) => {
       this.productList.push(data);
-      if(this.adwordsAds.length > 0 || this.adContent !== {}) {
+      let isMyObjectEmpty = Object.keys(this.adContent).length;
+      if(this.adwordsAds.length > 0 || isMyObjectEmpty) {
         let adWordAd: AdWordsAd = this.createAdWordContent(data);
         this.adwordsAds.push(adWordAd);
         this.enableAdList = true;
@@ -105,8 +105,8 @@ export class AdListComponent implements OnInit {
       id: product.id,
       finalUrl: [this.url + "/" + product.logicName]
     };
-    this.setKeyValuePairs(product);
-    this.replacer(adwordAd);
+    //this.setKeyValuePairs(product);
+    //this.replacer(adwordAd);
     return adwordAd;
   }
 
@@ -175,21 +175,21 @@ export class AdListComponent implements OnInit {
   }
 
   replacer(contentProduct: AdWordsAd){
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
-    for(let i = 0; i < this.keyValuePair.length; i++){
-      contentProduct.adContent.description = contentProduct.adContent.description.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
-    }
+      for(let i = 0; i < this.keyValuePair.length; i++){
+        contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      }
+      for(let i = 0; i < this.keyValuePair.length; i++){
+        contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      }
+      for(let i = 0; i < this.keyValuePair.length; i++){
+        contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      }
+      for(let i = 0; i < this.keyValuePair.length; i++){
+        contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      }
+      for(let i = 0; i < this.keyValuePair.length; i++){
+        contentProduct.adContent.description = contentProduct.adContent.description.replace(this.keyValuePair[i].key, this.keyValuePair[i].value);
+      }
   }
     
 } 

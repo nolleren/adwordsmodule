@@ -31,7 +31,7 @@
     <div class="form-group row">
         <label for="name" class="col-2 col-form-label">Sti</label>
         <label for="" class="col-2">www.nolleren.org /</label>
-            <div class="col-4">
+            <div class="col-3">
                 <input class="form-control" 
                         type="text" 
                         id="adwordAd.adContent.path1"
@@ -39,15 +39,20 @@
                         [(ngModel)]="adwordAd.adContent.path1">
                 <span 
                     *ngIf="!listItemForm.get('path1').valid"
-                    class="help-block">Stien er for lang, den er {{ adwordAd.adContent.path.length }}, og må kun være 15 tegn.
+                    class="help-block">Stien er for lang, den er {{ adwordAd.adContent.path1.length }}, og må kun være 15 tegn.
                 </span> 
             </div>
-            <div class="col-4">
+            <div class="col-3">
                     <input class="form-control" 
                             type="text" 
                             id="adwordAd.adContent.path2"
+                            formControlName="path2"
                             [(ngModel)]="adwordAd.adContent.path2"> 
-                </div>
+                <span 
+                    *ngIf="!listItemForm.get('path2').valid"
+                    class="help-block">Stien er for lang, den er {{ adwordAd.adContent.path2.length }}, og må kun være 15 tegn.
+                </span> 
+            </div>
         </div>
     <div class="form-group row">
         <label for="name" class="col-2 col-form-label">Beskrivelse</label>

@@ -13,25 +13,51 @@ import { ProductGroup } from '../../../models/productGroup';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products: Product[] = [];
-  selectedProducts: Product[] = [];
-  visible: boolean = false;
+  products: Product[];
+  visible: boolean;
+  showProducts: boolean[];
   counter: number;
   productGroups: ProductGroup[];
 
   constructor(private productService: ProductService, private dialog: MatDialog) {}
 
   ngOnInit() {
-
-
+    this.products = [];
+    this.visible = false;
+    this.showProducts = [];
     this.productGroups = [];
     this.counter = 0;
     this.setProductList();
   }
 
+  addProductGroup(productGroup: ProductGroup, event){
+    if(event.target.checked === true) {
+      for(let i = 0; i < productGroup.products.length; i++){
+        this.counter++;
+        this.productService.addProductToList.next(productGroup.products[i]);
+      }
+    }
+    else {
+      for(let i = 0; i < productGroup.products.length; i++){
+        this.counter--;
+        this.productService.removeProductFromList.next(productGroup.products[i]);
+      }
+    }
+  }
+
+  addProduct(product: Product, event){
+    if(event.target.checked === true) {
+      this.counter++;
+      this.productService.addProductToList.next(product);
+    }
+    else {
+      this.counter--;
+      this.productService.removeProductFromList.next(product);
+    }
+  }
+
   setProductList(){
     this.productService.getProducts().subscribe((data) => {
-      console.log(data);
       for(let i = 0; i < data.length; i++)
       {
         let productGroup: ProductGroup = {
@@ -51,25 +77,18 @@ export class ProductListComponent implements OnInit {
           });
         }
         this.productGroups.push(productGroup);
+        this.showProducts.push(false);
       }
-     console.log(this.productGroups);
     });
   }
 
-  updateSelectedProducts(product: Product, event){
-    if(event.checked === true) {
-      this.counter++;
-      this.productService.addProductToList.next(product);
-    }
-    else {
-      this.counter--;
-      this.productService.removeProductFromList.next(product);
-    }
+  viewProducts(i){
+    return this.showProducts[i] = !this.showProducts[i];
   }
 
   setChosenProducts(){
     this.show();
-    this.dialog.open(ProductsSelectedDialogComponent, { data: { products: this.selectedProducts }} );
+    this.dialog.open(ProductsSelectedDialogComponent, { data: this.counter } );
   }
 
   show(){

@@ -23,7 +23,7 @@ export class AdContentComponent implements OnInit {
   adContent: AdContent;
   draggable: DragNdrop;
   adContentForm: FormGroup;
-  url: string = "http://www.nolleren.org/";  
+  url: string = "www.nolleren.org/";  
   replacers: string[] = [ "Produktnummer", "Produktnavn", "Logisknavn", "Beskrivelse" ];
 
   constructor(private adContentService: AdContentService, private dialog: MatDialog) { }
@@ -38,34 +38,51 @@ export class AdContentComponent implements OnInit {
     this.setDataBinding();
   }
 
+  alertChildComponentOnChanges(){
+    this.adContent = {
+      description: this.adContent.description,
+      headLinePart1: this.adContent.headLinePart1,
+      headLinePart2: this.adContent.headLinePart2,
+      path1: this.adContent.path1,
+      path2: this.adContent.path2
+    }  
+  }
+
   setDataBinding(){
     $("#headlinePart1").on("keyup dropped", () => {
       let value = $("#headlinePart1").val();
       this.adContent.headLinePart1 = value;    
       this.adContentForm.patchValue({headlinePart1: value});
-      $("#headlinePart1").focus();    
+      $("#headlinePart1").focus();  
+      this.alertChildComponentOnChanges();
     });
     $("#headlinePart2").on("keyup dropped", () => {
       let value = $("#headlinePart2").val();
       this.adContent.headLinePart2 = value; 
       this.adContentForm.patchValue({headlinePart2: value});
       $("#headlinePart2").focus(); 
+      this.alertChildComponentOnChanges();
     });
     $("#path1").on("keyup dropped", () => {
       let value = $("#path1").val();
       this.adContent.path1 = value;
       this.adContentForm.patchValue({path1: value});
       $("#path1").focus();
+      this.alertChildComponentOnChanges();
     });
     $("#path2").on("keyup dropped", () => {
       let value = $("#path2").val();
-      this.adContent.path1 = value;
+      this.adContent.path2 = value;
+      this.adContentForm.patchValue({path2: value});
+      $("#path2").focus();
+      this.alertChildComponentOnChanges();
     });
     $("#description").on("keyup dropped", () => {
       let value = $("#description").val();
       this.adContent.description = value;   
       this.adContentForm.patchValue({description: value});
       $("#description").focus();
+      this.alertChildComponentOnChanges();
     });
   }
 
@@ -73,7 +90,6 @@ export class AdContentComponent implements OnInit {
     this.adContentForm = new FormGroup({
       'headlinePart1': new FormControl(null, Validators.required),
       'headlinePart2': new FormControl(null, Validators.required),
-      'path1': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required)
     });
   }

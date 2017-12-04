@@ -8,7 +8,7 @@
   </div>    
   <div [hidden]="!visible">
     <div class="jumbotron">
-      <div class="row" style="height: 275px;">
+      <div class="row">
         <div class="col-8">
 <form [formGroup]="adContentForm" (ngSubmit)="submitAdContent()">
           <div class="form-group row">
@@ -17,7 +17,8 @@
                 <input class="form-control dropdiv" 
                       type="text"
                       id="headlinePart1"
-                      formControlName="headlinePart1">
+                      formControlName="headlinePart1"
+                      (focus)="alertChildComponentOnChanges()">
                   <span 
                       *ngIf="!adContentForm.get('headlinePart1').valid && adContentForm.get('headlinePart1').touched"
                       class="help-block">Venligst udfyld Overskrift1
@@ -30,7 +31,8 @@
                 <input class="form-control dropdiv" 
                       type="text"
                       id="headlinePart2"
-                      formControlName="headlinePart2">
+                      formControlName="headlinePart2"
+                      (focus)="alertChildComponentOnChanges()">
                   <span 
                       *ngIf="!adContentForm.get('headlinePart2').valid && adContentForm.get('headlinePart2').touched"
                       class="help-block">Venligst udfyld Overskrift2
@@ -38,27 +40,22 @@
               </div>
           </div>
           <div class="form-group row">
-            <label for="name" class="col-2 col-form-label">Sti</label>
-            <label for="" class="col-4">{{ url }}</label>
-              <div class="col-2">
-                  <span class="input-inline">
-                      <input class="form-control dropdiv input-inline" 
+                <label for="name" class="col-2 col-form-label">Sti</label>
+                <label for="" class="col-4">{{ url }}</label>
+                  <div class="col-3">
+                          <input class="form-control dropdiv" 
+                          type="text"
+                          id="path1"
+                          (focus)="alertChildComponentOnChanges()">
+                        </div>
+                  <div class="col-3">
+                      <input class="form-control dropdiv float-right"  
                       type="text"
-                      id="path1"
-                      formControlName="path1">
-                  <input class="form-control dropdiv input-inline float-right"  
-                        type="text"
-                        id="path2">
-                  </span>    
-                </div>
+                      id="path2"
+                      (focus)="alertChildComponentOnChanges()">  
+                  </div>                    
+
           </div>
-          <span class="input-inline">
-              
-               <input class="inputbold" type="text" name="" placeholder="boldinput"  /> 
-                  <input class="inputbold" type="text"  name="" placeholder="blah"/>
-               
-              
-          </span>
           <div class="form-group row">
             <label for="name" class="col-2 col-form-label">Beskrivelse</label>
               <div class="col-10">
@@ -67,6 +64,7 @@
                   class="form-control dropdiv" 
                   rows="3"
                   id="description"
+                  (focus)="alertChildComponentOnChanges()"
                   ></textarea>
               <span 
                   *ngIf="!adContentForm.get('description').valid && adContentForm.get('description').touched"
@@ -87,14 +85,15 @@
                     </ul>
                 </div>
         </div>  
-      </div>
+      </div>  
       <div class="row">
           <div class="col-2"></div>
           <div class="col-8">
               <app-adword-ad-example [adContent]="adContent"></app-adword-ad-example>              
           </div>
           <div class="col-2"></div>
-      </div>      
-    </div>          
+      </div> 
+    </div>  
+            
   </div>
 </div>  

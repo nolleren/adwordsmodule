@@ -10,20 +10,25 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-8">
-              <div *ngFor="let adGroup of productGroups">
-                <label>{{ adGroup.name }}</label> <input type="checkbox" >
-                <div *ngFor="let product of adGroup.products">
-                    <label>{{ product.productName }}</label> <input type="checkbox">
+              <div *ngFor="let productGroup of productGroups; let i = index">
+                    <div class="group">
+                        <label (click)="viewProducts(i)">{{ productGroup.name }}</label> <input class="float-right test" type="checkbox" (change)="addProductGroup(productGroup, $event)">
+                    </div>
+                  <div [hidden]="!showProducts[i]" class="product" >
+                      <div *ngFor="let product of productGroup.products">
+                          <label>{{ product.productName }}</label> <input class="float-right" type="checkbox" (change)="addProduct(product, $event)">
+                      </div>
+                  </div>  
                 </div>
-                 
               </div>
               </div>
+              <div class="row">
+                  <div class="col-8">
+                    <button class="btn btn-primary float-right" [disabled]="!noProductChosen()" (click)="setChosenProducts()">Vælg produkter</button>
+                  </div>
+                </div>
           </div>
-          <div class="row">
-            <div class="col-8">
-              <button class="btn btn-primary float-right" [disabled]="!noProductChosen()" (click)="setChosenProducts()">Vælg produkter</button>
-            </div>
-          </div>
+          
         </div>       
 </div>
 

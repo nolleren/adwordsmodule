@@ -1,5 +1,16 @@
-.adExample {
-    border-style: groove;
-    border-radius: 8px;
+.outer-border {
+    border: 1px solid black;
+    color: #1a0dab;
+}
+.green-border {
+    border: 1px solid green;
+    color: green;
     margin: 5px;
+}
+.green-text {
+    margin: 5px;
+    color: green;
+}
+.black {
+    color: black;
 }

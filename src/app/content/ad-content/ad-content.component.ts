@@ -11,6 +11,7 @@ import { DragNdrop } from '../../../models/dragNdrop';
 import { ProductService } from '../../products/product.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { KeyValuePair } from '../../../models/keyValuePair';
+import { formControlBinding } from '@angular/forms/src/directives/reactive_directives/form_control_directive';
 declare var $ :any;
 
 @Component({
@@ -21,6 +22,7 @@ declare var $ :any;
 export class AdContentComponent implements OnInit {
   visible: boolean;
   adContent: AdContent;
+  outputAdContent: AdContent;
   draggable: DragNdrop;
   adContentForm: FormGroup;
   url: string = "www.nolleren.org/";  
@@ -34,6 +36,7 @@ export class AdContentComponent implements OnInit {
     this.visible = false;
     this.adContent = new AdContent();
     this.draggable = new DragNdrop();
+    this.outputAdContent = new AdContent();
 
     this.draggable.draggable();
     this.createFormGroup();
@@ -60,18 +63,12 @@ export class AdContentComponent implements OnInit {
             value: data[0].productLos[0].keyValuePairs[i].value
           });
         }
-      });
-      
+      });    
     }
 
   alertChildComponentOnChanges(){
-    this.adContent = {
-      description: this.adContent.description,
-      headLinePart1: this.adContent.headLinePart1,
-      headLinePart2: this.adContent.headLinePart2,
-      path1: this.adContent.path1,
-      path2: this.adContent.path2
-    }  
+    this.outputAdContent = Object.assign({}, this.outputAdContent , this.adContent );
+    this.adContentService.setAdContent.next(this.outputAdContent);
   }
 
   setDataBinding(){
@@ -116,6 +113,8 @@ export class AdContentComponent implements OnInit {
     this.adContentForm = new FormGroup({
       'headlinePart1': new FormControl(null, Validators.required),
       'headlinePart2': new FormControl(null, Validators.required),
+      'path1': new FormControl(null, Validators.minLength(0)),
+      'path2': new FormControl(null, Validators.minLength(0)),
       'description': new FormControl(null, Validators.required)
     });
   }

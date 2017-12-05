@@ -18,6 +18,7 @@
                       type="text"
                       id="headlinePart1"
                       formControlName="headlinePart1"
+                      [(ngModel)]="adContent.headLinePart1"
                       (focus)="alertChildComponentOnChanges()">
                   <span 
                       *ngIf="!adContentForm.get('headlinePart1').valid && adContentForm.get('headlinePart1').touched"
@@ -32,6 +33,7 @@
                       type="text"
                       id="headlinePart2"
                       formControlName="headlinePart2"
+                      [(ngModel)]="adContent.headLinePart2"
                       (focus)="alertChildComponentOnChanges()">
                   <span 
                       *ngIf="!adContentForm.get('headlinePart2').valid && adContentForm.get('headlinePart2').touched"
@@ -48,12 +50,16 @@
                           <input class="form-control dropdiv" 
                           type="text"
                           id="path1"
+                          formControlName="path1"
+                          [(ngModel)]="adContent.path1"
                           (focus)="alertChildComponentOnChanges()">
                         </div>
                   <div class="col-6">
                       <input class="form-control dropdiv float-right"  
                       type="text"
                       id="path2"
+                      formControlName="path2"
+                      [(ngModel)]="adContent.path2"
                       (focus)="alertChildComponentOnChanges()">  
                   </div>     
                   </div>                  
@@ -67,6 +73,7 @@
                   class="form-control dropdiv" 
                   rows="3"
                   id="description"
+                  [(ngModel)]="adContent.description"
                   (focus)="alertChildComponentOnChanges()"
                   ></textarea>
               <span 
@@ -90,13 +97,10 @@
         </div>  
       </div>  
       <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8">
-              <app-adword-ad-example [adContent]="adContent"></app-adword-ad-example>              
-          </div>
-          <div class="col-2"></div>
+        <div class="col-12">
+            <app-adword-ad-example></app-adword-ad-example>              
+        </div>                      
       </div> 
-    </div>  
-            
+    </div>             
   </div>
 </div>  

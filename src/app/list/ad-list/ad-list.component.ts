@@ -28,7 +28,6 @@ export class AdListComponent implements OnInit {
   productList: Product[];
   keyValuePair: KeyValuePair[];
   adContent: AdContent;
-  replacers: string[] = [ "Produktnummer", "Produktnavn", "Logisknavn", "Beskrivelse" ];
   url: string = "http://www.nolleren.org/";
 
   constructor(private adContentService: AdContentService, 

@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 export class AdContentService {
   adwordAds = new Subject<AdWordsAd[]>();
   adContent = new Subject<AdContent>();
+  setAdContent = new Subject<AdContent>();
 
   constructor() { }
 

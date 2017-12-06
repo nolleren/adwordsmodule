@@ -4,6 +4,6 @@ import { CampaignListItem } from './campaign';
 
 export class AdWordsAd {
     adContent: AdContent;
-    id: number;
     finalUrl: string[];
+    productId: number;
 }

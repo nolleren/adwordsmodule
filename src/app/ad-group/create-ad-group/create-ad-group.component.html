@@ -1,0 +1,45 @@
+<div class="form-group row">
+  <label for="name" class="col-3 col-form-label"><b>Opret annonce:</b></label>
+</div>
+<form [formGroup]="adGroupForm" (ngSubmit)="submitAdGroup()">
+<div class="form-group row">
+    <label for="name" class="col-3 col-form-label">Annoncegruppenavn</label>
+    <div class="col-6">
+      <input class="form-control" 
+             type="text" 
+             id="name"
+             formControlName="name"
+             [(ngModel)]="adGroup.name">
+      <span 
+        *ngIf="!adGroupForm.get('name').valid && adGroupForm.get('name').touched"
+        class="help-block">Venligst udfyld et navn for Annoncegruppen
+    </span>
+    <span 
+    *ngIf="!adGroupNameExist()"
+    class="help-block">navn for Annoncegruppen eksisterer allerede
+   </span>       
+    </div>
+  </div>
+  <div class="form-group row">
+      <label for="keyWords" class="col-3 col-form-label">Beskrivelse</label>
+        <div class="col-6">
+          <textarea 
+            formControlName="keyWords"
+            class="form-control" 
+            rows="3"
+            id="keyWords"
+            [(ngModel)]="adGroup.keyWords"
+            ></textarea>
+        <span 
+            *ngIf="!adGroupForm.get('keyWords').valid && adGroupForm.get('keyWords').touched"
+            class="help-block">Venligst angiv mindst 1 søgeord eller sætning
+        </span>   
+        </div>
+  </div>
+    <div class="col-9">
+        <button class="btn btn-primary float-right" type="submit" [disabled]="!adGroupForm.valid">Opret Annoncegruppe</button>
+        <button class="btn btn-danger float-right" type="button" (click)="toggleCreateAdGroup()">Annuller</button>
+    </div>
+</form>
+
+

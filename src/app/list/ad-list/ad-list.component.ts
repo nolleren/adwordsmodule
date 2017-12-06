@@ -1,3 +1,4 @@
+import { AdGroup } from './../../../models/adGroup';
 import { AdContent } from './../../../models/adContent';
 import { KeyValuePair } from './../../../models/keyValuePair';
 import { Product } from './../../../models/product';
@@ -11,6 +12,7 @@ import { ListItemComponent } from './list-item/list-item.component';
 import { Component, OnInit } from '@angular/core';
 import { AdWordsAd } from '../../../models/AdWordsAd';
 import { ProductService } from '../../products/product.service';
+import { AdGroupService } from '../../ad-group/ad-group-service.service';
 
 @Component({
   selector: 'app-ad-list',
@@ -18,43 +20,41 @@ import { ProductService } from '../../products/product.service';
   styleUrls: ['./ad-list.component.css']
 })
 export class AdListComponent implements OnInit {
-  listItemForm: FormGroup;
   adwordsAds: AdWordsAd[];
   visible: boolean;
   enableAdList: boolean;
-  campaign: CampaignListItem;
+  adGroup: AdGroup;
   adwordsContent: AdwordsContent;
   toggleCreateAdsButton: boolean;
   productList: Product[];
-  keyValuePair: KeyValuePair[];
   adContent: AdContent;
-  url: string = "http://www.nolleren.org/";
+  url: string = "http://www.nolleren.org";
 
   constructor(private adContentService: AdContentService, 
               private listService: ListService, 
               private campaignService: CampaignService,
-              private productService: ProductService) { }
+              private productService: ProductService,
+              private adGroupService: AdGroupService) { }
 
   ngOnInit() {
     this.adwordsAds = [];
     this.visible = false;
     this.enableAdList = false;
-    this.campaign = new CampaignListItem();
+    this.adGroup = new AdGroup();
     this.toggleCreateAdsButton = false;
     this.productList = [];
-    this.keyValuePair = [];
     this.adContent = new AdContent();
 
-    this.setChosenCampaign();
     this.addProductToList();
     this.removeProductFromList();
     this.getAdContent();
+    this.getSelectedAdGroup();
   }
 
-  setChosenCampaign(){
-    this.campaignService.setChosenCampaign.subscribe((data: CampaignListItem) => {
-      this.campaign = data;
-    });
+  getSelectedAdGroup(){
+    this.adGroupService.setSelectedAdGrop.subscribe((data: AdGroup) => {
+      this.adGroup = data;
+    })
   }
 
   getAdContent(){
@@ -85,11 +85,9 @@ export class AdListComponent implements OnInit {
   removeProductFromList(){
     this.productService.removeProductFromList.subscribe((data: Product) => {
       this.productList.splice(this.productList.indexOf(data), 1);
-
       for(let i = 0; i < this.adwordsAds.length; i++){
-        if(this.adwordsAds[i].id === data.id) this.adwordsAds.splice(i, 1);
+        if(this.adwordsAds[i].productId === data.id) this.adwordsAds.splice(i, 1);
       }
-
       if(this.adwordsAds.length <= 0) this.enableAdList = false;
     });
   }
@@ -103,8 +101,8 @@ export class AdListComponent implements OnInit {
         path2: this.adContent.path2,
         description: this.adContent.description
       },
-      id: product.id,
-      finalUrl: [this.url + "/" + product.logicName]
+      productId: product.id,
+      finalUrl: [this.url + product.logicName]
     };
     this.replacer(adwordAd, product);
     return adwordAd;
@@ -124,23 +122,23 @@ export class AdListComponent implements OnInit {
       if(element.adContent.headLinePart2.length > 30) return false;
         valid = true;
     }
-    if(this.campaign.id === undefined) return false;
+    if(this.adGroup.adGroupId === undefined) return false;
     return valid;
   }
 
   createAds(){
     this.toggle();
     this.adwordsContent = {
-      contentCampaign: this.campaign,
+      adGroupLo: this.adGroup,
       contentProducts: this.adwordsAds
     };
     this.listService.createAds(this.adwordsContent).subscribe((data) => {
+      //sconsole.log(data);
       this.toggle();
     },
       err => {
 
       });
-    this.campaignService.removeCampaign.next(this.campaign);
   }
 
   toggle(){
@@ -154,12 +152,12 @@ export class AdListComponent implements OnInit {
       for(let i = 0; i < product.keyValuePairs.length; i++){
         contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
       }
-      if(!contentProduct.adContent.path1 === undefined){
+      if(contentProduct.adContent.path1 !== undefined){
         for(let i = 0; i < product.keyValuePairs.length; i++){
           contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
         }
       }
-      if(!contentProduct.adContent.path2 === undefined){
+      if(contentProduct.adContent.path2 !== undefined){
         for(let i = 0; i < product.keyValuePairs.length; i++){
           contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
         }

@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Product } from './../../../../models/product';
 import { AdWordsAd } from './../../../../models/AdWordsAd';
 import { Component, OnInit } from '@angular/core';
@@ -33,6 +34,12 @@ export class AdwordAdExampleComponent implements OnInit {
     });
   }
 
+  setShowExample(){
+    let isMyObjectEmpty = Object.keys(this.replacedAdContent).length;
+    if(isMyObjectEmpty) return true;
+      else return false; 
+  }
+
   getProduct(){
     this.productService.getProducts().subscribe((data) => {
           this.product = {
@@ -64,7 +71,7 @@ export class AdwordAdExampleComponent implements OnInit {
           path2: this.replacedAdContent.path2,
           description: this.replacedAdContent.description
         },
-        id: product.id,
+        productId: product.id,
         finalUrl: [this.url + "/" + product.logicName]
       };
       this.replacer(this.replacedAdContent, product);

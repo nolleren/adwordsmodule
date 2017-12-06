@@ -15,6 +15,7 @@ export class ListService {
    }
 
    createAds(adwordsContent: AdwordsContent){
+     console.log(adwordsContent.adGroupLo.adGroupId);
       return this.http.post(this.httpString, adwordsContent).map(res => res.json());
    }
 

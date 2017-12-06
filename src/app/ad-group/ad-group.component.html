@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header" (click)="show()">
+    <h5 class="mb-0">
+      <a href="#" >
+        Vælg annoncegruppe
+      </a>
+    </h5>
+  </div>    
+  <div [hidden]="!visible">
+<div class="jumbotron">
+  <div class="row" *ngIf="!campaignChosen()">
+    <div class="col-12">
+      <h5>Du skal vælge en kampagne før du kan vælge eller oprette en annoncegruppe</h5>
+    </div>
+  </div>
+  <div class="row" *ngIf="campaignChosen()">
+    <div class="col-5">
+      <mat-form-field>
+        <mat-select placeholder="Annoncegruppe" [(ngModel)]="adGroup" name="adGroup">
+          <mat-option *ngFor="let adGroup of adGroups" [value]="adGroup">{{adGroup.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-7">
+      <button class="btn btn-success" (click)="selectAdGroup()" [disabled]="!adGroupIsChosen()">
+        Vælg annoncegruppe
+      </button>
+      <button class="btn btn-primary" (click)="toggleCreateAdGroup()">
+        Opret annoncegruppe
+      </button>
+      <button class="btn btn-danger" (click)="deleteAdGroup()" [disabled]="!adGroupIsChosen()">
+          Slet annoncegruppe
+        </button>
+    </div>
+  </div>
+   <app-create-ad-group 
+      [campaign]="campaign"
+      *ngIf="showCreateAdGroup">
+   </app-create-ad-group>
+  </div>
+  </div>
+</div>
+

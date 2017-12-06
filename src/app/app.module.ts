@@ -1,3 +1,4 @@
+import { AdGroupService } from './ad-group/ad-group-service.service';
 import { AdwordAdExampleComponent } from './content/ad-content/adword-ad-example/adword-ad-example.component';
 import { ListItemComponent } from './list/ad-list/list-item/list-item.component';
 import { ProductService } from './products/product.service';
@@ -32,6 +33,8 @@ import { ListService } from './list/list.service';
 import { AdListComponent } from './list/ad-list/ad-list.component';
 import { AdContentService } from './content/ad-content.service';
 import { AdwordsAdsCreatedDialogComponent } from './dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
+import { AdGroupComponent } from './ad-group/ad-group.component';
+import { CreateAdGroupComponent } from './ad-group/create-ad-group/create-ad-group.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
@@ -56,7 +59,9 @@ const appRoutes: Routes = [
     AdListComponent,
     ListItemComponent,
     AdwordsAdsCreatedDialogComponent,
-    AdwordAdExampleComponent
+    AdwordAdExampleComponent,
+    AdGroupComponent,
+    CreateAdGroupComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +90,8 @@ const appRoutes: Routes = [
     CampaignService, 
     ProductService,
     ListService,
-    AdContentService
+    AdContentService,
+    AdGroupService
    ],
   bootstrap: [AppComponent]
 })

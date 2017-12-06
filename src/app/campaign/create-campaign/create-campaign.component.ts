@@ -37,8 +37,19 @@ export class CreateCampaignComponent implements OnInit {
 
   addCampaignToList(){
     this.campaignService.addCreatedCampaignToList.subscribe((data: CampaignListItem) => {
-      this.campaignList.push(data);
+      let campaign: CampaignListItem = data;
+      campaign.startDate = this.formatDateString(campaign.startDate);
+      campaign.endDate = this.formatDateString(campaign.endDate);
+      this.campaignList.push(campaign);
     });
+  }
+
+  formatDateString(dateString: string) {
+      let year = dateString.substring(0, 4);
+      let month = dateString.substring(4, 6);
+      let day = dateString.substring(6, 8);
+
+      return day + "/" + month + "/" + year;
   }
 
   toggleCreateCampaign(){
@@ -66,6 +77,8 @@ export class CreateCampaignComponent implements OnInit {
         let newCampaignListItem: CampaignListItem = {
           id: data.value[0].id,
           name: data.value[0].name,
+          startDate: data.value[0].startDate,
+          endDate: data.value[0].endDate,
           microAmount: data.value[0].budget.amount.microAmount
         };
         this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       

@@ -15,5 +15,7 @@ export class CampaignDto {
 export class CampaignListItem {
     id: number;
     name: string;
+    startDate: string;
+    endDate: string;
     microAmount: number;
 }

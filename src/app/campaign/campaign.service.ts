@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { environment } from './../../environments/environment.prod';
 import { CampaignListItem, CampaignDto } from './../../models/campaign';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,6 @@ import { isDevMode } from '@angular/core';
 
 @Injectable()
 export class CampaignService {
-    campaignList: CampaignListItem[] = [];
     httpString: string;
 
     constructor(private http: Http) {
@@ -23,27 +23,34 @@ export class CampaignService {
    endDate = new Subject<Date>();
    setChosenCampaign = new Subject<CampaignListItem>();
    removeCampaign = new Subject<CampaignListItem>();
+   getChosenCampaign = new Subject();
 
-   createCampaign(campaign: CampaignDto){
+  createCampaign(campaign: CampaignDto){
     campaign.budget.microAmount *= 1000000;
     campaign.budget.name = new Date().toString();
     return this.http.post(this.httpString, campaign).map(res => res.json()); 
   }
 
+  deleteCampaign(campaign: CampaignListItem){
+    return this.http.delete(this.httpString + "/" + campaign.id).map(res => res.json());
+  }
+
   getCampaigns(){
-    this.campaignList = [];
+    let campaignList: CampaignListItem[] = [];
     this.http.get(this.httpString).map(res => res.json())
           .subscribe(result => {
             result.forEach(element => {
               let campaign: CampaignListItem = {
                 id: element.id,
                 name: element.name,
+                startDate: element.startDate,
+                endDate: element.endDate,
                 microAmount: element.budget.amount.microAmount
               };
-              this.campaignList.push(campaign);
+              campaignList.push(campaign);
             });
           });
-          return this.campaignList;                                                               
+          return campaignList;                                                               
   }
 
 }

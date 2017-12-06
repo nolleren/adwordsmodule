@@ -1,19 +1,21 @@
 <div class="row">
-  <div class="col-7">
+  <div class="col-6">
     <mat-form-field>
       <mat-select placeholder="Kampagne" [(ngModel)]="campaign" name="campaign">
-        <mat-option>Ingen valgt</mat-option>
-        <mat-option *ngFor="let campaign of campaignList" [value]="campaign">{{campaign.name}}</mat-option>
+        <mat-option *ngFor="let campaign of campaignList" [value]="campaign">{{campaign.name}} {{campaign.startDate}}-{{campaign.endDate}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="col-5">
-    <button class="btn btn-success" (click)="setChosenCampaign()">
+  <div class="col-6">
+    <button class="btn btn-success" (click)="setChosenCampaign()" [disabled]="!campaignIsChosen()">
       Vælg kampagne
     </button>
     <button class="btn btn-primary" (click)="toggleCreateCampaign()">
       Opret kampagne
     </button>
+    <button class="btn btn-danger" (click)="deleteCampaign()" [disabled]="!campaignIsChosen()">
+        Slet kampagne
+      </button>
   </div>
 </div>
 

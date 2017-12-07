@@ -30,8 +30,8 @@ export class CreateCampaignComponent implements OnInit {
 
   createFormGroup(){
     this.campaignForm = new FormGroup({
-      'name': new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      'microAmount': new FormControl(null, [ Validators.required, Validators.min(1) ])
+      'name': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(55)]),
+      'microAmount': new FormControl(null, [ Validators.required, Validators.min(1), Validators.max(10000000) ])
     });
   }
 

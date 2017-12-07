@@ -24,7 +24,8 @@
               </div>
               <div class="row">
                   <div class="col-8">
-                    <button class="btn btn-success float-right" *ngIf="counter !== 0" (click)="setChosenProducts()" >{{ counter }} produkter valgt</button>
+                    <button class="btn btn-success float-right" *ngIf="counter === 1" (click)="setChosenProducts()" >{{ counter }} produkt valgt</button>
+                    <button class="btn btn-success float-right" *ngIf="counter > 1" (click)="setChosenProducts()" >{{ counter }} produkter valgt</button>
                     <button class="btn btn-danger float-right" *ngIf="counter === 0" [disabled]="true" >Ingen produkter valgt</button>
                   </div>
                 </div>

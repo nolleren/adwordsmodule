@@ -12,7 +12,7 @@
                [(ngModel)]="campaign.name">
         <span 
           *ngIf="!campaignForm.get('name').valid && campaignForm.get('name').touched"
-          class="help-block">Venligst udfyld et kampagnenavn
+          class="help-block">Venligst udfyld et kampagnenavn, skal være mellem 1 og 55 tegn
       </span>
       <span 
       *ngIf="!campaignNameExist()"
@@ -31,7 +31,7 @@
                  [(ngModel)]="microAmount">
         <span 
             *ngIf="!campaignForm.get('microAmount').valid && campaignForm.get('microAmount').touched"
-            class="help-block">Angiv venligst et beløb for kampagnen, og beløb skal være minimum 1 krone
+            class="help-block">Angiv venligst et beløb for kampagnen, og beløb skal være minimum 1 krone og maksimum 10000000 kroner
         </span>  
         </div>
       </div>

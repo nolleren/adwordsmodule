@@ -135,11 +135,11 @@ export class AdListComponent implements OnInit {
   validateAds(){
     let valid: boolean = false;
     for(let element of this.adwordsAds){
-      if(element.adContent.description === undefined || element.adContent.description.length > 80) return false;
+      if(element.adContent.description.length > 80) return false;
       if(element.adContent.path1 === undefined || element.adContent.path1.length > 15) return false;
       if(element.adContent.path2 === undefined || element.adContent.path2.length > 15) return false;
-      if(element.adContent.headLinePart1 === undefined || element.adContent.headLinePart1.length > 30) return false;
-      if(element.adContent.headLinePart2 === undefined || element.adContent.headLinePart2.length > 30) return false;
+      if(element.adContent.headLinePart1.length > 30) return false;
+      if(element.adContent.headLinePart2.length > 30) return false;
         valid = true;
     }
     if(this.adGroup.adGroupId === undefined) return false;

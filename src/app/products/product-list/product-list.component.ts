@@ -92,7 +92,6 @@ export class ProductListComponent implements OnInit {
           this.productGroups.push(productGroup);
       }
           this.showProducts.push(false);
-          console.log(this.productGroups);
     });
   }
 

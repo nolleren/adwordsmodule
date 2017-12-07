@@ -106,8 +106,8 @@ export class AdwordAdExampleComponent implements OnInit {
       }  
       if(contentProduct.headLinePart1 !== undefined) contentProduct.headLinePart1 = contentProduct.headLinePart1.substring(0, 30);
       if(contentProduct.headLinePart2 !== undefined) contentProduct.headLinePart2 = contentProduct.headLinePart2.substring(0, 30);
-      if(contentProduct.path1 !== undefined) contentProduct.path1 = contentProduct.path1.substring(0, 15); 
-      if(contentProduct.path2 !== undefined) contentProduct.path2 = contentProduct.path2.substring(0, 15); 
-      if(contentProduct.description !== undefined) contentProduct.description = contentProduct.description.substring(0, 80);  
+      if(contentProduct.path1 !== undefined) contentProduct.path1 = contentProduct.path1.substring(0, 15);
+      if(contentProduct.path2 !== undefined) contentProduct.path2 = contentProduct.path2.substring(0, 15);
+      if(contentProduct.description !== undefined) contentProduct.description = contentProduct.description.substring(0, 80);
   }
 }

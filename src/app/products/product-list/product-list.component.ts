@@ -69,7 +69,6 @@ export class ProductListComponent implements OnInit {
           groupName: data[i].groupName,
           products: [],
         };
-
         for(let j = 0; j < data[i].productLos.length; j++){
           productGroup.products.push({
             id: data[i].productLos[j].id,
@@ -93,6 +92,7 @@ export class ProductListComponent implements OnInit {
           this.productGroups.push(productGroup);
       }
           this.showProducts.push(false);
+          console.log(this.productGroups);
     });
   }
 

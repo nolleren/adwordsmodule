@@ -12,7 +12,7 @@
           <div class="col-8">
               <div *ngFor="let productGroup of productGroups; let i = index">
                     <div class="group">
-                        <label (click)="viewProducts(i)">{{ productGroup.name }}</label> <input class="float-right test" type="checkbox" (change)="addProductGroup(productGroup, $event)">
+                        <label (click)="viewProducts(i)">{{ productGroup.groupName }}</label> <input class="float-right test" type="checkbox" (change)="addProductGroup(productGroup, $event)">
                     </div>
                   <div [hidden]="!showProducts[i]" class="product" >
                       <div *ngFor="let product of productGroup.products">

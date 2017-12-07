@@ -18,7 +18,6 @@ export class ListItemComponent implements OnInit {
 
   ngOnInit() {
     this.createFormGroup();
-    console.log(this.adwordAd);
   }
 
   createFormGroup(){

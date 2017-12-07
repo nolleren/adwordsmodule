@@ -52,7 +52,7 @@ export class ProductListComponent implements OnInit {
   addProduct(product: Product, event){
     if(event.target.checked === true) {
       this.counter++;
-      for(let i = 0; i <= 10; i++) this.productService.addProductToList.next(product);
+      this.productService.addProductToList.next(product);
     }
     else {
       this.counter--;
@@ -66,7 +66,7 @@ export class ProductListComponent implements OnInit {
       {
         let productGroup: ProductGroup = {
           id: data[i].id,
-          name: data[i].groupName,
+          groupName: data[i].groupName,
           products: [],
         };
 

@@ -1,3 +1,4 @@
+import { AdwordsAdsCreatedDialogComponent } from './../../dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 import { AdGroup } from './../../../models/adGroup';
 import { AdContent } from './../../../models/adContent';
 import { KeyValuePair } from './../../../models/keyValuePair';
@@ -21,6 +22,7 @@ import { AdGroupService } from '../../ad-group/ad-group-service.service';
 })
 export class AdListComponent implements OnInit {
   adwordsAds: AdWordsAd[];
+  replaceAdwordsAds: AdWordsAd[];
   visible: boolean;
   enableAdList: boolean;
   adGroup: AdGroup;
@@ -66,8 +68,26 @@ export class AdListComponent implements OnInit {
           this.adwordsAds.push(adWordsAd);
         };
       }
+      else {
+        this.replaceAdwordsAds = [];
+        for(let i = 0; i < this.productList.length; i++) {
+          let adWordsAd: AdWordsAd = this.createAdWordContent(this.productList[i]);
+          this.replaceAdwordsAds.push(adWordsAd);
+        };
+        for(let i = 0; i < this.adwordsAds.length; i++){
+          this.updateAdwordsAd(this.adwordsAds[i], this.replaceAdwordsAds[i]);
+        }
+      }
       if(this.adwordsAds.length !== 0) this.enableAdList = true;
     });
+  }
+
+  updateAdwordsAd(adWordsAd: AdWordsAd, replaceAdwordsAds: AdWordsAd){
+    if(adWordsAd.adContent.headLinePart1 !== replaceAdwordsAds.adContent.headLinePart1) adWordsAd.adContent.headLinePart1 = replaceAdwordsAds.adContent.headLinePart1;
+    if(adWordsAd.adContent.headLinePart2 !== replaceAdwordsAds.adContent.headLinePart2) adWordsAd.adContent.headLinePart2 = replaceAdwordsAds.adContent.headLinePart2;
+    if(adWordsAd.adContent.path1 !== replaceAdwordsAds.adContent.path1) adWordsAd.adContent.path1 = replaceAdwordsAds.adContent.path1;
+    if(adWordsAd.adContent.path2 !== replaceAdwordsAds.adContent.path2) adWordsAd.adContent.path2 = replaceAdwordsAds.adContent.path2;
+    if(adWordsAd.adContent.description !== replaceAdwordsAds.adContent.description) adWordsAd.adContent.description = replaceAdwordsAds.adContent.description;
   }
 
   addProductToList(){

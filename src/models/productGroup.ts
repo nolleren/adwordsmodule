@@ -1,6 +1,6 @@
 import { Product } from './product';
 export class ProductGroup {
     id: number;
-    name: string;
+    groupName: string;
     products: Product[];
 }

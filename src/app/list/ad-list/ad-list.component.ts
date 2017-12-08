@@ -1,4 +1,3 @@
-import { AdwordsAdsCreatedDialogComponent } from './../../dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 import { AdGroup } from './../../../models/adGroup';
 import { AdContent } from './../../../models/adContent';
 import { KeyValuePair } from './../../../models/keyValuePair';
@@ -14,6 +13,9 @@ import { Component, OnInit } from '@angular/core';
 import { AdWordsAd } from '../../../models/AdWordsAd';
 import { ProductService } from '../../products/product.service';
 import { AdGroupService } from '../../ad-group/ad-group-service.service';
+import { MatDialog } from '@angular/material';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-ad-list',
@@ -36,7 +38,8 @@ export class AdListComponent implements OnInit {
               private listService: ListService, 
               private campaignService: CampaignService,
               private productService: ProductService,
-              private adGroupService: AdGroupService) { }
+              private adGroupService: AdGroupService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.adwordsAds = [];
@@ -51,6 +54,18 @@ export class AdListComponent implements OnInit {
     this.removeProductFromList();
     this.getAdContent();
     this.getSelectedAdGroup();
+    this.reset();
+  }
+
+  reset(){
+    this.listService.resetProcess.subscribe(data => {
+      this.adContent = new AdContent();
+      this.adwordsAds = [];
+      this.adGroup = new AdGroup();
+      this.productList = [];
+      this.enableAdList = false;
+      this.visible = false;
+    });
   }
 
   getSelectedAdGroup(){
@@ -136,8 +151,10 @@ export class AdListComponent implements OnInit {
     let valid: boolean = false;
     for(let element of this.adwordsAds){
       if(element.adContent.description.length > 80) return false;
-      if(element.adContent.path1 === undefined || element.adContent.path1.length > 15) return false;
-      if(element.adContent.path2 === undefined || element.adContent.path2.length > 15) return false;
+      if(element.adContent.path1 !== undefined)
+        if(element.adContent.path1.length > 15) return false;
+      if(element.adContent.path2 !== undefined)
+        if(element.adContent.path2.length > 15) return false;
       if(element.adContent.headLinePart1.length > 30) return false;
       if(element.adContent.headLinePart2.length > 30) return false;
         valid = true;
@@ -153,11 +170,21 @@ export class AdListComponent implements OnInit {
       contentProducts: this.adwordsAds
     };
     this.listService.createAds(this.adwordsContent).subscribe((data) => {
-      //sconsole.log(data);
+      let dialog: Dialog = {
+        headline: "Annoncerne blev oprettet",
+        message: "Start forfra hvis de ønsker at oprette flere annoncer"
+      };
+      this.dialog.open(DialogComponent, { data: dialog });
       this.toggle();
+      this.show();
+      this.listService.resetProcess.next();
     },
       err => {
-
+        let dialog: Dialog = {
+          headline: "Annoncerne blev ikke oprettet",
+          message: "Opstod en fejl under oprettelse af annoncerne, prøv venligst igen eller kontakt support"
+        };
+        this.dialog.open(DialogComponent, { data: dialog });
       });
   }
 

@@ -1,11 +1,12 @@
 import { CampaignComponent } from './../campaign.component';
 import { ListService } from './../../list/list.service';
 import { MatDialog } from '@angular/material';
-import { CampaignSelectedDialogComponent } from './../../dialogs/campaign-selected-dialog/campaign-selected-dialog.component';
 import { CampaignService } from './../campaign.service';
 import { CampaignDto, CampaignListItem } from './../../../models/campaign';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { empty } from 'rxjs/Observer';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-choose-campaign',
@@ -15,14 +16,23 @@ import { empty } from 'rxjs/Observer';
 export class ChooseCampaignComponent implements OnInit {
   campaign: CampaignListItem = new CampaignListItem();
   campaignList: CampaignListItem[] = [];
-  visible: boolean = false;
   disableButtons: boolean = false;
 
-  constructor(private campaignService: CampaignService, private dialog: MatDialog) { }
+  constructor(private campaignService: CampaignService,
+              private dialog: MatDialog,
+              private listService: ListService) { }
 
   ngOnInit() {
     this.campaignList = this.campaignService.getCampaigns();
     this.addCampaignToList();
+    this.reset();
+  }
+
+  reset(){
+    this.listService.resetProcess.subscribe(data => {
+      this.campaign = new CampaignListItem();
+      this.campaignService.toggleVisibility.next(false);
+    });
   }
 
   addCampaignToList(){
@@ -51,13 +61,11 @@ export class ChooseCampaignComponent implements OnInit {
   setChosenCampaign(){   
     this.campaignService.setChosenCampaign.next(this.campaign);
     this.campaignService.toggleVisibility.next(false);
-    this.dialog.open(CampaignSelectedDialogComponent);
-  }
-
-  getChosenCampaign(){
-    this.campaignService.getChosenCampaign.subscribe(data => {
-      this.campaignService.setChosenCampaign.next(this.campaign);
-    })
+    let dialog: Dialog = {
+      headline: "Kampagnen blev valgt",
+      message: "Gå videre til 'Vælg annoncegruppe'"
+    };
+    this.dialog.open(DialogComponent, { data: dialog });
   }
 } 
 

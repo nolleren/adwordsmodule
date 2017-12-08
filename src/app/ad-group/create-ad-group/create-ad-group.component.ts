@@ -4,6 +4,9 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AdGroup } from '../../../models/adGroup';
 import { AdGroupService } from '../ad-group-service.service';
 import { CampaignListItem } from '../../../models/campaign';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-create-ad-group',
@@ -17,7 +20,8 @@ export class CreateAdGroupComponent implements OnInit {
   @Input() campaign: CampaignListItem;
 
   constructor(private adGroupService: AdGroupService,
-              private campaignService: CampaignService) { }
+              private campaignService: CampaignService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.adGroup = new AdGroup();
@@ -58,6 +62,18 @@ export class CreateAdGroupComponent implements OnInit {
       this.adGroupService.addCreatedAdGroupToList.next(newAdGroup);
       this.adGroups.push(newAdGroup);
       this.toggleCreateAdGroup();
+      let dialog: Dialog = {
+        headline: "Annoncegruppen blev oprettet",
+        message: "Annoncegruppen kan nu vælges fra listen"
+      };
+      this.dialog.open(DialogComponent, { data: dialog });
+    },
+    err => {
+      let dialog: Dialog = {
+        headline: "Annoncegruppen blev ikke oprettet",
+        message: "Opstod en fejl under oprettelse af annoncegruppen, prøv venligst igen eller kontakt support"
+      };
+      this.dialog.open(DialogComponent, { data: dialog });
     });
   }  
 }

@@ -1,3 +1,4 @@
+import { ListService } from './../../list/list.service';
 import { KeyValuePair } from './../../../models/keyValuePair';
 import { CampaignService } from './../../campaign/campaign.service';
 import { ProductService } from './../product.service';
@@ -5,8 +6,9 @@ import { Product } from './../../../models/product';
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material';
-import { ProductsSelectedDialogComponent } from '../../dialogs/products-selected-dialog/products-selected-dialog.component';
 import { ProductGroup } from '../../../models/productGroup';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +23,9 @@ export class ProductListComponent implements OnInit {
   counter: number;
   productGroups: ProductGroup[];
 
-  constructor(private productService: ProductService, private dialog: MatDialog) {}
+  constructor(private productService: ProductService,
+              private dialog: MatDialog,
+              private listService: ListService) {}
 
   ngOnInit() {
     this.products = [];
@@ -30,7 +34,16 @@ export class ProductListComponent implements OnInit {
     this.productGroups = [];
     this.counter = 0;
     this.setProductList();
+    this.reset();
  }
+
+ reset(){
+  this.listService.resetProcess.subscribe(data => {
+    this.productGroups = [];
+    this.setProductList();
+    this.visible = false;
+    });
+  } 
 
   addProductGroup(productGroup: ProductGroup, event){
     if(event.target.checked === true) {
@@ -101,7 +114,11 @@ export class ProductListComponent implements OnInit {
 
   setChosenProducts(){
     this.show();
-    this.dialog.open(ProductsSelectedDialogComponent, { data: this.counter } );
+    let dialog: Dialog = {
+      headline: "De ønskede produkter blev valgt",
+      message: "Der blev valgt " + this.counter + " produkter"
+    };
+    this.dialog.open(DialogComponent, { data: dialog });
   }
 
   show(){

@@ -1,9 +1,13 @@
+import { ListService } from './../list/list.service';
 import { Subject } from 'rxjs/Subject';
 import { CampaignListItem } from './../../models/campaign';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdGroupService } from './ad-group-service.service';
 import { AdGroup } from '../../models/adGroup';
 import { CampaignService } from '../campaign/campaign.service';
+import { MatDialog } from '@angular/material';
+import { Dialog } from '../../models/dialog';
+import { DialogComponent } from '../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-ad-group',
@@ -20,7 +24,9 @@ export class AdGroupComponent implements OnInit {
   loadAdGroupList: boolean;
 
   constructor(private adGroupService: AdGroupService,
-              private campaignService: CampaignService) { }
+              private campaignService: CampaignService,
+              private dialog: MatDialog,
+              private listService: ListService) { }
 
   ngOnInit() {
     this.showCreateAdGroup = false;
@@ -34,6 +40,15 @@ export class AdGroupComponent implements OnInit {
     this.setShowCreateAdGroup();
     this.setChosenCampaign();
     this.getCreatedAdGroup();
+    this.reset();
+  }
+  
+  reset(){
+    this.listService.resetProcess.subscribe(data => {
+      this.campaign = new CampaignListItem();
+      this.adGroup = new AdGroup();
+      this.visible = false;
+    });
   }
 
   setShowAdGroup(){
@@ -74,6 +89,11 @@ export class AdGroupComponent implements OnInit {
   selectAdGroup(){
     this.adGroupService.setSelectedAdGrop.next(this.adGroup);
     this.visible = !this.visible;
+    let dialog: Dialog = {
+      headline: "Annoncegruppen blev valgt",
+      message: "Gå nu videre til 'Vælg produkter'"
+    };
+    this.dialog.open(DialogComponent, { data: dialog });
   }
 
   show(){

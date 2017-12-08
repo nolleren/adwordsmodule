@@ -23,7 +23,6 @@ export class CampaignService {
    endDate = new Subject<Date>();
    setChosenCampaign = new Subject<CampaignListItem>();
    removeCampaign = new Subject<CampaignListItem>();
-   getChosenCampaign = new Subject();
 
   createCampaign(campaign: CampaignDto){
     campaign.budget.microAmount *= 1000000;

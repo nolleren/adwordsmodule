@@ -1,10 +1,10 @@
-import { CampaignNotCreatedDialogComponent } from './../../dialogs/campaign-not-created-dialog/campaign-not-created-dialog.component';
-import { CampaignCreatedDialogComponent } from './../../dialogs/campaign-created-dialog/campaign-created-dialog.component';
 import { CampaignDto, CampaignListItem } from './../../../models/campaign';
 import { CampaignService } from '../campaign.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-create-campaign',
@@ -84,11 +84,19 @@ export class CreateCampaignComponent implements OnInit {
         this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       
         this.toggleCreateCampaign();
         this.campaign = new CampaignDto();
-        this.dialog.open(CampaignCreatedDialogComponent)
+        let dialog: Dialog = {
+          headline: "Kampagnen blev oprettet",
+          message: "Kampagnen er nu oprettet, og kan vælges fra listen"
+        };
+        this.dialog.open(DialogComponent, { data: dialog });
     },
       err => {
         this.campaign.budget.microAmount /= 1000000;
-        this.dialog.open(CampaignNotCreatedDialogComponent);       
+        let dialog: Dialog = {
+          headline: "Kampagnen blev ikke oprettet",
+          message: "Opstod en fejl under oprettelse af kampagnen, prøv venligst igen eller kontakt support"
+        };
+        this.dialog.open(DialogComponent, { data: dialog });       
     });
   }
 

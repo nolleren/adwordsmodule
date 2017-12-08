@@ -6,7 +6,7 @@ import { AdWordsAd } from '../../models/AdWordsAd';
 
 @Injectable()
 export class ListService {
-  updateAd = new Subject<AdWordsAd>();
+  resetProcess = new Subject();
   httpString: string;
 
   constructor(private http: Http) {
@@ -15,7 +15,6 @@ export class ListService {
    }
 
    createAds(adwordsContent: AdwordsContent){
-     console.log(adwordsContent.adGroupLo.adGroupId);
       return this.http.post(this.httpString, adwordsContent).map(res => res.json());
    }
 

@@ -1,6 +1,5 @@
 import { AppPage } from './../../../../e2e/app.po';
 import { MatDialog } from '@angular/material';
-import { AdwordsAdsCreatedDialogComponent } from './../../dialogs/adwords-ads-created-dialog/adwords-ads-created-dialog.component';
 import { AdContentService } from './../ad-content.service';
 import { element } from 'protractor';
 import { AdWordsAd } from './../../../models/AdWordsAd';
@@ -12,6 +11,9 @@ import { ProductService } from '../../products/product.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { KeyValuePair } from '../../../models/keyValuePair';
 import { formControlBinding } from '@angular/forms/src/directives/reactive_directives/form_control_directive';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
+import { ListService } from '../../list/list.service';
 declare var $ :any;
 
 @Component({
@@ -26,22 +28,33 @@ export class AdContentComponent implements OnInit {
   draggable: DragNdrop;
   adContentForm: FormGroup;
   url: string = "www.nolleren.org/";  
-  product: Product = new Product();
+  product: Product;
 
   constructor(private adContentService: AdContentService, 
               private dialog: MatDialog,
-              private productService: ProductService) { }
+              private productService: ProductService,
+              private listService: ListService) { }
 
   ngOnInit() {
     this.visible = false;
     this.adContent = new AdContent();
     this.draggable = new DragNdrop();
     this.outputAdContent = new AdContent();
+    this.product = new Product();
 
-    this.draggable.draggable();
+    this.getProduct();
     this.createFormGroup();
     this.setDataBinding();
-    this.getProduct();
+    this.reset();
+  }
+
+  reset(){
+    this.listService.resetProcess.subscribe(data => {
+      this.adContent = new AdContent();
+      this.outputAdContent = new AdContent();
+      this.visible = false;
+      this.adContentForm.reset();
+    });
   }
 
   getProduct(){
@@ -63,6 +76,7 @@ export class AdContentComponent implements OnInit {
             value: data[0].productLos[0].keyValuePairs[i].value
           });
         }
+        this.draggable.draggable();
       });    
     }
 
@@ -120,16 +134,20 @@ export class AdContentComponent implements OnInit {
   }
 
   setAdwordsAds(){
-    this.createContentProduct(true);
+    this.createContentProduct();
   }
 
   submitAdContent(){
     this.setAdwordsAds();
   }
 
-  createContentProduct(showDialog: boolean){
+  createContentProduct(){
     this.adContentService.adContent.next(this.adContent);
-    if(showDialog) this.dialog.open(AdwordsAdsCreatedDialogComponent);
+    let dialog: Dialog = {
+      headline: "Annonceindhold udfyldt",
+      message: "Gå nu videre til 'Tilpas annoncer'"
+    };
+    this.dialog.open(DialogComponent, { data: dialog });
     this.visible = false;
   }
 

@@ -7,7 +7,7 @@
       <div class="col-6">
         <input class="form-control" 
                type="text" 
-               id="name"
+               id="name"placeholder="Indtast kampagnenavn her..."
                formControlName="name"
                [(ngModel)]="campaign.name">
         <span 
@@ -27,6 +27,7 @@
           <input class="form-control" 
                  type="number"
                  id="microAmount"
+                 placeholder="Indtast beløb per dag for kampagnen her..."
                  formControlName="microAmount"
                  [(ngModel)]="microAmount">
         <span 

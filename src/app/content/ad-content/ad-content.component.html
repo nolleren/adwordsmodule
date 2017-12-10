@@ -17,6 +17,7 @@
                 <input class="form-control dropdiv" 
                       type="text"
                       id="headlinePart1"
+                      placeholder="Indtast tekst for overskrift 1 her..."
                       formControlName="headlinePart1"
                       [(ngModel)]="adContent.headLinePart1"
                       (focus)="alertChildComponentOnChanges()">
@@ -32,6 +33,7 @@
                 <input class="form-control dropdiv" 
                       type="text"
                       id="headlinePart2"
+                      placeholder="Indtast tekst for overskrift 2 her..."
                       formControlName="headlinePart2"
                       [(ngModel)]="adContent.headLinePart2"
                       (focus)="alertChildComponentOnChanges()">
@@ -50,6 +52,7 @@
                           <input class="form-control dropdiv" 
                           type="text"
                           id="path1"
+                          placeholder="Indtast tekst for sti 1 her..."
                           formControlName="path1"
                           [(ngModel)]="adContent.path1"
                           (focus)="alertChildComponentOnChanges()">
@@ -58,6 +61,7 @@
                       <input class="form-control dropdiv float-right"  
                       type="text"
                       id="path2"
+                      placeholder="Indtast tekst for sti 2 her..."
                       formControlName="path2"
                       [(ngModel)]="adContent.path2"
                       (focus)="alertChildComponentOnChanges()">  
@@ -73,6 +77,7 @@
                   class="form-control dropdiv" 
                   rows="3"
                   id="description"
+                  placeholder="Indtast beskrivelse her..."
                   [(ngModel)]="adContent.description"
                   (focus)="alertChildComponentOnChanges()"
                   ></textarea>

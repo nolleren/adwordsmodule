@@ -8,6 +8,7 @@
       <input class="form-control" 
              type="text" 
              id="name"
+             placeholder="Indtast navn for annoncegruppe her..."
              formControlName="name"
              [(ngModel)]="adGroup.name">
       <span 
@@ -27,6 +28,7 @@
             formControlName="keyWords"
             class="form-control" 
             rows="3"
+            placeholder="Indtast søgeord og søgesætninger her. Skal bruge komma som seperator..."
             id="keyWords"
             [(ngModel)]="adGroup.keyWords"
             ></textarea>

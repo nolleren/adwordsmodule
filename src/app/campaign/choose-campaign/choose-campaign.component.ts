@@ -1,4 +1,3 @@
-import { CampaignComponent } from './../campaign.component';
 import { ListService } from './../../list/list.service';
 import { MatDialog } from '@angular/material';
 import { CampaignService } from './../campaign.service';
@@ -17,6 +16,8 @@ export class ChooseCampaignComponent implements OnInit {
   campaign: CampaignListItem = new CampaignListItem();
   campaignList: CampaignListItem[] = [];
   disableButtons: boolean = false;
+  showCreateCampaign: boolean = false;
+  visible: boolean = false;
 
   constructor(private campaignService: CampaignService,
               private dialog: MatDialog,
@@ -25,6 +26,8 @@ export class ChooseCampaignComponent implements OnInit {
   ngOnInit() {
     this.campaignList = this.campaignService.getCampaigns();
     this.addCampaignToList();
+    this.setShowCampaign();
+    this.setShowCreateCampaign();
     this.reset();
   }
 
@@ -33,6 +36,22 @@ export class ChooseCampaignComponent implements OnInit {
       this.campaign = new CampaignListItem();
       this.campaignService.toggleVisibility.next(false);
     });
+  }
+
+  setShowCampaign(){
+    this.campaignService.toggleVisibility.subscribe((data: boolean) => {
+      this.visible = data;
+    })
+  }
+
+  setShowCreateCampaign(){
+    this.campaignService.showCreateCampaignComponent.subscribe((data: boolean) => {
+      this.showCreateCampaign = data;
+    })
+  }
+
+  show(){
+    this.visible = !this.visible;
   }
 
   addCampaignToList(){

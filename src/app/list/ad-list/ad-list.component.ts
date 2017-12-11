@@ -12,7 +12,7 @@ import { ListItemComponent } from './list-item/list-item.component';
 import { Component, OnInit } from '@angular/core';
 import { AdWordsAd } from '../../../models/AdWordsAd';
 import { ProductService } from '../../products/product.service';
-import { AdGroupService } from '../../ad-group/ad-group-service.service';
+import { AdGroupService } from '../../ad/ad-group-service.service';
 import { MatDialog } from '@angular/material';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';

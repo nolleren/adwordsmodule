@@ -1,4 +1,4 @@
-import { AdGroupService } from './ad-group/ad-group-service.service';
+import { AdGroupService } from './ad/ad-group-service.service';
 import { AdwordAdExampleComponent } from './content/ad-content/adword-ad-example/adword-ad-example.component';
 import { ListItemComponent } from './list/ad-list/list-item/list-item.component';
 import { ProductService } from './products/product.service';
@@ -19,7 +19,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
-import { CampaignComponent } from './campaign/campaign.component';
 import { CreateCampaignComponent } from './campaign/create-campaign/create-campaign.component';
 import { ChooseCampaignComponent } from './campaign/choose-campaign/choose-campaign.component';
 import { DatepickerComponent } from './campaign/create-campaign/date-picker/date-picker.component';
@@ -28,8 +27,8 @@ import { AdContentComponent } from './content/ad-content/ad-content.component';
 import { ListService } from './list/list.service';
 import { AdListComponent } from './list/ad-list/ad-list.component';
 import { AdContentService } from './content/ad-content.service';
-import { AdGroupComponent } from './ad-group/ad-group.component';
-import { CreateAdGroupComponent } from './ad-group/create-ad-group/create-ad-group.component';
+import { AdGroupComponent } from './ad/ad-group/ad-group.component';
+import { CreateAdGroupComponent } from './ad/create-ad-group/create-ad-group.component';
 import { DialogComponent } from './dialogs/dialog/dialog.component';
 
 const appRoutes: Routes = [
@@ -40,7 +39,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    CampaignComponent,
     CreateCampaignComponent,
     ChooseCampaignComponent,
     DatepickerComponent,

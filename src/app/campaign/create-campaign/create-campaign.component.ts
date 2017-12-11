@@ -12,16 +12,20 @@ import { DialogComponent } from '../../dialogs/dialog/dialog.component';
   styleUrls: ['./create-campaign.component.css'],
 })
 export class CreateCampaignComponent implements OnInit {
-  campaign: CampaignDto = new CampaignDto();
+  campaign: CampaignDto;
   campaignForm: FormGroup;
   campaignList: CampaignListItem[];
   microAmount?: number;
-  visible: boolean = false;
+  visible: boolean;
+  toggleCreateCampaignButton: boolean;
 
   constructor(private campaignService: CampaignService, 
               private dialog: MatDialog,){}
   
   ngOnInit(){
+    this.campaign = new CampaignDto();
+    this.visible = false;
+    this.toggleCreateCampaignButton = false;
     this.campaignList = this.campaignService.getCampaigns();
     this.createFormGroup();   
     this.setDates();
@@ -56,6 +60,10 @@ export class CreateCampaignComponent implements OnInit {
     this.campaignService.showCreateCampaignComponent.next(false);
   }
 
+  toggle(){
+    this.toggleCreateCampaignButton = !this.toggleCreateCampaignButton;
+  }
+
   setDates(){
     this.campaignService.startDate.subscribe((data: Date) => { this.campaign.startDate = data });
     this.campaignService.endDate.subscribe((data: Date) => { this.campaign.endDate = data });
@@ -71,6 +79,7 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   createCampagin(campaign: CampaignDto){
+    this.toggle();
     this.campaign.budget.microAmount = this.microAmount;
     this.campaignService.createCampaign(campaign).subscribe(
       data => {
@@ -83,6 +92,7 @@ export class CreateCampaignComponent implements OnInit {
         };
         this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       
         this.toggleCreateCampaign();
+        this.toggle();
         this.campaign = new CampaignDto();
         let dialog: Dialog = {
           headline: "Kampagnen blev oprettet",

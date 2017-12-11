@@ -18,6 +18,7 @@ export class CreateAdGroupComponent implements OnInit {
   adGroup: AdGroup;
   adGroups: AdGroup[];
   @Input() campaign: CampaignListItem;
+  toggleCreateAdGroupButton: boolean;
 
   constructor(private adGroupService: AdGroupService,
               private campaignService: CampaignService,
@@ -25,6 +26,7 @@ export class CreateAdGroupComponent implements OnInit {
 
   ngOnInit() {
     this.adGroup = new AdGroup();
+    this.toggleCreateAdGroupButton = false;
     this.adGroups = this.adGroupService.getAdGroups(this.campaign);
   
     this.createFormGroup();
@@ -35,6 +37,10 @@ export class CreateAdGroupComponent implements OnInit {
       'name': new FormControl(null, [Validators.required, Validators.minLength(1)]),
       'keyWords': new FormControl(null, [Validators.required, Validators.minLength(1)])
     });
+  }
+
+  toggle(){
+    this.toggleCreateAdGroupButton = !this.toggleCreateAdGroupButton;
   }
 
   adGroupNameExist(){
@@ -51,6 +57,7 @@ export class CreateAdGroupComponent implements OnInit {
   }
 
   createAdGroup(adgroup: AdGroup){
+    this.toggle();
     adgroup.campaignId = this.campaign.id;
     this.adGroupService.createAdGroup(adgroup).subscribe(data => {
       let newAdGroup: AdGroup = {
@@ -61,6 +68,7 @@ export class CreateAdGroupComponent implements OnInit {
       };
       this.adGroupService.addCreatedAdGroupToList.next(newAdGroup);
       this.adGroups.push(newAdGroup);
+      this.toggle();
       this.toggleCreateAdGroup();
       let dialog: Dialog = {
         headline: "Annoncegruppen blev oprettet",

@@ -1,13 +1,13 @@
-import { ListService } from './../list/list.service';
+import { ListService } from '../../list/list.service';
 import { Subject } from 'rxjs/Subject';
-import { CampaignListItem } from './../../models/campaign';
+import { CampaignListItem } from '../../../models/campaign';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AdGroupService } from './ad-group-service.service';
-import { AdGroup } from '../../models/adGroup';
-import { CampaignService } from '../campaign/campaign.service';
+import { AdGroupService } from '../ad-group-service.service';
+import { AdGroup } from '../../../models/adGroup';
+import { CampaignService } from '../../campaign/campaign.service';
 import { MatDialog } from '@angular/material';
-import { Dialog } from '../../models/dialog';
-import { DialogComponent } from '../dialogs/dialog/dialog.component';
+import { Dialog } from '../../../models/dialog';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-ad-group',

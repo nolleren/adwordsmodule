@@ -39,7 +39,8 @@
         </div>
   </div>
     <div class="col-9">
-        <button class="btn btn-primary float-right" type="submit" [disabled]="!adGroupForm.valid">Opret Annoncegruppe</button>
+        <button class="btn btn-primary float-right" [hidden]="toggleCreateAdGroupButton" type="submit" [disabled]="!adGroupForm.valid">Opret Annoncegruppe</button>
+        <button class="btn btn-danger float-right" [hidden]="!toggleCreateAdGroupButton" [disabled]="true">Opretter annoncegruppe, vent venligst</button>
         <button class="btn btn-danger float-right" type="button" (click)="toggleCreateAdGroup()">Annuller</button>
     </div>
 </form>

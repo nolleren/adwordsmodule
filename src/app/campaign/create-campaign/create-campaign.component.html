@@ -37,7 +37,8 @@
         </div>
       </div>
       <div class="col-9">
-          <button class="btn btn-primary float-right" type="submit" [disabled]="!campaignForm.valid">Opret kampagne</button>
+          <button class="btn btn-primary float-right" [hidden]="toggleCreateCampaignButton" type="submit" [disabled]="!campaignForm.valid">Opret kampagne</button>
+          <button class="btn btn-danger float-right" [hidden]="!toggleCreateCampaignButton" [disabled]="true">Opretter kampagne, vent venligst</button>
           <button class="btn btn-danger float-right" type="button" (click)="toggleCreateCampaign()">Annuller</button>
       </div>
 </form>

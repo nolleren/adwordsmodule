@@ -34,8 +34,8 @@ export class CreateAdGroupComponent implements OnInit {
 
   createFormGroup(){
     this.adGroupForm = new FormGroup({
-      'name': new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      'keyWords': new FormControl(null, [Validators.required, Validators.minLength(1)])
+      'name': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(55)]),
+      'keyWords': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(80)])
     });
   }
 

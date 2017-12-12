@@ -65,7 +65,7 @@ export class ProductListComponent implements OnInit {
   addProduct(product: Product, event){
     if(event.target.checked === true) {
       this.counter++;
-      this.productService.addProductToList.next(product);
+      for(let i = 0; i < 100; i++) this.productService.addProductToList.next(product);
     }
     else {
       this.counter--;

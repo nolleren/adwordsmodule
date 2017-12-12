@@ -87,7 +87,7 @@
               </span>
               </div>
               <div class="col-12">
-                  <button class="btn btn-primary float-right" [disabled]="!adContentForm.valid">Gem</button>
+                  <button class="btn btn-primary float-right" [hidden]="disableButton" [disabled]="!adContentForm.valid">Gem</button>
                 </div>
         </div>       
 </form>

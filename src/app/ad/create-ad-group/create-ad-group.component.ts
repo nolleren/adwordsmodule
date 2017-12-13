@@ -68,12 +68,12 @@ export class CreateAdGroupComponent implements OnInit {
       };
       this.adGroupService.addCreatedAdGroupToList.next(newAdGroup);
       this.adGroups.push(newAdGroup);
-      this.toggle();
       this.toggleCreateAdGroup();
       let dialog: Dialog = {
         headline: "Annoncegruppen blev oprettet",
         message: "Annoncegruppen kan nu vælges fra listen"
       };
+      this.toggle();
       this.dialog.open(DialogComponent, { data: dialog });
     },
     err => {
@@ -81,6 +81,7 @@ export class CreateAdGroupComponent implements OnInit {
         headline: "Annoncegruppen blev ikke oprettet",
         message: "Opstod en fejl under oprettelse af annoncegruppen, prøv venligst igen eller kontakt support"
       };
+      this.toggle();
       this.dialog.open(DialogComponent, { data: dialog });
     });
   }  

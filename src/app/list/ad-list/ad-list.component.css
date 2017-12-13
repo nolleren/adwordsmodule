@@ -1,7 +1,7 @@
 .search-results {
     height: 100%;
     overflow: auto;
-    max-height: 565px;
+    max-height: 800px;
 }
 .btn {
     margin-top: 5px;

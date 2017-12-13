@@ -92,12 +92,12 @@ export class CreateCampaignComponent implements OnInit {
         };
         this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       
         this.toggleCreateCampaign();
-        this.toggle();
         this.campaign = new CampaignDto();
         let dialog: Dialog = {
           headline: "Kampagnen blev oprettet",
           message: "Kampagnen er nu oprettet, og kan vælges fra listen"
         };
+        this.toggle();
         this.dialog.open(DialogComponent, { data: dialog });
     },
       err => {
@@ -105,7 +105,8 @@ export class CreateCampaignComponent implements OnInit {
         let dialog: Dialog = {
           headline: "Kampagnen blev ikke oprettet",
           message: "Opstod en fejl under oprettelse af kampagnen, prøv venligst igen eller kontakt support"
-        };
+        };      
+        this.toggle();
         this.dialog.open(DialogComponent, { data: dialog });       
     });
   }

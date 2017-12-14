@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { ProductGroup } from '../../../models/productGroup';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
+import { ModelSetter } from '../../../models/dataTransfer';
 
 @Component({
   selector: 'app-product-list',
@@ -22,6 +23,7 @@ export class ProductListComponent implements OnInit {
   showProducts: boolean[];
   counter: number;
   productGroups: ProductGroup[];
+  modelSetter: ModelSetter;
 
   constructor(private productService: ProductService,
               private dialog: MatDialog,
@@ -33,6 +35,7 @@ export class ProductListComponent implements OnInit {
     this.showProducts = [];
     this.productGroups = [];
     this.counter = 0;
+    this.modelSetter = new ModelSetter();
     this.setProductList();
     this.reset();
  }
@@ -48,16 +51,20 @@ export class ProductListComponent implements OnInit {
   addProductGroup(productGroup: ProductGroup, event){
     if(event.target.checked === true) {
       for(let i = 0; i < productGroup.products.length; i++){
-        this.counter++;
-        productGroup.products[i].isChecked = true;
-        this.productService.addProductToList.next(productGroup.products[i]);
+        if(productGroup.products[i].isChecked === false){
+          this.counter++;
+          productGroup.products[i].isChecked = true;
+          this.productService.addProductToList.next(productGroup.products[i]);
+        }       
       }
     }
     else {
       for(let i = 0; i < productGroup.products.length; i++){
+        if(productGroup.products[i].isChecked === true){
         this.counter--;
         productGroup.products[i].isChecked = false;
         this.productService.removeProductFromList.next(productGroup.products[i]);
+        }
       }
     }
   }
@@ -65,10 +72,12 @@ export class ProductListComponent implements OnInit {
   addProduct(product: Product, event){
     if(event.target.checked === true) {
       this.counter++;
-      for(let i = 0; i < 100; i++) this.productService.addProductToList.next(product);
+      product.isChecked = true;
+      this.productService.addProductToList.next(product);
     }
     else {
       this.counter--;
+      product.isChecked = false;
       this.productService.removeProductFromList.next(product);
     }
   }
@@ -77,34 +86,9 @@ export class ProductListComponent implements OnInit {
     this.productService.getProducts().subscribe((data) => {
       for(let i = 0; i < data.length; i++)
       {
-        let productGroup: ProductGroup = {
-          id: data[i].id,
-          groupName: data[i].groupName,
-          products: [],
-        };
-        for(let j = 0; j < data[i].productLos.length; j++){
-          productGroup.products.push({
-            id: data[i].productLos[j].id,
-            productNumber: data[i].productLos[j].productNumber,
-            productName: data[i].productLos[j].productName,
-            logicName: data[i].productLos[j].logicName,
-            description: data[i].productLos[j].description,
-            descriptionShort: data[i].productLos[j].descriptionShort,
-            adGroupId: data[i].productLos[j].adGroupLoId,
-            isChecked: false,
-            keyValuePairs: []
-          });
-
-          for(let h = 0; h < data[i].productLos[j].keyValuePairs.length; h++){
-            productGroup.products[j].keyValuePairs.push({
-              key: data[i].productLos[j].keyValuePairs[h].key,
-              value: data[i].productLos[j].keyValuePairs[h].value
-            });
-          }  
-        }  
-          this.productGroups.push(productGroup);
-      }
-          this.showProducts.push(false);
+        this.productGroups.push(this.modelSetter.setProductGroup(data[i]));
+      }  
+        this.showProducts.push(false);
     });
   }
 

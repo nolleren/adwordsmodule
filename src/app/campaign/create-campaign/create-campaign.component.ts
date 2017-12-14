@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
+import { ModelSetter } from '../../../models/dataTransfer';
 
 @Component({
   selector: 'app-create-campaign',
@@ -18,6 +19,7 @@ export class CreateCampaignComponent implements OnInit {
   microAmount?: number;
   visible: boolean;
   toggleCreateCampaignButton: boolean;
+  modelSetter: ModelSetter;
 
   constructor(private campaignService: CampaignService, 
               private dialog: MatDialog,){}
@@ -26,6 +28,8 @@ export class CreateCampaignComponent implements OnInit {
     this.campaign = new CampaignDto();
     this.visible = false;
     this.toggleCreateCampaignButton = false;
+    this.modelSetter = new ModelSetter();
+
     this.campaignList = this.campaignService.getCampaigns();
     this.createFormGroup();   
     this.setDates();
@@ -82,15 +86,8 @@ export class CreateCampaignComponent implements OnInit {
     this.toggle();
     this.campaign.budget.microAmount = this.microAmount;
     this.campaignService.createCampaign(campaign).subscribe(
-      data => {
-        let newCampaignListItem: CampaignListItem = {
-          id: data.value[0].id,
-          name: data.value[0].name,
-          startDate: data.value[0].startDate,
-          endDate: data.value[0].endDate,
-          microAmount: data.value[0].budget.amount.microAmount
-        };
-        this.campaignService.addCreatedCampaignToList.next(newCampaignListItem);       
+      data => {        
+        this.campaignService.addCreatedCampaignToList.next(this.modelSetter.setCreatedCampaignListItem(data));       
         this.toggleCreateCampaign();
         this.campaign = new CampaignDto();
         let dialog: Dialog = {

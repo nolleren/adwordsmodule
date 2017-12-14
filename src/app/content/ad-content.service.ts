@@ -5,10 +5,14 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AdContentService {
-  adwordAds = new Subject<AdWordsAd[]>();
-  adContent = new Subject<AdContent>();
-  setAdContent = new Subject<AdContent>();
+  adwordAds;
+  adContent;
+  setAdContent;
 
-  constructor() { }
+  constructor() { 
+    this.adwordAds = new Subject<AdWordsAd[]>();
+    this.adContent = new Subject<AdContent>();
+    this.setAdContent = new Subject<AdContent>();
+  }
 
 }

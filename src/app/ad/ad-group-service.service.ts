@@ -1,3 +1,4 @@
+import { ModelSetter } from './../../models/dataTransfer';
 import { AdGroup } from './../../models/adGroup';
 import { Subject } from 'rxjs/Subject';
 import { Injectable, isDevMode } from '@angular/core';
@@ -6,13 +7,20 @@ import { CampaignListItem } from '../../models/campaign';
 
 @Injectable()
 export class AdGroupService {
-  toggleVisibility = new Subject<boolean>();
-  showCreateAdGroupComponent = new Subject<boolean>();
-  addCreatedAdGroupToList = new Subject<AdGroup>();
-  setSelectedAdGrop = new Subject<AdGroup>();
+  toggleVisibility;
+  showCreateAdGroupComponent;
+  addCreatedAdGroupToList;
+  setSelectedAdGrop;
   httpString: string;
+  modelSetter: ModelSetter;
 
   constructor(private http: Http) {
+    this.toggleVisibility = new Subject<boolean>();
+    this.showCreateAdGroupComponent = new Subject<boolean>();
+    this.addCreatedAdGroupToList = new Subject<AdGroup>();
+    this.setSelectedAdGrop = new Subject<AdGroup>();
+    this.modelSetter = new ModelSetter();
+
     if(isDevMode()) this.httpString = "http://localhost:52185/api/adgroups";
     else this.httpString = "https://adwordsmoduleapi.azurewebsites.net/api/adgroups"; 
   }
@@ -28,14 +36,8 @@ export class AdGroupService {
     this.http.get(this.httpString + "/" + campaign.id).map(res => res.json())
         .subscribe((data) => {
           for(let i = 0; i < data.length; i++){
-            let adgroup: AdGroup = {
-              adGroupId: data[i].id,
-              name: data[i].name,
-              keyWords: "",
-              campaignId: data[i].campaignId
+              adGroups.push(this.modelSetter.setAdGroup(data[i]));
             };
-            adGroups.push(adgroup);
-          } 
         });
         return adGroups;
   }

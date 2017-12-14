@@ -14,6 +14,7 @@ import { formControlBinding } from '@angular/forms/src/directives/reactive_direc
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 import { ListService } from '../../list/list.service';
+import { ModelSetter } from '../../../models/dataTransfer';
 declare var $ :any;
 
 @Component({
@@ -29,6 +30,7 @@ export class AdContentComponent implements OnInit {
   adContentForm: FormGroup;
   url: string = "www.nolleren.org/";  
   product: Product;
+  dataTransfer: ModelSetter;
 
   constructor(private adContentService: AdContentService, 
               private dialog: MatDialog,
@@ -41,6 +43,7 @@ export class AdContentComponent implements OnInit {
     this.draggable = new DragNdrop();
     this.outputAdContent = new AdContent();
     this.product = new Product();
+    this.dataTransfer = new ModelSetter();
 
     this.getProduct();
     this.createFormGroup();
@@ -59,24 +62,8 @@ export class AdContentComponent implements OnInit {
 
   getProduct(){
     this.productService.getProducts().subscribe((data) => {
-          this.product = {
-            id: data[0].productLos[0].id,
-            productNumber: data[0].productLos[0].productNumber,
-            productName: data[0].productLos[0].productName,
-            logicName: data[0].productLos[0].logicName,
-            description: data[0].productLos[0].description,
-            descriptionShort: data[0].productLos[0].descriptionShort,
-            adGroupId: data[0].productLos[0].adGroupLoId,
-            isChecked: false,
-            keyValuePairs: []
-        };
-        for(let i = 0; i < data[0].productLos[0].keyValuePairs.length; i++){
-          this.product.keyValuePairs.push({
-            key: data[0].productLos[0].keyValuePairs[i].key,
-            value: data[0].productLos[0].keyValuePairs[i].value
-          });
-        }
-        this.draggable.draggable();
+          this.product = this.dataTransfer.setProduct(data);
+          this.draggable.draggable();
       });    
     }
 

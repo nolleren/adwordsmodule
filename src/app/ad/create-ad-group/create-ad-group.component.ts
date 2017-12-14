@@ -1,3 +1,4 @@
+import { ModelSetter } from './../../../models/dataTransfer';
 import { CampaignService } from './../../campaign/campaign.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
@@ -19,6 +20,7 @@ export class CreateAdGroupComponent implements OnInit {
   adGroups: AdGroup[];
   @Input() campaign: CampaignListItem;
   toggleCreateAdGroupButton: boolean;
+  modelSetter: ModelSetter;
 
   constructor(private adGroupService: AdGroupService,
               private campaignService: CampaignService,
@@ -28,6 +30,7 @@ export class CreateAdGroupComponent implements OnInit {
     this.adGroup = new AdGroup();
     this.toggleCreateAdGroupButton = false;
     this.adGroups = this.adGroupService.getAdGroups(this.campaign);
+    this.modelSetter = new ModelSetter();
   
     this.createFormGroup();
   }
@@ -60,12 +63,7 @@ export class CreateAdGroupComponent implements OnInit {
     this.toggle();
     adgroup.campaignId = this.campaign.id;
     this.adGroupService.createAdGroup(adgroup).subscribe(data => {
-      let newAdGroup: AdGroup = {
-        adGroupId: data.value[0].id,
-        campaignId: data.value[0].campaignId,
-        name: data.value[0].name,
-        keyWords: ""
-      };
+      let newAdGroup = this.modelSetter.setAdGroup(data);
       this.adGroupService.addCreatedAdGroupToList.next(newAdGroup);
       this.adGroups.push(newAdGroup);
       this.toggleCreateAdGroup();

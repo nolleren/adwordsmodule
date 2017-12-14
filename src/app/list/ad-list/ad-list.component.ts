@@ -1,3 +1,4 @@
+import { ModelSetter } from './../../../models/dataTransfer';
 import { AdGroup } from './../../../models/adGroup';
 import { AdContent } from './../../../models/adContent';
 import { KeyValuePair } from './../../../models/keyValuePair';
@@ -33,6 +34,7 @@ export class AdListComponent implements OnInit {
   productList: Product[];
   adContent: AdContent;
   url: string = "http://www.nolleren.org";
+  modelSetter: ModelSetter;
 
   constructor(private adContentService: AdContentService, 
               private listService: ListService, 
@@ -49,6 +51,7 @@ export class AdListComponent implements OnInit {
     this.toggleCreateAdsButton = false;
     this.productList = [];
     this.adContent = new AdContent();
+    this.modelSetter = new ModelSetter();
 
     this.addProductToList();
     this.removeProductFromList();
@@ -109,7 +112,7 @@ export class AdListComponent implements OnInit {
     this.productService.addProductToList.subscribe((data: Product) => {
       this.productList.push(data);
       let isMyObjectEmpty = Object.keys(this.adContent).length;
-      if(this.adwordsAds.length > 0 || isMyObjectEmpty) {
+      if(this.adwordsAds.length !== 0 || isMyObjectEmpty) {
         let adWordAd: AdWordsAd = this.createAdWordContent(data);
         this.adwordsAds.push(adWordAd);
         this.enableAdList = true;
@@ -128,18 +131,8 @@ export class AdListComponent implements OnInit {
   }
 
   createAdWordContent(product: Product) : AdWordsAd{
-    let adwordAd: AdWordsAd = {
-      adContent: {
-        headLinePart1: this.adContent.headLinePart1,
-        headLinePart2: this.adContent.headLinePart2,
-        path1: this.adContent.path1,
-        path2: this.adContent.path2,
-        description: this.adContent.description
-      },
-      productId: product.id,
-      finalUrl: [this.url + product.logicName]
-    };
-    this.replacer(adwordAd, product);
+    let adwordAd = this.modelSetter.setAdwordAd(product, this.adContent);
+    this.modelSetter.replacer(adwordAd, product, false);
     return adwordAd;
   }
 
@@ -191,27 +184,4 @@ export class AdListComponent implements OnInit {
   toggle(){
     this.toggleCreateAdsButton = !this.toggleCreateAdsButton
   }
-
-  replacer(contentProduct: AdWordsAd, product: Product){
-      for(let i = 0; i < product.keyValuePairs.length; i++){
-        contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-      }
-      for(let i = 0; i < product.keyValuePairs.length; i++){
-        contentProduct.adContent.headLinePart2 = contentProduct.adContent.headLinePart2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-      }
-      if(contentProduct.adContent.path1 !== undefined){
-        for(let i = 0; i < product.keyValuePairs.length; i++){
-          contentProduct.adContent.path1 = contentProduct.adContent.path1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-        }
-      }
-      if(contentProduct.adContent.path2 !== undefined){
-        for(let i = 0; i < product.keyValuePairs.length; i++){
-          contentProduct.adContent.path2 = contentProduct.adContent.path2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-        }
-      } 
-      for(let i = 0; i < product.keyValuePairs.length; i++){
-        contentProduct.adContent.description = contentProduct.adContent.description.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-      }
-  }
-    
 } 

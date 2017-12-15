@@ -1,11 +1,11 @@
-import { ModelSetter } from './../../../models/dataTransfer';
+import { ModelSetter } from './../../../models/modelSetter';
 import { AdGroup } from './../../../models/adGroup';
 import { AdContent } from './../../../models/adContent';
 import { KeyValuePair } from './../../../models/keyValuePair';
 import { Product } from './../../../models/product';
 import { AdwordsContent } from './../../../models/adwordsContent';
 import { CampaignService } from './../../campaign/campaign.service';
-import { CampaignListItem } from './../../../models/campaign';
+import { CampaignListItem } from './../../../models/campaignListItem';
 import { ListService } from './../list.service';
 import { AdContentService } from './../../content/ad-content.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

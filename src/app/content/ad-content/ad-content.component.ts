@@ -14,7 +14,7 @@ import { formControlBinding } from '@angular/forms/src/directives/reactive_direc
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 import { ListService } from '../../list/list.service';
-import { ModelSetter } from '../../../models/dataTransfer';
+import { ModelSetter } from '../../../models/modelSetter';
 declare var $ :any;
 
 @Component({

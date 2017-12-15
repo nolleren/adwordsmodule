@@ -1,11 +1,12 @@
-import { CampaignDto, CampaignListItem } from './../../../models/campaign';
+import { CampaignDto } from './../../../models/campaign';
 import { CampaignService } from '../campaign.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
-import { ModelSetter } from '../../../models/dataTransfer';
+import { ModelSetter } from '../../../models/modelSetter';
+import { CampaignListItem } from '../../../models/campaignListItem';
 
 @Component({
   selector: 'app-create-campaign',

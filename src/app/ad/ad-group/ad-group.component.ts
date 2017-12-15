@@ -1,6 +1,6 @@
 import { ListService } from '../../list/list.service';
 import { Subject } from 'rxjs/Subject';
-import { CampaignListItem } from '../../../models/campaign';
+import { CampaignListItem } from '../../../models/campaignListItem';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdGroupService } from '../ad-group-service.service';
 import { AdGroup } from '../../../models/adGroup';

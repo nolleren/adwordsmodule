@@ -1,10 +1,10 @@
-import { ModelSetter } from './../../../models/dataTransfer';
+import { ModelSetter } from './../../../models/modelSetter';
 import { CampaignService } from './../../campaign/campaign.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AdGroup } from '../../../models/adGroup';
 import { AdGroupService } from '../ad-group-service.service';
-import { CampaignListItem } from '../../../models/campaign';
+import { CampaignListItem } from '../../../models/campaignListItem';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
@@ -63,7 +63,7 @@ export class CreateAdGroupComponent implements OnInit {
     this.toggle();
     adgroup.campaignId = this.campaign.id;
     this.adGroupService.createAdGroup(adgroup).subscribe(data => {
-      let newAdGroup = this.modelSetter.setAdGroup(data);
+      let newAdGroup = this.modelSetter.setCreatedAdGroup(data);
       this.adGroupService.addCreatedAdGroupToList.next(newAdGroup);
       this.adGroups.push(newAdGroup);
       this.toggleCreateAdGroup();

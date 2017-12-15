@@ -1,11 +1,12 @@
 import { ListService } from './../../list/list.service';
 import { MatDialog } from '@angular/material';
 import { CampaignService } from './../campaign.service';
-import { CampaignDto, CampaignListItem } from './../../../models/campaign';
+import { CampaignDto } from './../../../models/campaign';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { empty } from 'rxjs/Observer';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
+import { CampaignListItem } from '../../../models/campaignListItem';
 
 @Component({
   selector: 'app-choose-campaign',

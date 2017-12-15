@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material';
 import { ProductGroup } from '../../../models/productGroup';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
-import { ModelSetter } from '../../../models/dataTransfer';
+import { ModelSetter } from '../../../models/modelSetter';
 
 @Component({
   selector: 'app-product-list',

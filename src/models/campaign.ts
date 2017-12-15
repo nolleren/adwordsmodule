@@ -1,6 +1,14 @@
 import { BudgetDto } from "./budget";
 
-export class CampaignDto {
+interface ICampaignDto {
+    id: number;
+    budget: BudgetDto;
+    name: string;
+    startDate: Date;
+    endDate: Date;
+}
+
+export class CampaignDto implements ICampaignDto {
     id: number;
     budget: BudgetDto;
     name: string;
@@ -10,12 +18,4 @@ export class CampaignDto {
     constructor(){
         this.budget = new BudgetDto();
     }
-}
-
-export class CampaignListItem {
-    id: number;
-    name: string;
-    startDate: string;
-    endDate: string;
-    microAmount: number;
 }

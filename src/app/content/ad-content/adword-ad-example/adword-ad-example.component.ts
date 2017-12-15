@@ -1,4 +1,4 @@
-import { ModelSetter } from './../../../../models/dataTransfer';
+import { ModelSetter } from './../../../../models/modelSetter';
 import { element } from 'protractor';
 import { Product } from './../../../../models/product';
 import { AdWordsAd } from './../../../../models/AdWordsAd';

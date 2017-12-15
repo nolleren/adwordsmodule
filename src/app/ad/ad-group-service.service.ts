@@ -1,9 +1,9 @@
-import { ModelSetter } from './../../models/dataTransfer';
+import { ModelSetter } from './../../models/modelSetter';
 import { AdGroup } from './../../models/adGroup';
 import { Subject } from 'rxjs/Subject';
 import { Injectable, isDevMode } from '@angular/core';
 import { Http } from '@angular/http';
-import { CampaignListItem } from '../../models/campaign';
+import { CampaignListItem } from '../../models/campaignListItem';
 
 @Injectable()
 export class AdGroupService {

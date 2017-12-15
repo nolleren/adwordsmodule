@@ -1,12 +1,23 @@
 import { AdContent } from './adContent';
 import { AdGroup } from './adGroup';
 import { Product } from "./product";
-import { CampaignListItem } from './campaign';
+import { CampaignListItem } from './campaignListItem';
 import { AdWordsAd } from './AdWordsAd';
 import { ProductGroup } from './productGroup';
 import { AdwordsContent } from './adwordsContent';
 
-export class ModelSetter {
+interface IModelSetter {
+  setProduct(data);
+  setAdGroup(data);
+  setCreatedAdGroup(data);
+  setCreatedCampaignListItem(data);
+  setCampaignListItem(data);
+  replacer(contentProduct: AdWordsAd, product: Product, setLenght: boolean);
+  setProductGroup(data);
+  setAdwordAd(product: Product, adContent: AdContent);
+}
+
+export class ModelSetter implements IModelSetter {
     url: string = "http://www.nolleren.org/";
 
     setProduct(data) : Product {
@@ -38,6 +49,16 @@ export class ModelSetter {
             campaignId: data.campaignId
         }
         return adgroup;
+    }
+
+    setCreatedAdGroup(data) : AdGroup {
+      let adgroup: AdGroup = {
+        adGroupId: data.value[0].id,
+        name: data.value[0].name,
+        keyWords: "",
+        campaignId: data.value[0].campaignId
+    }
+    return adgroup;
     }
 
     setCreatedCampaignListItem(data) : CampaignListItem {
@@ -96,32 +117,6 @@ export class ModelSetter {
             if(contentProduct.adContent.description !== undefined) contentProduct.adContent.description = contentProduct.adContent.description.substring(0, 80);
         }     
     }
-    replacer2(contentProduct: AdContent, product: Product){
-        if(contentProduct.headLinePart1 !== undefined){
-          for(let i = 0; i < product.keyValuePairs.length; i++){
-            contentProduct.headLinePart1 = contentProduct.headLinePart1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-          }
-        }
-        if(contentProduct.headLinePart2 !== undefined){
-          for(let i = 0; i < product.keyValuePairs.length; i++){
-            contentProduct.headLinePart2 = contentProduct.headLinePart2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-          }
-        }
-        if(contentProduct.path1 !== undefined){
-          for(let i = 0; i < product.keyValuePairs.length; i++){
-            contentProduct.path1 = contentProduct.path1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);         
-          }
-        }
-        if(contentProduct.path2 !== undefined){
-          for(let i = 0; i < product.keyValuePairs.length; i++){
-            contentProduct.path2 = contentProduct.path2.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-          }
-        } 
-        if(contentProduct.description !== undefined){
-          for(let i = 0; i < product.keyValuePairs.length; i++){
-            contentProduct.description = contentProduct.description.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);
-          }
-        }  }
 
     setProductGroup(data){
         let productGroup: ProductGroup = {

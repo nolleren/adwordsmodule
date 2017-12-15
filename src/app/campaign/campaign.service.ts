@@ -1,12 +1,13 @@
 import { element } from 'protractor';
 import { environment } from './../../environments/environment.prod';
-import { CampaignListItem, CampaignDto } from './../../models/campaign';
+import { CampaignListItem } from './../../models/campaignListItem';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { Subject } from 'rxjs/Subject';
 import { isDevMode } from '@angular/core';
-import { ModelSetter } from '../../models/dataTransfer';
+import { ModelSetter } from '../../models/modelSetter';
+import { CampaignDto } from '../../models/campaign';
 
 @Injectable()
 export class CampaignService {

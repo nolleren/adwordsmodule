@@ -1,8 +1,13 @@
 import { AdGroup } from './adGroup';
 import { AdWordsAd } from './AdWordsAd';
-import { CampaignListItem } from './campaign';
+import { CampaignListItem } from './campaignListItem';
 
-export class AdwordsContent {
+interface IAdwordsContent {
+    adGroupLo: AdGroup;
+    contentProducts: AdWordsAd[];
+}
+
+export class AdwordsContent implements IAdwordsContent {
     adGroupLo: AdGroup;
     contentProducts: AdWordsAd[];
 }

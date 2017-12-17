@@ -31,9 +31,9 @@ export class AdGroupService {
     return this.http.post(this.httpString, adgroup).map(res => res.json());
   }
 
-  getAdGroups(campaign: CampaignListItem){
+  getAdGroups(campaign: CampaignListItem, getAllAdGroups: boolean){
     let adGroups: AdGroup[] = [];
-    this.http.get(this.httpString + "/" + campaign.id).map(res => res.json())
+    this.http.get(this.httpString + "/" + campaign.id + "/" + getAllAdGroups).map(res => res.json())
         .subscribe((data) => {
           for(let i = 0; i < data.length; i++){
               adGroups.push(this.modelSetter.setAdGroup(data[i]));

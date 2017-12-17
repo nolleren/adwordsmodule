@@ -48,6 +48,7 @@ export class AdGroupComponent implements OnInit {
       this.campaign = new CampaignListItem();
       this.adGroup = new AdGroup();
       this.visible = false;
+      this.showCreateAdGroup = false;
     });
   }
 
@@ -60,7 +61,7 @@ export class AdGroupComponent implements OnInit {
   setChosenCampaign(){
     this.campaignService.setChosenCampaign.subscribe((data: CampaignListItem) => {
       this.campaign = data;
-      this.adGroups = this.adGroupService.getAdGroups(this.campaign);  
+      this.adGroups = this.adGroupService.getAdGroups(this.campaign, false);  
     });
   }
 

@@ -36,6 +36,7 @@ export class ChooseCampaignComponent implements OnInit {
     this.listService.resetProcess.subscribe(data => {
       this.campaign = new CampaignListItem();
       this.campaignService.toggleVisibility.next(false);
+      this.showCreateCampaign = false;
     });
   }
 

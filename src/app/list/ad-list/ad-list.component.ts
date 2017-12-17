@@ -8,7 +8,6 @@ import { CampaignService } from './../../campaign/campaign.service';
 import { CampaignListItem } from './../../../models/campaignListItem';
 import { ListService } from './../list.service';
 import { AdContentService } from './../../content/ad-content.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ListItemComponent } from './list-item/list-item.component';
 import { Component, OnInit } from '@angular/core';
 import { AdWordsAd } from '../../../models/AdWordsAd';

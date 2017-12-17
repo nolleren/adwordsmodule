@@ -29,7 +29,7 @@ export class CreateAdGroupComponent implements OnInit {
   ngOnInit() {
     this.adGroup = new AdGroup();
     this.toggleCreateAdGroupButton = false;
-    this.adGroups = this.adGroupService.getAdGroups(this.campaign);
+    this.adGroups = this.adGroupService.getAdGroups(this.campaign, true);
     this.modelSetter = new ModelSetter();
   
     this.createFormGroup();

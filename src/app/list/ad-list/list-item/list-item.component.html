@@ -39,7 +39,7 @@
                         [(ngModel)]="adwordAd.adContent.path1">
                 <span 
                     *ngIf="!listItemForm.get('path1').valid"
-                    class="help-block">Stien er for lang, den er {{ adwordAd.adContent.path1.length }}, og må kun være 15 tegn.
+                    class="help-block">Sti 1 er for lang, den er {{ adwordAd.adContent.path1.length }}, og må kun være 15 tegn.
                 </span> 
             </div>
             <div class="col-3">
@@ -50,7 +50,7 @@
                             [(ngModel)]="adwordAd.adContent.path2"> 
                 <span 
                     *ngIf="!listItemForm.get('path2').valid"
-                    class="help-block">Stien er for lang, den er {{ adwordAd.adContent.path2.length }}, og må kun være 15 tegn.
+                    class="help-block">Sti 2 er for lang, den er {{ adwordAd.adContent.path2.length }}, og må kun være 15 tegn.
                 </span> 
             </div>
         </div>
@@ -65,7 +65,7 @@
                         [(ngModel)]="adwordAd.adContent.description"></textarea>
                     <span 
                         *ngIf="!listItemForm.get('description').valid"
-                        class="help-block">Overskrift 1 er for lang, den er {{ adwordAd.adContent.description.length }}, og må kun være 80 tegn.
+                        class="help-block">Beskrivelsen er for lang, den er {{ adwordAd.adContent.description.length }}, og må kun være 80 tegn.
                     </span>   
                 </div>
             </div>        

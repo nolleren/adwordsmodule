@@ -102,9 +102,21 @@ export class AdGroupComponent implements OnInit {
   }
 
   deleteAdGroup(){
-    this.adGroupService.deleteAdGroup(this.adGroup).subscribe((data) => {
+    this.adGroupService.deleteAdGroup(this.adGroup).subscribe(
+      data => {
       this.adGroups = this.adGroups.filter(adGroup => adGroup.adGroupId !== data.value[0].id);
       this.adGroup = new AdGroup();
+      let dialog: Dialog = {
+        headline: "Annoncegruppen blev slettet",
+        message: "Annoncegruppen er nu fjernet fra listen"
+      };
+      this.dialog.open(DialogComponent, { data: dialog });
+    },
+    err => {
+      let dialog: Dialog = {
+        headline: "Annoncegruppen blev ikke slettet",
+        message: "Der opstod en fejl under sletning af Annoncegruppen, prøv venligst igen"
+      };
     });
   }
 

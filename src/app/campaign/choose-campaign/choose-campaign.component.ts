@@ -63,9 +63,21 @@ export class ChooseCampaignComponent implements OnInit {
   }
 
   deleteCampaign(){
-    this.campaignService.deleteCampaign(this.campaign).subscribe((data) => {
+    this.campaignService.deleteCampaign(this.campaign).subscribe(
+      data => {
       this.campaignList = this.campaignList.filter(campaign => campaign.id !== data.value[0].baseCampaignId);
       this.campaign = new CampaignListItem();
+      let dialog: Dialog = {
+        headline: "Kampagnen blev slettet",
+        message: "Kampagnen er nu fjernet fra listen"
+      };
+      this.dialog.open(DialogComponent, { data: dialog });
+    },
+    err => {
+      let dialog: Dialog = {
+        headline: "Kampagnen blev ikke slettet",
+        message: "Der opstod en fejl under sletning af kampagnen, prøv venligst igen"
+      };
     });
   }
 

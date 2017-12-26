@@ -7,7 +7,8 @@
                     type="text" 
                     id="adwordAd.adContent.headLinePart1"
                     formControlName="headlinePart1"
-                    [(ngModel)]="adwordAd.adContent.headLinePart1"> 
+                    [(ngModel)]="adwordAd.adContent.headLinePart1"
+                    (keyup)="adWordChanged()"> 
                 <span 
                 *ngIf="!listItemForm.get('headlinePart1').valid"
                 class="help-block">Overskrift 1 er for lang, den er {{ adwordAd.adContent.headLinePart1.length }}, og må kun være 30 tegn.

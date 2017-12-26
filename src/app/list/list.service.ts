@@ -8,6 +8,7 @@ import { AdWordsAd } from '../../models/AdWordsAd';
 export class ListService {
   resetProcess = new Subject();
   httpString: string;
+  updateAdWordsAd = new Subject<AdWordsAd>();
 
   constructor(private http: Http) {
     if(isDevMode()) this.httpString = "http://localhost:52185/api/ads";

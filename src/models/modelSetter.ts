@@ -18,7 +18,7 @@ interface IModelSetter {
 }
 
 export class ModelSetter implements IModelSetter {
-    url: string = "http://www.nolleren.org/";
+    url: string = "http://www.nolleren.org";
 
     setProduct(data) : Product {
         let product: Product = {

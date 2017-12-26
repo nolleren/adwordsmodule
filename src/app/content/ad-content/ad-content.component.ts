@@ -15,6 +15,7 @@ import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 import { ListService } from '../../list/list.service';
 import { ModelSetter } from '../../../models/modelSetter';
+import { ChangedAdCOntent } from '../../../models/changedAdContent';
 declare var $ :any;
 
 @Component({
@@ -31,6 +32,8 @@ export class AdContentComponent implements OnInit {
   url: string = "www.nolleren.org/";  
   product: Product;
   dataTransfer: ModelSetter;
+  changedAdContent: ChangedAdCOntent;
+  adContentCheck: AdContent;
 
   constructor(private adContentService: AdContentService, 
               private dialog: MatDialog,
@@ -44,6 +47,8 @@ export class AdContentComponent implements OnInit {
     this.outputAdContent = new AdContent();
     this.product = new Product();
     this.dataTransfer = new ModelSetter();
+    this.changedAdContent = new ChangedAdCOntent();
+    this.changedAdContent.replaceAdContent = [];
 
     this.getProduct();
     this.createFormGroup();
@@ -129,13 +134,31 @@ export class AdContentComponent implements OnInit {
   }
 
   createContentProduct(){
-    this.adContentService.adContent.next(this.adContent);
+    this.checkAdContent();
+    this.changedAdContent.adContent = this.adContent;
+    this.adContentService.adContent.next(this.changedAdContent);
+    this.adContentCheck = Object.assign({}, this.adContentCheck, this.adContent)
     let dialog: Dialog = {
       headline: "Annonceindhold udfyldt",
       message: "Gå nu videre til 'Tilpas annoncer'"
     };
     this.dialog.open(DialogComponent, { data: dialog });
     this.visible = false;
+  }
+
+  checkAdContent(){
+    if(this.adContentCheck !== undefined){
+      if(this.adContent.headLinePart1 !== this.adContentCheck.headLinePart1) this.changedAdContent.replaceAdContent[0] = true;
+        else this.changedAdContent.replaceAdContent[0] = false;
+      if(this.adContent.headLinePart2 !== this.adContentCheck.headLinePart2) this.changedAdContent.replaceAdContent[1] = true;
+        else this.changedAdContent.replaceAdContent[1] = false;
+      if(this.adContent.path1 !== this.adContentCheck.path1) this.changedAdContent.replaceAdContent[2] = true;
+        else this.changedAdContent.replaceAdContent[2] = false;
+      if(this.adContent.path2 !== this.adContentCheck.path2) this.changedAdContent.replaceAdContent[3] = true;
+        else this.changedAdContent.replaceAdContent[3] = false;
+      if(this.adContent.description !== this.adContentCheck.description) this.changedAdContent.replaceAdContent[4] = true;
+        else this.changedAdContent.replaceAdContent[4] = false;
+    }
   }
 
   show(){

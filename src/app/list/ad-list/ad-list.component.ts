@@ -16,6 +16,7 @@ import { AdGroupService } from '../../ad/ad-group-service.service';
 import { MatDialog } from '@angular/material';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
+import { ChangedAdCOntent } from '../../../models/changedAdContent';
 
 @Component({
   selector: 'app-ad-list',
@@ -34,6 +35,7 @@ export class AdListComponent implements OnInit {
   adContent: AdContent;
   url: string = "http://www.nolleren.org";
   modelSetter: ModelSetter;
+  replaceAdContent: boolean[];
 
   constructor(private adContentService: AdContentService, 
               private listService: ListService, 
@@ -51,6 +53,7 @@ export class AdListComponent implements OnInit {
     this.productList = [];
     this.adContent = new AdContent();
     this.modelSetter = new ModelSetter();
+    this.replaceAdContent = [];
 
     this.addProductToList();
     this.removeProductFromList();
@@ -77,8 +80,9 @@ export class AdListComponent implements OnInit {
   }
 
   getAdContent(){
-    this.adContentService.adContent.subscribe((data: AdContent) => {
-      this.adContent = data;
+    this.adContentService.adContent.subscribe((data: ChangedAdCOntent) => {
+      this.adContent = data.adContent;
+      this.replaceAdContent = data.replaceAdContent;
       if(this.adwordsAds.length === 0){
         for(let i = 0; i < this.productList.length; i++) {
           let adWordsAd: AdWordsAd = this.createAdWordContent(this.productList[i]);
@@ -100,11 +104,11 @@ export class AdListComponent implements OnInit {
   }
 
   updateAdwordsAd(adWordsAd: AdWordsAd, replaceAdwordsAds: AdWordsAd){
-    if(adWordsAd.adContent.headLinePart1 !== replaceAdwordsAds.adContent.headLinePart1) adWordsAd.adContent.headLinePart1 = replaceAdwordsAds.adContent.headLinePart1;
-    if(adWordsAd.adContent.headLinePart2 !== replaceAdwordsAds.adContent.headLinePart2) adWordsAd.adContent.headLinePart2 = replaceAdwordsAds.adContent.headLinePart2;
-    if(adWordsAd.adContent.path1 !== replaceAdwordsAds.adContent.path1) adWordsAd.adContent.path1 = replaceAdwordsAds.adContent.path1;
-    if(adWordsAd.adContent.path2 !== replaceAdwordsAds.adContent.path2) adWordsAd.adContent.path2 = replaceAdwordsAds.adContent.path2;
-    if(adWordsAd.adContent.description !== replaceAdwordsAds.adContent.description) adWordsAd.adContent.description = replaceAdwordsAds.adContent.description;
+    if(this.replaceAdContent[0]) adWordsAd.adContent.headLinePart1 = replaceAdwordsAds.adContent.headLinePart1;
+    if(this.replaceAdContent[1]) adWordsAd.adContent.headLinePart2 = replaceAdwordsAds.adContent.headLinePart2;
+    if(this.replaceAdContent[2]) adWordsAd.adContent.path1 = replaceAdwordsAds.adContent.path1;
+    if(this.replaceAdContent[3]) adWordsAd.adContent.path2 = replaceAdwordsAds.adContent.path2;
+    if(this.replaceAdContent[4]) adWordsAd.adContent.description = replaceAdwordsAds.adContent.description;
   }
 
   addProductToList(){

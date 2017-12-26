@@ -1,14 +1,13 @@
-import { AdWordsAd } from './../../../../models/AdWordsAd';
+import { AdWordsAd } from '../../../../models/AdWordsAd';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, Input, ViewChild } from '@angular/core';
-import { TagContentType } from '@angular/compiler';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
 import { ListService } from '../../list.service';
 
 @Component({
   selector: 'app-list-item',
   templateUrl: './list-item.component.html',
-  styleUrls: ['./list-item.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./list-item.component.css']
 })
 export class ListItemComponent implements OnInit {
   listItemForm: FormGroup;
@@ -18,6 +17,10 @@ export class ListItemComponent implements OnInit {
 
   ngOnInit() {
     this.createFormGroup();
+  }
+
+  adWordChanged(){
+    this.listService.updateAdWordsAd.next(this.adwordAd);
   }
 
   createFormGroup(){

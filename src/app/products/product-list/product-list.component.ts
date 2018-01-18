@@ -98,9 +98,10 @@ export class ProductListComponent implements OnInit {
 
   setChosenProducts(){
     this.show();
+    let productText = this.counter === 1 ? "produkt" : "produkter";
     let dialog: Dialog = {
       headline: "De ønskede produkter blev valgt",
-      message: "Der blev valgt " + this.counter + " produkter"
+      message: "Der blev valgt " + this.counter + " " + productText
     };
     this.dialog.open(DialogComponent, { data: dialog });
   }

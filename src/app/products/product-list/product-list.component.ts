@@ -1,5 +1,4 @@
 import { ListService } from './../../list/list.service';
-import { KeyValuePair } from './../../../models/keyValuePair';
 import { CampaignService } from './../../campaign/campaign.service';
 import { ProductService } from './../product.service';
 import { Product } from './../../../models/product';
@@ -106,7 +105,7 @@ export class ProductListComponent implements OnInit {
     this.dialog.open(DialogComponent, { data: dialog });
   }
 
-  show(){
+  show(){ 
     this.visible = !this.visible;
   }
 

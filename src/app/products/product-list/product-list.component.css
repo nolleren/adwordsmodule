@@ -24,3 +24,7 @@ input[type="checkbox"] {
     margin-top: 10px;
     margin-right: 5px;
 }
+
+.setWidth {
+    width: 630px;
+}

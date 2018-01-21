@@ -42,8 +42,10 @@ export class ProductListComponent implements OnInit {
  reset(){
   this.listService.resetProcess.subscribe(data => {
     this.productGroups = [];
+    this.showProducts = [];
     this.setProductList();
     this.visible = false;
+    this.counter = 0;
     });
   } 
 

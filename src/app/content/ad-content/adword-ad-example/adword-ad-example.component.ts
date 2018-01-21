@@ -7,6 +7,7 @@ import { AdContent } from '../../../../models/adContent';
 import { ProductService } from '../../../products/product.service';
 import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
 import { AdContentService } from '../../ad-content.service';
+import { ListService } from '../../../list/list.service';
 
 @Component({
   selector: 'app-adword-ad-example',
@@ -20,7 +21,8 @@ export class AdwordAdExampleComponent implements OnInit {
   url: string = "http://www.nolleren.org/";
 
   constructor(private productService: ProductService,
-              private adContentService: AdContentService) { }
+              private adContentService: AdContentService,
+              private listService: ListService) { }
 
   ngOnInit() {
     this.product = new Product();
@@ -28,6 +30,13 @@ export class AdwordAdExampleComponent implements OnInit {
     this.adwordAd = new AdWordsAd();
     this.getProduct();
     this.setAdContent();
+    this.reset();
+  }
+
+  reset(){
+    this.listService.resetProcess.subscribe(data => {
+      this.adwordAd = new AdWordsAd();
+    });
   }
 
   setAdContent(){

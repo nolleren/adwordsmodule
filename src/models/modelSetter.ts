@@ -94,8 +94,17 @@ export class ModelSetter implements IModelSetter {
         }
         else return dateString;
      }
+
+    removeNulls(content: AdWordsAd){
+        if(content.adContent.headLinePart1 === null) content.adContent.headLinePart1 = undefined;
+        if(content.adContent.headLinePart2 === null) content.adContent.headLinePart2 = undefined;
+        if(content.adContent.path1 === null) content.adContent.path1 = undefined;
+        if(content.adContent.path2 === null) content.adContent.path2 = undefined;
+        if(content.adContent.description === null) content.adContent.description = undefined;
+    }
     
     replacer(contentProduct: AdWordsAd, product: Product, setLenght: boolean){
+        this.removeNulls(contentProduct);
         if(contentProduct.adContent.headLinePart1 !== undefined) {
             for(let i = 0; i < product.keyValuePairs.length; i++){
                 contentProduct.adContent.headLinePart1 = contentProduct.adContent.headLinePart1.replace(product.keyValuePairs[i].key, product.keyValuePairs[i].value);

@@ -1,3 +1,4 @@
+import { isDevMode } from '@angular/core';
 import { AdContent } from './adContent';
 import { AdGroup } from './adGroup';
 import { Product } from "./product";
@@ -76,12 +77,23 @@ export class ModelSetter implements IModelSetter {
         let campaignListItem: CampaignListItem = {
             id: data.id,
             name: data.name,
-            startDate: data.startDate,
-            endDate: data.endDate,
+            startDate: this.formatDateString(data.startDate),
+            endDate: this.formatDateString(data.endDate),
             microAmount: data.budget.amount.microAmount
           };
           return campaignListItem;
     }
+
+    formatDateString(dateString: string) {
+        if(!isDevMode()){
+            let year = dateString.substring(6, 9);
+            let month = dateString.substring(0, 1);
+            let day = dateString.substring(3, 4);
+
+            return day + "/" + month + "/" + year;
+        }
+        else return dateString;
+     }
     
     replacer(contentProduct: AdWordsAd, product: Product, setLenght: boolean){
         if(contentProduct.adContent.headLinePart1 !== undefined) {

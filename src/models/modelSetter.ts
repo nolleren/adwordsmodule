@@ -87,8 +87,8 @@ export class ModelSetter implements IModelSetter {
     formatDateString(dateString: string) {
         if(!isDevMode()){
             let year = dateString.substring(6, 9);
-            let month = dateString.substring(0, 1);
-            let day = dateString.substring(3, 4);
+            let month = dateString.substring(0, 2);
+            let day = dateString.substring(3, 5);
 
             return day + "/" + month + "/" + year;
         }

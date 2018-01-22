@@ -22,7 +22,6 @@ export class DatepickerComponent {
   ngOnInit() {
     this.setPickRangeOnDatesStart();
     this.setPickRangeOnDatesEnd();
-
     this.updateStartDateForEndDate();
   }
 

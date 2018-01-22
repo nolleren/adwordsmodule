@@ -27,6 +27,8 @@ export class CreateCampaignComponent implements OnInit {
   
   ngOnInit(){
     this.campaign = new CampaignDto();
+    this.campaign.name = "";
+    this.microAmount = null;
     this.visible = false;
     this.toggleCreateCampaignButton = false;
     this.modelSetter = new ModelSetter();
@@ -40,8 +42,19 @@ export class CreateCampaignComponent implements OnInit {
   createFormGroup(){
     this.campaignForm = new FormGroup({
       'name': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(55)]),
-      'microAmount': new FormControl(null, [ Validators.required, Validators.min(1), Validators.max(10000000) ])
+      'microAmount': new FormControl(null, [ Validators.required, Validators.min(1), Validators.max(10000000) ]),
     });
+  }
+
+  formIsValid(){
+    let valid: boolean = false;
+    if(this.campaign.name.length < 1 || this.campaign.name.length > 55) return false;
+    if(this.microAmount < 1 || this.microAmount > 10000000) return false;
+    if(this.campaign.startDate === undefined) return false;
+    if(this.campaign.endDate === undefined) return false;
+    if(!this.campaignNameExist()) return false;
+    valid = true;
+    return valid;
   }
 
   addCampaignToList(){

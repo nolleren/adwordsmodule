@@ -28,6 +28,8 @@ export class CreateAdGroupComponent implements OnInit {
 
   ngOnInit() {
     this.adGroup = new AdGroup();
+    this.adGroup.name = "";
+    this.adGroup.keyWords = "";
     this.toggleCreateAdGroupButton = false;
     this.adGroups = this.adGroupService.getAdGroups(this.campaign, true);
     this.modelSetter = new ModelSetter();
@@ -42,6 +44,15 @@ export class CreateAdGroupComponent implements OnInit {
     });
   }
 
+  formIsValid(){
+    let valid: boolean = false;
+    if(this.adGroup.name.length < 1 || this.adGroup.name.length > 55) return false;
+    if(this.adGroup.keyWords.length < 1 || this.adGroup.keyWords.length > 55) return false;
+    if(!this.adGroupNameExist()) return false;
+    valid = true;
+    return valid;
+  }
+  
   toggle(){
     this.toggleCreateAdGroupButton = !this.toggleCreateAdGroupButton;
   }

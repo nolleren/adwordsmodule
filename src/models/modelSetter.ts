@@ -16,6 +16,7 @@ interface IModelSetter {
   replacer(contentProduct: AdWordsAd, product: Product, setLenght: boolean);
   setProductGroup(data);
   setAdwordAd(product: Product, adContent: AdContent);
+  formatDateString(dateString: string);
 }
 
 export class ModelSetter implements IModelSetter {
@@ -86,7 +87,7 @@ export class ModelSetter implements IModelSetter {
 
     formatDateString(dateString: string) {
         if(!isDevMode()){
-            let year = dateString.substring(6, 9);
+            let year = dateString.substring(6, 10);
             let month = dateString.substring(0, 2);
             let day = dateString.substring(3, 5);
 

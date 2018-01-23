@@ -2,11 +2,12 @@ import { ListService } from './../../list/list.service';
 import { MatDialog } from '@angular/material';
 import { CampaignService } from './../campaign.service';
 import { CampaignDto } from './../../../models/campaign';
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, isDevMode } from '@angular/core';
 import { empty } from 'rxjs/Observer';
 import { Dialog } from '../../../models/dialog';
 import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 import { CampaignListItem } from '../../../models/campaignListItem';
+import { months } from 'moment-timezone';
 
 @Component({
   selector: 'app-choose-campaign',
@@ -58,9 +59,25 @@ export class ChooseCampaignComponent implements OnInit {
 
   addCampaignToList(){
     this.campaignService.addCreatedCampaignToList.subscribe((data: CampaignListItem) => {
-      this.campaignList.push(data);
+      let campaign: CampaignListItem = data;
+      campaign.startDate = this.formatDateString(campaign.startDate);
+      campaign.endDate = this.formatDateString(campaign.endDate);
+      this.campaignList.push(campaign);
     });
   }
+
+  formatDateString(dateString: string) {
+    let year, month, day;
+    if(!isDevMode()){
+      year = dateString.substring(0, 4);
+      month = dateString.substring(4, 6);
+      day = dateString.substring(6, 8);
+      return day + "/" + month + "/" + year;
+    }
+    else return month + "/" + day + "/" + year;
+
+    
+}
 
   deleteCampaign(){
     this.campaignService.deleteCampaign(this.campaign).subscribe(
